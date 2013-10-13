@@ -40,21 +40,21 @@ public:
         opcodesList.insert(Opcodes(opcode), opcodeHandler);
     }
 
-    static bool Exists(Opcodes id)
+    static bool Exists(quint16 id)
     {
-        return opcodesList.contains(id);
+        return opcodesList.contains((Opcodes)id);
     }
 
-    static OpcodeHandler Get(Opcodes id)
+    static OpcodeHandler Get(quint16 id)
     {
-        return opcodesList.value(id);
+        return opcodesList.value((Opcodes)id);
     }
 
 private:
     static OpcodesList opcodesList;
 };
 
-inline QString GetOpcodeName(Opcodes id)
+inline QString GetOpcodeName(quint16 id)
 {
     if (!OpcodeTable::Exists(id))
         return "Unknown opcode";

@@ -4,6 +4,7 @@
 SocketHandler::SocketHandler(QTcpSocket *socket)
 {
     m_socket = socket;
+    m_packetSize = 0;
 
     connect(m_socket, SIGNAL(readyRead()), this, SLOT(OnRead()));
 }

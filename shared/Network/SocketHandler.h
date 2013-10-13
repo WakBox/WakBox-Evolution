@@ -14,10 +14,7 @@ class SocketHandler : public QObject
 public:
     SocketHandler(QTcpSocket* socket);
 
-    QString GetIp() const
-    {
-        return m_socket->peerAddress().toString();
-    }
+    QString GetIp() const { return m_socket->peerAddress().toString(); }
 
     virtual void ProcessPacket(WorldPacket& packet) = 0;
     void SendPacket(const WorldPacket& data) const;
@@ -31,6 +28,7 @@ public slots:
 
 protected:
     QTcpSocket* m_socket;
+    quint16 m_packetSize;
 };
 
 #endif // SOCKETREADER_H

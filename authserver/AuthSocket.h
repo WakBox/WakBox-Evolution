@@ -17,6 +17,7 @@ public:
     ~AuthSocket();
 
     virtual void ProcessPacket(WorldPacket& packet);
+    void HandlePacket(quint16 opcode, WorldPacket& packet);
 
 public slots:
     virtual void OnClose();
