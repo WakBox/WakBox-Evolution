@@ -1,0 +1,5 @@
+include(Accounts/Accounts.pri)
+include(Chat/Chat.pri)
+include(Handlers/Handlers.pri)
+include(Server/Server.pri)
+include(World/World.pri)
