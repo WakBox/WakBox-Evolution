@@ -3,7 +3,6 @@
 
 #include <QtCore>
 #include <QTextStream>
-#include "Opcodes/Opcodes.h"
 
 class WorldPacket
 {
@@ -22,11 +21,37 @@ public:
         return m_buffer;
     }
 
-    template<class T>
+    template <class T>
     WorldPacket& operator<<(const T& value)
     {
         m_stream << value;
         return *this;
+    }
+
+    template <class T>
+    WorldPacket& operator>>(T& value)
+    {
+        m_stream >> value;
+        return *this;
+    }
+
+    template <typename T>
+    T Read()
+    {
+        T v;
+        *this >> v;
+        return v;
+    }
+
+    QString ReadString(quint16 length)
+    {
+        QByteArray bytes;
+        bytes.resize(length);
+
+        for (quint16 i = 0; i < length; ++i)
+            bytes[i] = Read<qint8>();
+
+        return QString(bytes);
     }
 
 private:

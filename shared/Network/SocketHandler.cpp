@@ -11,7 +11,7 @@ SocketHandler::SocketHandler(QTcpSocket *socket)
 
 void SocketHandler::OnRead()
 {
-
+    ProcessPacket();
 }
 
 void SocketHandler::OnDisconnect()

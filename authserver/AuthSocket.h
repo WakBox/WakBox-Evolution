@@ -16,7 +16,7 @@ public:
     AuthSocket(QTcpSocket* socket);
     ~AuthSocket();
 
-    virtual void ProcessPacket(WorldPacket& packet);
+    virtual void ProcessPacket();
     void HandlePacket(quint16 opcode, WorldPacket& packet);
 
 public slots:

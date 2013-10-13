@@ -49,6 +49,9 @@ bool AuthServer::Initialize()
     else
        Log::Write(LOG_TYPE_NORMAL, "AuthServer started on port %i : waiting for connections", ConfigMgr::Auth()->GetInt("AuthServerPort"));
 
+    // A mettre ailleurs
+    OpcodeTable::Load();
+
     return true;
 }
 

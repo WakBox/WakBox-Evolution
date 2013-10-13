@@ -8,13 +8,10 @@ class WorldSession;
 
 enum Opcodes
 {
-    MSG_UNKNOWN_OPCODE,
-
     // Client messages (CMSG)
+    CMSG_CLIENT_VERSION                         = 7
 
     // Server messages (SMSG)
-
-    NUM_MSG_TYPES
 };
 
 struct OpcodeHandler

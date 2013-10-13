@@ -14,7 +14,7 @@ WorldSession::~WorldSession()
 {
 }
 
-void WorldSession::ProcessPacket(WorldPacket& /*packet*/)
+void WorldSession::ProcessPacket()
 {
     QDataStream in(m_socket);
 

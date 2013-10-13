@@ -17,7 +17,7 @@ public:
     WorldSession(QTcpSocket* socket);
     ~WorldSession();
 
-    virtual void ProcessPacket(WorldPacket& packet);
+    virtual void ProcessPacket();
 
     // Default handlers
     void HandleNULL(WorldPacket& /*packet*/) {}

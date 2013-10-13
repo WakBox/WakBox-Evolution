@@ -16,7 +16,7 @@ public:
 
     QString GetIp() const { return m_socket->peerAddress().toString(); }
 
-    virtual void ProcessPacket(WorldPacket& packet) = 0;
+    virtual void ProcessPacket() = 0;
     void SendPacket(const WorldPacket& data) const;
 
 public slots:

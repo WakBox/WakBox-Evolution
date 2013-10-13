@@ -5,12 +5,13 @@ OpcodesList OpcodeTable::opcodesList;
 
 void OpcodeTable::Load()
 {
-    #define ADD_OPCODE_HANDLER(opcode, handler) \
-        Add(opcode, #opcode, handler);
-
-    ADD_OPCODE_HANDLER(MSG_UNKNOWN_OPCODE, &WorldSession::HandleNULL);
+#define ADD_OPCODE_HANDLER(opcode, handler) \
+    Add(opcode, #opcode, handler);
 
     // Client messages (CMSG)
+    ADD_OPCODE_HANDLER(CMSG_CLIENT_VERSION, &WorldSession::HandleNULL);
 
     // Server messages (SMSG)
+
+#undef ADD_OPCODE_HANDLER
 }
