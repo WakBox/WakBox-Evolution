@@ -1,0 +1,82 @@
+
+EVP_PKEY * generate_key()
+{
+/* Allocate memory for the EVP_PKEY structure. */
+EVP_PKEY * pkey = EVP_PKEY_new();
+if(!pkey)
+{
+std::cerr << "Unable to create EVP_PKEY structure." << std::endl;
+return NULL;
+}
+/* Generate the RSA key and assign it to pkey. */
+RSA * rsa = RSA_generate_key(1024, RSA_F4, NULL, NULL);
+if(!EVP_PKEY_assign_RSA(pkey, rsa))
+{
+std::cerr << "Unable to generate 2048-bit RSA key." << std::endl;
+EVP_PKEY_free(pkey);
+return NULL;
+}
+/* The key has been generated, return it. */
+return pkey;
+}
+
+X509 * generate_x509(EVP_PKEY * pkey)
+{
+/* Allocate memory for the X509 structure. */
+X509 * x509 = X509_new();
+if(!x509)
+{
+std::cerr << "Unable to create X509 structure." << std::endl;
+return NULL;
+}
+/* Set the serial number. */
+ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
+/* This certificate is valid from now until exactly one year from now. */
+X509_gmtime_adj(X509_get_notBefore(x509), 0);
+X509_gmtime_adj(X509_get_notAfter(x509), 31536000L);
+/* Set the public key for our certificate. */
+X509_set_pubkey(x509, pkey);
+/* We want to copy the subject name to the issuer name. */
+X509_NAME * name = X509_get_subject_name(x509);
+/* Set the country code and common name. */
+X509_NAME_add_entry_by_txt(name, "C", MBSTRING_ASC, (unsigned char *)"CA", -1, -1, 0);
+X509_NAME_add_entry_by_txt(name, "O", MBSTRING_ASC, (unsigned char *)"MyCompany", -1, -1, 0);
+X509_NAME_add_entry_by_txt(name, "CN", MBSTRING_ASC, (unsigned char *)"localhost", -1, -1, 0);
+/* Now set the issuer name. */
+X509_set_issuer_name(x509, name);
+/* Actually sign the certificate with our key. */
+if(!X509_sign(x509, pkey, EVP_sha1()))
+{
+std::cerr << "Error signing certificate." << std::endl;
+X509_free(x509);
+return NULL;
+}
+return x509;
+}
+
+
+void AuthSocket::SendRSAPacket()
+{
+    /*
+    m_keyPair = RSA_new();
+    m_keyPair = RSA_generate_key(1024, RSA_F4, 0, 0);
+
+    uchar *pp = NULL;
+    int length = i2d_RSAPublicKey(m_keyPair, &pp);
+    RSA_free(m_keyPair);
+*/
+    //int length = i2d_RSAPublicKey(m_keyPair, &finalPubKey);
+/*
+    EVP_PKEY* pkey = generate_key();
+    X509* x509 = generate_x509(pkey);
+    EVP_PKEY * pubkey;
+    pubkey = X509_get_pubkey(x509);
+
+    uchar* finalPubKey = NULL;
+    int length = i2d_PublicKey(pubkey, &finalPubKey);
+*/
+    WorldPacket data(SMSG_RSA_PUBLIC_KEY, Utils::FromHexString("00 AE 04 08 80 00 00 00 00 00 00 00 30 81 9F 30 0D 06 09 2A 86 48 86 F7 0D 01 01 01 05 00 03 81 8D 00 30 81 89 02 81 81 00 8A C8 54 B6 F8 0A 47 1B AA A4 81 27 53 B5 74 4F E1 52 91 38 87 4C 20 0F 96 2B 2F A4 7A 2E 00 28 EA A2 B9 9F 68 EB D3 94 57 0A 06 50 13 E7 B8 E0 B8 0A 16 B5 1C 24 84 1F A4 E0 0A 26 58 F6 1B 54 58 6A 56 F9 89 BB F0 A5 83 43 7A AD BD 95 4A BC B6 6B 5E 85 B1 B9 99 E5 6C 8E 46 C4 2B DC 43 0D 63 F6 71 F7 16 E9 25 36 05 3C 0A 89 19 B6 03 BC CF AC C7 CB 14 06 71 7C 2F D5 DB 23 8F C6 D7 19 02 03 01 00 01"));
+    //data << qint64(0x8000000000000000);
+    //data.WriteBytes((char*)pp, length);
+    SendPacket(data);
+}

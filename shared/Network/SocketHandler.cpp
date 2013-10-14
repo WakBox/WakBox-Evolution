@@ -30,7 +30,10 @@ void SocketHandler::OnError(QAbstractSocket::SocketError /*error*/)
 
 }
 
-void SocketHandler::SendPacket(const WorldPacket& data) const
+void SocketHandler::SendPacket(WorldPacket& data)
 {
+    data.WriteHeader();
     m_socket->write(data.GetPacket());
+
+    Log::Write(LOG_TYPE_DEBUG, "Send packet %s <%u> (size : %u).", OpcodeTable::Get(data.GetOpcode()).name.toLatin1().data(), data.GetOpcode(), data.GetPacket().size());
 }

@@ -7,18 +7,29 @@
 class WorldPacket
 {
 public:
-    WorldPacket(quint16 opcode, QByteArray packet) : m_opcode(opcode), m_stream(packet)
+    WorldPacket(quint16 opcode, QByteArray packet = QByteArray()) : m_opcode(opcode), m_buffer(packet), m_stream(&m_buffer, QIODevice::ReadWrite)
     {
+        if (packet.isEmpty())
+        {
+            *this << (qint16)0;
+            *this << m_opcode;
+        }
     }
 
-    quint16 GetOpcode() const
+    quint16 GetOpcode()
     {
         return m_opcode;
     }
 
-    QByteArray GetPacket() const
+    QByteArray GetPacket()
     {
         return m_buffer;
+    }
+
+    void WriteHeader()
+    {
+        m_stream.device()->seek(0);
+        *this << (qint16)m_stream.device()->size();
     }
 
     template <class T>
@@ -26,6 +37,11 @@ public:
     {
         m_stream << value;
         return *this;
+    }
+
+    void WriteBytes(const char* s, uint len)
+    {
+        m_stream.writeBytes(s, len);
     }
 
     template <class T>
@@ -55,8 +71,6 @@ public:
     }
 
 private:
-    quint16 m_size;
-    qint8 m_unk;
     quint16 m_opcode;
 
     QByteArray m_buffer;

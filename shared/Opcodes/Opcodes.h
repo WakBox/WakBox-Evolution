@@ -9,9 +9,13 @@ class WorldSession;
 enum Opcodes
 {
     // Client messages (CMSG)
-    CMSG_CLIENT_VERSION                         = 7
+    CMSG_CLIENT_DISCONNECT                      = 1,
+    CMSG_CLIENT_VERSION                         = 7,
+    CMSG_CLIENT_AUTH                            = 1025,
 
     // Server messages (SMSG)
+    SMSG_CLIENT_AUTH_RESULT                     = 1024,
+    SMSG_RSA_PUBLIC_KEY                         = 1032
 };
 
 struct OpcodeHandler

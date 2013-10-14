@@ -13,7 +13,9 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-INCLUDEPATH += . ../shared ../worldserver ../worldserver/Game
+LIBS += -L"C:/OpenSSL-Win32/lib" -llibeay32
+
+INCLUDEPATH += . ../shared ../worldserver ../worldserver/Game C:/OpenSSL-Win64/include
 DEPENDPATH += . ../shared ../worldserver ../worldserver/Game
 
 SOURCES += main.cpp
