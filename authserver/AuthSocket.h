@@ -5,10 +5,6 @@
 #include <QObject>
 #include <QtNetwork>
 
-#include <openssl/rsa.h>
-#include <openssl/pem.h>
-#include <openssl/x509.h>
-
 #include "Define.h"
 #include "Databases/Database.h"
 #include "Network/SocketHandler.h"
@@ -30,8 +26,7 @@ public slots:
     virtual void OnClose();
 
 private:
-    RSA* m_keyPair;
-    X509* m_cert;
+
 };
 
 #endif // AUTHSOCKET_H

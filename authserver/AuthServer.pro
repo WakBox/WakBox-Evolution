@@ -13,9 +13,9 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-LIBS += -L"C:/OpenSSL-Win32/lib" -llibeay32
+LIBS += -L"C:/CryptoCPP/lib" -lcryptopp
 
-INCLUDEPATH += . ../shared ../worldserver ../worldserver/Game C:/OpenSSL-Win64/include
+INCLUDEPATH += . ../shared ../worldserver ../worldserver/Game C:/CryptoCPP/include
 DEPENDPATH += . ../shared ../worldserver ../worldserver/Game
 
 SOURCES += main.cpp

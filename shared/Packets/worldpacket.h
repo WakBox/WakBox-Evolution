@@ -11,7 +11,7 @@ public:
     {
         if (packet.isEmpty())
         {
-            *this << (qint16)0;
+            *this << (quint16)0;
             *this << m_opcode;
         }
     }
@@ -28,8 +28,8 @@ public:
 
     void WriteHeader()
     {
-        m_stream.device()->seek(0);
-        *this << (qint16)m_stream.device()->size();
+        m_stream.device()->reset();
+        *this << (quint16)m_stream.device()->size();
     }
 
     template <class T>
@@ -42,6 +42,11 @@ public:
     void WriteBytes(const char* s, uint len)
     {
         m_stream.writeBytes(s, len);
+    }
+
+    void WriteRawBytes(const char* s, int len)
+    {
+        m_stream.writeRawData(s, len);
     }
 
     template <class T>
@@ -59,12 +64,25 @@ public:
         return v;
     }
 
-    QString ReadString(quint16 length)
+    void ReadBytes(char*& s, uint len)
     {
-        QByteArray bytes;
-        bytes.resize(length);
+        m_stream.readBytes(s, len);
+    }
 
-        for (quint16 i = 0; i < length; ++i)
+    void ReadRawBytes(char*& s, int len)
+    {
+        m_stream.readRawData(s, len);
+    }
+
+    QString ReadString()
+    {
+        quint8 len;
+        QByteArray bytes;
+
+        *this >> len;
+        bytes.resize(len);
+
+        for (quint16 i = 0; i < len; ++i)
             bytes[i] = Read<qint8>();
 
         return QString(bytes);

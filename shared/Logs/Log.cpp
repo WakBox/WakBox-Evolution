@@ -15,7 +15,7 @@ Log::~Log()
         m_file->close();
 }
 
-void Log::Init(ushort logConsoleLevel, ushort logFileLevel, QString logFile)
+void Log::Initialize(ushort logConsoleLevel, ushort logFileLevel, QString logFile)
 {
     m_logTypeConsole = LogType(logConsoleLevel);
     m_logTypeFile = LogType(logFileLevel);

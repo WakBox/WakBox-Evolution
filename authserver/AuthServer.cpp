@@ -1,4 +1,6 @@
 #include "AuthServer.h"
+#include "Logs/Log.h"
+#include "Cryptography/Cryptography.h"
 
 template<> AuthServer*  Singleton<AuthServer>::m_instance = 0;
 
@@ -14,6 +16,7 @@ AuthServer::~AuthServer()
 
     ConfigMgr::Delete();
     Log::Delete();
+    Cryptography::Delete();
     Database::Delete();
 
     SocketList::Iterator itr, next;
@@ -35,11 +38,16 @@ bool AuthServer::Initialize()
     if (!ConfigMgr::Instance()->LoadAuthConfig("authserver.conf"))
         return false;
 
-    Log::Instance()->Init(ConfigMgr::Auth()->GetUShort("LogConsoleLevel"), ConfigMgr::Auth()->GetUShort("LogFileLevel"), ConfigMgr::Auth()->GetQString("LogFile"));
+    Log::Instance()->Initialize(ConfigMgr::Auth()->GetUShort("LogConsoleLevel"), ConfigMgr::Auth()->GetUShort("LogFileLevel"), ConfigMgr::Auth()->GetQString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting AuthServer...");
 
     //if (!Database::Instance()->OpenAuthDatabase())
-    //    return close();
+    //    return false;
+
+    OpcodeTable::Load();
+
+    if (!Cryptography::Instance()->Initialize())
+        return false;
 
     if(!Start(QHostAddress::LocalHost, quint16(ConfigMgr::Auth()->GetInt("AuthServerPort"))))
     {
@@ -48,9 +56,6 @@ bool AuthServer::Initialize()
     }
     else
        Log::Write(LOG_TYPE_NORMAL, "AuthServer started on port %i : waiting for connections", ConfigMgr::Auth()->GetInt("AuthServerPort"));
-
-    // A mettre ailleurs
-    OpcodeTable::Load();
 
     return true;
 }

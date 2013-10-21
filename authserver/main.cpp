@@ -4,7 +4,6 @@
 
 #include "Define.h"
 #include "AuthServer.h"
-#include "Databases/Database.h"
 #include "Logs/Log.h"
 #include "Configuration/ConfigMgr.h"
 

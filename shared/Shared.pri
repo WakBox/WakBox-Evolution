@@ -2,6 +2,7 @@
 HEADERS += $$PWD/*.h
 
 include(Configuration/Configuration.pri)
+include(Cryptography/Cryptography.pri)
 include(Databases/Databases.pri)
 include(Logs/Logs.pri)
 include(Network/Network.pri)
