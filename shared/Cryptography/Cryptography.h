@@ -22,7 +22,7 @@ public:
     bool LoadKeyPair();
 
     QByteArray GetPublicKey() { return m_publicKey; }
-    QByteArray Decrypt(char* b, uint size);
+    QByteArray Decrypt(QByteArray buffer);
 
 private:
     CryptoPP::InvertibleRSAFunction m_privateKey;

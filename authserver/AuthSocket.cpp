@@ -89,20 +89,19 @@ void AuthSocket::HandlePacket(quint16 opcode, WorldPacket& packet)
         quint64 rsaVerification;
         QString username, password;
 
-        uint bufferLen = packet.GetPacket().length();
-        qDebug() << bufferLen;
-        char* b = new char[bufferLen];
-        packet.ReadRawBytes(b, bufferLen);
-        qDebug() << b;
+        QByteArray buffer;
+        buffer.resize(packet.GetPacket().length());
+        packet.ReadRawBytes(buffer.data(), buffer.size());
 
-        QByteArray decoded = Cryptography::Instance()->Decrypt(b, bufferLen);
+        WorldPacket decrypted(0, Cryptography::Instance()->Decrypt(buffer));
 
-        /*
-        packet >> rsaVerification;
+        decrypted >> rsaVerification;
         qDebug() << rsaVerification;
 
-        username = packet.ReadString();
-        password = packet.ReadString();*/
+        username = decrypted.ReadString();
+        qDebug() << username;
+        password = decrypted.ReadString();
+        qDebug() << password;
         break;
     }
 }

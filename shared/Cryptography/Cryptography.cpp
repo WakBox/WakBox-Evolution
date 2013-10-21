@@ -56,17 +56,13 @@ bool Cryptography::LoadKeyPair()
     return true;
 }
 
-QByteArray Cryptography::Decrypt(char* b, uint size)
+QByteArray Cryptography::Decrypt(QByteArray buffer)
 {
     CryptoPP::AutoSeededRandomPool prng;
     std::string result;
 
-    bool key_ok = m_privateKey.Validate(prng, 3);
-    qDebug() << key_ok;
-    qDebug() << b;
-
     CryptoPP::RSAES_PKCS1v15_Decryptor d(m_privateKey);
-    CryptoPP::StringSource((byte*)&b, (size_t)size, true,
+    CryptoPP::StringSource((byte*)buffer.data(), (size_t)buffer.size(), true,
             new CryptoPP::PK_DecryptorFilter(prng, d, new CryptoPP::StringSink(result)));
 
     return QString::fromStdString(result).toLatin1();

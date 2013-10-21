@@ -69,7 +69,7 @@ public:
         m_stream.readBytes(s, len);
     }
 
-    void ReadRawBytes(char*& s, int len)
+    void ReadRawBytes(char* s, int len)
     {
         m_stream.readRawData(s, len);
     }
