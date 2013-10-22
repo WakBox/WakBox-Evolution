@@ -49,6 +49,12 @@ public:
         m_stream.writeRawData(s, len);
     }
 
+    void WriteString(QString s)
+    {
+        *this << (quint8)s.length();
+        *this << s;
+    }
+
     template <class T>
     WorldPacket& operator>>(T& value)
     {

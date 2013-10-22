@@ -41,8 +41,8 @@ bool AuthServer::Initialize()
     Log::Instance()->Initialize(ConfigMgr::Auth()->GetUShort("LogConsoleLevel"), ConfigMgr::Auth()->GetUShort("LogFileLevel"), ConfigMgr::Auth()->GetQString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting AuthServer...");
 
-    //if (!Database::Instance()->OpenAuthDatabase())
-    //    return false;
+    if (!Database::Instance()->OpenAuthDatabase())
+        return false;
 
     OpcodeTable::Load();
 

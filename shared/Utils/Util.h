@@ -7,6 +7,7 @@ class Utils
 {
 public:
     static QByteArray FromHexString(QString packet);
+    static QString HashPassword(QString account, QString password);
 };
 
 #endif

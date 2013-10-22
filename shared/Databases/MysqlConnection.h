@@ -36,7 +36,7 @@ public:
     virtual void LoadQueries() = 0;
     void LoadQuery(quint16 id, QString sql)
     {
-        m_queries[id] = sql;
+        m_queries.insert(id, sql);
     }
 
     bool Open(bool loadQueries = true);
@@ -45,18 +45,11 @@ public:
 
     QString GetSqlQuery(quint16 sqlQueryId)
     {
-        QueriesMap::ConstIterator itr = m_queries.find(sqlQueryId);
-
-        if(itr != m_queries.end())
-            return m_queries[sqlQueryId];
-        return QString();
+        return m_queries.value(sqlQueryId);
     }
 
-    QSqlQuery Query(QString sqlQuery);
-    QSqlQuery PQuery(QString sqlQuery, ...);
-
-    QSqlQuery Query(quint16 sqlQueryId);
-    QSqlQuery PQuery(quint16 sqlQueryId, ...);
+    QSqlQuery Query(QString sqlQuery, QVariantList args);
+    QSqlQuery Query(quint16 sqlQueryId, QVariantList args);
 
 protected:
     QueriesMap m_queries;

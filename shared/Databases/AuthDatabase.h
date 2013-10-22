@@ -17,6 +17,7 @@ enum AuthDatabaseQueries
     /**
      * DATABASE_STATEMENT_SUMMARY
      */
+    SELECT_ACCOUNT_BY_USERNAME
 };
 
 #endif

@@ -86,22 +86,20 @@ void AuthSocket::HandlePacket(quint16 opcode, WorldPacket& packet)
     } break;
 
     case CMSG_CLIENT_AUTH:
-        quint64 rsaVerification;
-        QString username, password;
-
         QByteArray buffer;
         buffer.resize(packet.GetPacket().length());
         packet.ReadRawBytes(buffer.data(), buffer.size());
 
         WorldPacket decrypted(0, Cryptography::Instance()->Decrypt(buffer));
 
+        quint64 rsaVerification;
         decrypted >> rsaVerification;
-        qDebug() << rsaVerification;
 
-        username = decrypted.ReadString();
-        qDebug() << username;
-        password = decrypted.ReadString();
-        qDebug() << password;
+        QString account = decrypted.ReadString();
+        QString password = decrypted.ReadString();
+
+        SendLoginResultPacket(account, password);
+
         break;
     }
 }
@@ -116,38 +114,53 @@ void AuthSocket::SendRSAPacket()
     SendPacket(data);
 }
 
-void AuthSocket::SendLoginResultPacket()
+void AuthSocket::SendLoginResultPacket(QString account, QString password)
 {
-    // too much bytes (+5), must be size 68
+    QSqlQuery result = Database::Auth()->Query(SELECT_ACCOUNT_BY_USERNAME, QVariantList() << account);
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
-    data << quint8(0);
-    data << quint16(61); // data length
-    data << quint8(1);
+    LoginResult loginResult = LOGIN_RESULT_INVALID_LOGIN;
 
-    for (quint8 i = 0; i < 4; ++i)
+    if (!result.first())
+    {
+        data << (quint8)loginResult;
+        SendPacket(data);
+        return;
+    }
+
+    QSqlRecord fields = result.record();
+    QString hashPassword = result.value(fields.indexOf("hash_password")).toString();
+
+    qDebug() << hashPassword;
+    qDebug() << Utils::HashPassword(account, password);
+    if (Utils::HashPassword(account, password) == hashPassword)
+    {
+        loginResult = LOGIN_RESULT_SUCCESS;
+    }
+
+    data << (quint8)loginResult;
+
+    switch (loginResult)
+    {
+    case LOGIN_RESULT_ACCOUNT_BANNED:
+        break;
+
+    case LOGIN_RESULT_SUCCESS:
+        data << quint16(50);
+        data << quint8(1);
         data << quint8(0);
-
-    data << quint8(6);
-
-    for (quint8 i = 0; i < 5; ++i)
+        data << quint32(6);
         data << quint8(0);
-
-    data << quint8(4);
-    data << quint8(102);
-    data << quint8(43);
-    data << quint8(64);
-
-    for (quint8 i = 0; i < 29; ++i)
+        data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
         data << quint8(0);
-
-    data << quint8(11); // Pseudo length
-    data << "WakSandbox0";
-
-    data << quint8(2);
-    data << quint8(63);
-    data << quint8(63);
-    data << quint8(0);
-    data << quint8(0);
+        data << quint64(1000); // Subscribe
+        data << quint32(0); // isAdmin ? 1 : 0
+        data.WriteString(account);
+        data.WriteString("??");
+        data << quint16(00);
+        break;
+    default:
+        break;
+    }
 
     SendPacket(data);
 }

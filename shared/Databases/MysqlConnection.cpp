@@ -52,55 +52,30 @@ void MysqlConnection::Close()
     Log::Write(LOG_TYPE_NORMAL, "Closing database connection on %s", m_connectionInfo.database.toLatin1().data());
 }
 
-QSqlQuery MysqlConnection::Query(QString sqlQuery)
+QSqlQuery MysqlConnection::Query(QString sqlQuery, QVariantList args)
 {
     if(sqlQuery.isEmpty() || !m_db.isOpen())
         return QSqlQuery();
 
-    QSqlQuery req = QSqlQuery(m_db);
+    QSqlQuery query = QSqlQuery(m_db);
+    query.prepare(sqlQuery);
 
-    if(!req.exec(sqlQuery))
+    while (!args.isEmpty())
+        query.addBindValue(args.takeFirst());
+
+    if(!query.exec())
     {
         Log::Write(LOG_TYPE_NORMAL, "SQL error with %s", sqlQuery.toLatin1().data());
-        Log::Write(LOG_TYPE_NORMAL, "[Error %u] %s", req.lastError().number(), req.lastError().text().toLatin1().data());
+        Log::Write(LOG_TYPE_NORMAL, "[Error %u] %s", query.lastError().number(), query.lastError().text().toLatin1().data());
 
-        if (req.lastError().number() == 2013 || req.lastError().number() == 2003)
-        {
-            if (Reconnect())
-                Query(sqlQuery);
-            else
-                Log::Write(LOG_TYPE_NORMAL, "Reconnect failed : MySQL connection lost.");
-        }
+        if (query.lastError().number() == 2013 || query.lastError().number() == 2003)
+            Log::Write(LOG_TYPE_NORMAL, "MySQL connection lost.");
     }
 
-    return req;
+    return query;
 }
 
-QSqlQuery MysqlConnection::PQuery(QString sqlQuery, ...)
+QSqlQuery MysqlConnection::Query(quint16 sqlQueryId, QVariantList args)
 {
-    if(sqlQuery.isEmpty() || !m_db.isOpen())
-        return QSqlQuery();
-
-    va_list ap;
-    va_start(ap, sqlQuery);
-    QString query;
-    query.vsprintf(sqlQuery.toLatin1().data(), ap);
-
-    return Query(query);
-}
-
-QSqlQuery MysqlConnection::Query(quint16 sqlQueryId)
-{
-    return Query(GetSqlQuery(sqlQueryId));
-}
-
-QSqlQuery MysqlConnection::PQuery(quint16 sqlQueryId, ...)
-{
-    QString sqlQuery = GetSqlQuery(sqlQueryId);
-    va_list ap;
-    va_start(ap, sqlQuery);
-    QString query;
-    query.vsprintf(sqlQuery.toLatin1().data(), ap);
-
-    return Query(query);
+    return Query(GetSqlQuery(sqlQueryId), args);
 }

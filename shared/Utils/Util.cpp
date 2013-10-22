@@ -25,3 +25,9 @@ QByteArray Utils::FromHexString(QString packet)
 
     return buffer;
 }
+
+QString Utils::HashPassword(QString account, QString password)
+{
+    QString data = account + ":" + password;
+    return QString(QCryptographicHash::hash(data.toLatin1(), QCryptographicHash::Sha1).toHex());
+}
