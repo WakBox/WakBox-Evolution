@@ -1,18 +1,8 @@
 #include <QCoreApplication>
-#include <QTime>
-
-#include <QFile>
-#include <iostream>
 #include <csignal>
-#include <QtSql>
 
-#include "define.h"
-#include "databases/database.h"
 #include "logs/log.h"
-#include "configuration/configmgr.h"
 #include "game/chat/commandline.h"
-
-using namespace std;
 
 void stop(int /*s*/)
 {

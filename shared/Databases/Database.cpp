@@ -28,7 +28,7 @@ Database::~Database()
 
 bool Database::OpenAuthDatabase()
 {
-    ConnectionInfo cinfos = ConnectionInfo(ConfigMgr::Auth()->GetQString("AuthDatabase"));
+    ConnectionInfo cinfos = ConnectionInfo(ConfigMgr::World()->GetQString("AuthDatabase"));
     m_authDatabase = new AuthDatabase(cinfos);
 
     if(!m_authDatabase->Open())

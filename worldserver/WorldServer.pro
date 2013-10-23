@@ -14,14 +14,15 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-INCLUDEPATH += . ../authserver/ ../shared ../worldserver ../worldserver/Game
-DEPENDPATH += . ../authserver/ ../shared ../worldserver ../worldserver/Game
+LIBS += -L"C:/CryptoCPP/lib" -lcryptopp
+
+INCLUDEPATH += . ../shared ../worldserver ../worldserver/Game C:/CryptoCPP/include
+DEPENDPATH += . ../shared ../worldserver ../worldserver/Game
 
 SOURCES += main.cpp \
     WorldServer.cpp
 
 HEADERS += WorldServer.h
 
-include(../authserver/AuthServer.pri)
 include(../shared/Shared.pri)
 include(Game/Game.pri)

@@ -24,7 +24,7 @@ bool MysqlConnection::Open(bool loadQueries)
 {
     if(!m_db.open())
     {
-        qDebug() << m_db.lastError();
+        Log::Write(LOG_TYPE_NORMAL, "Error when trying to connect to database %s : %s", m_connectionInfo.database.toLatin1().data(), m_db.lastError().text().toLatin1().data());
         return false;
     }
 
@@ -48,8 +48,11 @@ bool MysqlConnection::Reconnect()
 
 void MysqlConnection::Close()
 {
-    m_db.close();
-    Log::Write(LOG_TYPE_NORMAL, "Closing database connection on %s", m_connectionInfo.database.toLatin1().data());
+    if (m_db.isOpen())
+    {
+        m_db.close();
+        Log::Write(LOG_TYPE_NORMAL, "Closing database connection on %s", m_connectionInfo.database.toLatin1().data());
+    }
 }
 
 QSqlQuery MysqlConnection::Query(QString sqlQuery, QVariantList args)

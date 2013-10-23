@@ -4,7 +4,7 @@
 #include <QtCore>
 #include <QObject>
 #include <QtNetwork>
-#include "logs/log.h"
+
 #include "game/server/worldsession.h"
 #include "utils/singleton.h"
 

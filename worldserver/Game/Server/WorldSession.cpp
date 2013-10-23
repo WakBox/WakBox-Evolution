@@ -37,10 +37,6 @@ void WorldSession::ProcessPacket()
         in >> unk;
         in >> opcode;
 
-        qDebug() << m_packetSize;
-        qDebug() << unk;
-        qDebug() << opcode;
-
         if (OpcodeTable::Exists(opcode))
         {
             opcodeHandler handler = OpcodeTable::Get(opcode).handler;

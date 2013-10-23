@@ -1,5 +1,6 @@
 #include "worldserver.h"
-#include "game/world/world.h"
+#include "Game/World/World.h"
+#include "Cryptography/Cryptography.h"
 
 template<> WorldServer*  Singleton<WorldServer>::m_instance = 0;
 
@@ -14,8 +15,9 @@ WorldServer::~WorldServer()
 
     World::Delete();
     ConfigMgr::Delete();
-    Log::Delete();
+    Cryptography::Delete();
     Database::Delete();
+    Log::Delete();
 
     m_server->close();
     delete m_server;
@@ -23,13 +25,10 @@ WorldServer::~WorldServer()
 
 bool WorldServer::Initialize()
 {
-    if (!ConfigMgr::Instance()->LoadAuthConfig("authserver.conf"))
-        return false;
-
     if (!ConfigMgr::Instance()->LoadWorldConfig("worldserver.conf"))
         return false;
 
-    Log::Instance()->Init(ConfigMgr::World()->GetUShort("LogConsoleLevel"), ConfigMgr::World()->GetUShort("LogFileLevel"), ConfigMgr::World()->GetQString("LogFile"));
+    Log::Instance()->Initialize(ConfigMgr::World()->GetUShort("LogConsoleLevel"), ConfigMgr::World()->GetUShort("LogFileLevel"), ConfigMgr::World()->GetQString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting WorldServer...");
 
     if (!Database::Instance()->OpenAuthDatabase())
@@ -40,6 +39,8 @@ bool WorldServer::Initialize()
 
     if (!Database::Instance()->OpenWorldDatabase())
         return false;
+
+    OpcodeTable::Load();
 
     if (!World::Instance()->Initialize())
     {
@@ -71,5 +72,6 @@ void WorldServer::OnConnect()
 {
     QTcpSocket* socket = m_server->nextPendingConnection();
     WorldSession* session = new WorldSession(socket);
+
     World::Instance()->AddSession(session);
 }
