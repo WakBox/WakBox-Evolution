@@ -81,3 +81,7 @@
 /build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/worldserver.conf
 /build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/authserver.conf
 /build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/worldserver.conf
+/build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/cryptography/wakbox.ppk
+/build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/cryptography/wakbox.pub
+/build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/debug/Cryptography.o
+/build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/libmysql.dll

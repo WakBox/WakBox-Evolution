@@ -4,6 +4,14 @@
 #include <QtCore>
 #include <QTextStream>
 
+struct Block
+{
+    qint64 pos;
+    qint64 dataWritten;
+};
+
+typedef QMap<quint8, Block> BlockMap;
+
 class WorldPacket
 {
 public:
@@ -36,23 +44,27 @@ public:
     WorldPacket& operator<<(const T& value)
     {
         m_stream << value;
+        AddDataSizeToBlock((qint64)sizeof(T));
+
         return *this;
     }
 
     void WriteBytes(const char* s, uint len)
     {
         m_stream.writeBytes(s, len);
+        AddDataSizeToBlock((qint64)len);
     }
 
     void WriteRawBytes(const char* s, int len)
     {
         m_stream.writeRawData(s, len);
+        AddDataSizeToBlock((qint64)len);
     }
 
     void WriteString(QString s)
     {
         *this << (quint8)s.length();
-        *this << s;
+        WriteRawBytes(s.toLatin1().constData(), (uint)s.length());
     }
 
     template <class T>
@@ -94,11 +106,41 @@ public:
         return QString(bytes);
     }
 
+    template <typename T>
+    void StartBlock(quint8 index = 0)
+    {
+        Block block;
+        block.pos = m_stream.device()->pos();
+        block.dataWritten = 0;
+
+        m_blocks.insert(index, block);
+
+        T v;
+        *this << T(0);
+    }
+
+    void AddDataSizeToBlock(qint64 len)
+    {
+        if (m_blocks.size() > 0)
+            m_blocks[m_blocks.size() - 1].dataWritten += len;
+    }
+
+    template <class T>
+    void EndBlock(quint8 index = 0)
+    {
+        Block block = m_blocks.take(index);
+        m_stream.device()->seek(block.pos);
+
+        *this << T(block.dataWritten);
+    }
+
 private:
     quint16 m_opcode;
 
     QByteArray m_buffer;
     QDataStream m_stream;
+
+    BlockMap m_blocks;
 };
 
 #endif

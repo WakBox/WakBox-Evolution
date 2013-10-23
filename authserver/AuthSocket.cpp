@@ -130,8 +130,6 @@ void AuthSocket::SendLoginResultPacket(QString account, QString password)
     QSqlRecord fields = result.record();
     QString hashPassword = result.value(fields.indexOf("hash_password")).toString();
 
-    qDebug() << hashPassword;
-    qDebug() << Utils::HashPassword(account, password);
     if (Utils::HashPassword(account, password) == hashPassword)
     {
         loginResult = LOGIN_RESULT_SUCCESS;
@@ -145,18 +143,21 @@ void AuthSocket::SendLoginResultPacket(QString account, QString password)
         break;
 
     case LOGIN_RESULT_SUCCESS:
-        data << quint16(50);
-        data << quint8(1);
-        data << quint8(0);
-        data << quint32(6);
-        data << quint8(0);
-        data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
-        data << quint8(0);
-        data << quint64(1000); // Subscribe
-        data << quint32(0); // isAdmin ? 1 : 0
-        data.WriteString(account);
-        data.WriteString("??");
-        data << quint16(00);
+        data.StartBlock<quint16>();
+        {
+            data << quint8(1);
+            data << quint8(0);
+            data << quint32(6);
+            data << quint8(0);
+            data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
+            data << quint8(0);
+            data << quint64(1000); // Subscribe
+            data << quint32(0); // isAdmin ? 1 : 0
+            data.WriteString(account);
+            data.WriteString("??");
+            data << quint16(00);
+        }
+        data.EndBlock<quint16>();
         break;
     default:
         break;
