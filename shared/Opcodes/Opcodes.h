@@ -14,6 +14,7 @@ enum Opcodes
     CMSG_CLIENT_AUTH                            = 1025,
 
     // Server messages (SMSG)
+    SMSG_BAD_CLIENT_VERSION                     = 8,
     SMSG_CLIENT_AUTH_RESULT                     = 1024,
     SMSG_RSA_PUBLIC_KEY                         = 1032
 };

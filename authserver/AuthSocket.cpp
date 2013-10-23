@@ -70,19 +70,25 @@ void AuthSocket::HandlePacket(quint16 opcode, WorldPacket& packet)
     {
         quint8 version, change;
         quint16 revision;
-        QString build;
 
         packet >> version;
         packet >> revision;
         packet >> change;
 
-        build = packet.ReadString();
+        QString clientVersion = QString(QString::number(version) + "." + QString::number(revision) + "." + QString::number(change));
 
-        QString clientVersion = QString(QString::number(version) + "." + QString::number(revision)
-                                        + "." + QString::number(change) + "." + build);
-        qDebug() << clientVersion;
-
-        SendRSAPacket();
+        if (clientVersion != ConfigMgr::Instance()->GetAuthConfig()->GetQString("AcceptClientVersion"))
+        {
+            QStringList version = ConfigMgr::Instance()->GetAuthConfig()->GetQString("AcceptClientVersion").split(".");
+            WorldPacket data(SMSG_BAD_CLIENT_VERSION);
+            data << (quint8)version.at(0).toUShort();
+            data << (quint16)version.at(1).toUShort();
+            data << (quint8)version.at(2).toUShort();
+            data.WriteString("-1");
+            SendPacket(data);
+        }
+        else
+            SendRSAPacket();
     } break;
 
     case CMSG_CLIENT_AUTH:
