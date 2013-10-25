@@ -36,8 +36,13 @@ public:
     // CMSG Handlers
     void HandleClientVersion(WorldPacket& packet);
     void HandleClientAuthentication(WorldPacket& packet);
+    void HandleWorldSelect(WorldPacket& packet);
 
     // SMSG Handlers
+
+    void SendRSAPublicKey();
+    void SendLoginResult();
+    void SendWorldList();
 
 public slots:
     void OnClose();

@@ -51,9 +51,13 @@ public:
         m_stream.writeRawData(s, len);
     }
 
-    void WriteString(QString s)
+    void WriteString(QString s, bool bigString = false)
     {
-        *this << (quint8)s.length();
+        if (bigString)
+            *this << (quint16)s.length();
+        else
+            *this << (quint8)s.length();
+
         WriteRawBytes(s.toLatin1().constData(), (uint)s.length());
     }
 
@@ -106,10 +110,13 @@ public:
     template <class T>
     void EndBlock(quint8 index = 0)
     {
+        if (m_blockPos.count() == 0)
+            return;
+
         qint64 pos = m_blockPos.take(index);
         m_stream.device()->seek(pos);
 
-        *this << T(m_stream.device()->size() - pos);
+        *this << T(m_stream.device()->size() - pos - sizeof(T));
     }
 
 private:

@@ -39,10 +39,11 @@ void WorldSession::ProcessPacket()
 
         if (OpcodeTable::Exists(opcode))
         {
-            opcodeHandler handler = OpcodeTable::Get(opcode).handler;
-            WorldPacket packet(opcode, in.device()->readAll());
+            OpcodeHandler opcodeHandler = OpcodeTable::Get(opcode);
+            Log::Write(LOG_TYPE_DEBUG, "Received packet opcode %s <%u> (size : %u).", opcodeHandler.name.toLatin1().data(), opcode, m_packetSize);
 
-            (this->*handler)(packet);
+            WorldPacket packet(opcode, in.device()->readAll());
+            (this->*opcodeHandler.handler)(packet);
         }
         else
             Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u>.", opcode);

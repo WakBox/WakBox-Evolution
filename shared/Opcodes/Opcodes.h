@@ -12,11 +12,16 @@ enum Opcodes
     CMSG_CLIENT_DISCONNECT                      = 1,
     CMSG_CLIENT_VERSION                         = 7,
     CMSG_CLIENT_AUTH                            = 1025,
+    CMSG_WORLD_SELECT                           = 1201,
 
     // Server messages (SMSG)
     SMSG_BAD_CLIENT_VERSION                     = 8,
     SMSG_CLIENT_AUTH_RESULT                     = 1024,
-    SMSG_RSA_PUBLIC_KEY                         = 1032
+    SMSG_RSA_PUBLIC_KEY                         = 1032,
+    SMSG_WORLD_LIST                             = 1200,
+    SMSG_WORLD_SELECT_RESULT                    = 1202,
+    SMSG_CHAR_LIST                              = 2048,
+    SMSG_SERVER_TIME                            = 2063
 };
 
 struct OpcodeHandler

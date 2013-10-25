@@ -42,6 +42,9 @@ bool WorldServer::Initialize()
 
     OpcodeTable::Load();
 
+    if (!Cryptography::Instance()->Initialize())
+        return false;
+
     if (!World::Instance()->Initialize())
     {
         Log::Write(LOG_TYPE_NORMAL, "World initialization failed. Exiting.");

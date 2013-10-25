@@ -72,31 +72,67 @@ void WorldSession::HandleClientAuthentication(WorldPacket &packet)
 
     data << (quint8)loginResult;
 
-    switch (loginResult)
+    if (loginResult != LOGIN_RESULT_SUCCESS)
     {
-    case LOGIN_RESULT_ACCOUNT_BANNED:
-        break;
-
-    case LOGIN_RESULT_SUCCESS:
-        data.StartBlock<quint16>();
+        if (loginResult == LOGIN_RESULT_ACCOUNT_BANNED)
         {
-            data << quint8(1);
-            data << quint8(0);
-            data << quint32(6);
-            data << quint8(0);
-            data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
-            data << quint8(0);
-            data << quint64(1000); // Subscribe
-            data << quint32(0); // isAdmin ? 1 : 0
-            data.WriteString(account);
-            data.WriteString("??");
-            data << quint16(00);
+            // data << quint32(banDelay);
         }
-        data.EndBlock<quint16>();
-        break;
-    default:
-        break;
+
+        return SendPacket(data);
     }
 
+    data.StartBlock<quint16>();
+    {
+        data << quint8(1);
+        data << quint8(0);
+        data << quint32(6);
+        data << quint8(0);
+        data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
+        data << quint8(0);
+        data << quint64(0); // Subscribe
+        data << quint32(0); // isAdmin ? 1 : 0
+        data.WriteString(account);
+        data.WriteString("??");
+        data << quint16(00);
+    }
+    data.EndBlock<quint16>();
+
+    SendPacket(data);
+
+    // Send World list
+    SendWorldList();
+}
+
+void WorldSession::SendWorldList()
+{
+    WorldPacket data(SMSG_WORLD_LIST);
+    data << quint8(1); // World count
+
+    // La structure doit être fausse
+    data.StartBlock<quint8>();
+    {
+        data << quint8(3);
+        data << quint8(0);
+        data << quint32(16);
+        data << quint8(1);
+        data << quint32(24);
+        data << quint8(2);
+        data << quint32(36);
+
+        data << quint8(0);
+        data << quint32(1606); // World Id
+        data.WriteString("1W");
+
+        data << quint8(1);
+        data.WriteString("Wakboxx"); // Name - 7char, if other change the server status wtf ?
+        data.WriteString("fr"); // Language
+
+        data << quint8(2);
+        data << quint8(1); // Status (0 = offline, 1 = online)
+        data << quint8(0);
+        data << quint8(0); // Population
+    }
+    data.EndBlock<quint8>();
     SendPacket(data);
 }
