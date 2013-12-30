@@ -48,8 +48,8 @@ public:
         return m_queries.value(sqlQueryId);
     }
 
-    QSqlQuery Query(QString sqlQuery, QVariantList args);
-    QSqlQuery Query(quint16 sqlQueryId, QVariantList args);
+    QSqlQuery Query(QString sqlQuery, QVariantList args = QVariantList());
+    QSqlQuery Query(quint16 sqlQueryId, QVariantList args = QVariantList());
 
 protected:
     QueriesMap m_queries;

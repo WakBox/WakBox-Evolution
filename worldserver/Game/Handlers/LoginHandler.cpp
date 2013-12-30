@@ -106,33 +106,57 @@ void WorldSession::HandleClientAuthentication(WorldPacket &packet)
 
 void WorldSession::SendWorldList()
 {
+    QSqlQuery result = Database::Auth()->Query(SELECT_WORLD_ID, QVariantList() << ConfigMgr::Instance()->GetWorldConfig()->GetUShort("WorldId"));
     WorldPacket data(SMSG_WORLD_LIST);
-    data << quint8(1); // World count
 
-    // La structure doit être fausse
-    data.StartBlock<quint8>();
+    QSqlRecord fields = result.record();
+    data << quint8(result.size());
+
+    while (result.next())
     {
-        data << quint8(3);
-        data << quint8(0);
-        data << quint32(16);
-        data << quint8(1);
-        data << quint32(24);
-        data << quint8(2);
-        data << quint32(36);
+        data.StartBlock<quint8>();
+        {
+            quint8 blockCount = 3;
+            data << blockCount;
 
-        data << quint8(0);
-        data << quint32(1606); // World Id
-        data.WriteString("1W");
+            for (quint8 i = 0; i < blockCount; ++i)
+            {
+                data << i;
+                data.StartBlock<quint32>(i + 1);
+            }
 
-        data << quint8(1);
-        data.WriteString("Wakboxx"); // Name - 7char, if other change the server status wtf ?
-        data.WriteString("fr"); // Language
+            // Block 0
+            {
+                data.EndBlockAbsolute<quint32>(1, -6);
+                data << quint8(0);
 
-        data << quint8(2);
-        data << quint8(1); // Status (0 = offline, 1 = online)
-        data << quint8(0);
-        data << quint8(0); // Population
+                data << quint32(result.value(fields.indexOf("world_id")).toUInt());
+                data.WriteString("1W");
+            }
+
+            // Block 1
+            {
+                data.EndBlockAbsolute<quint32>(2, -6);
+                data << quint8(1);
+
+                data.WriteString(result.value(fields.indexOf("name")).toString() + "y");
+                data.WriteString(result.value(fields.indexOf("language")).toString());
+            }
+
+            // Block 2
+            {
+                data.EndBlockAbsolute<quint32>(3, -6);
+                data << quint8(2);
+
+                // 0 = offline, 1 = online
+                data << quint8(result.value(fields.indexOf("status")).toUInt());
+                // 0 = not full, 1 = full
+                data << quint8(0);
+                data << quint8(result.value(fields.indexOf("population")).toUInt());
+            }
+        }
+        data.EndBlock<quint8>();
     }
-    data.EndBlock<quint8>();
+
     SendPacket(data);
 }

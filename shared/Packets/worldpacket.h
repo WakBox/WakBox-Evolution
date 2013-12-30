@@ -108,7 +108,7 @@ public:
     }
 
     template <class T>
-    void EndBlock(quint8 index = 0)
+    void EndBlock(quint8 index = 0, qint8 add = 0)
     {
         if (m_blockPos.count() == 0)
             return;
@@ -116,7 +116,21 @@ public:
         qint64 pos = m_blockPos.take(index);
         m_stream.device()->seek(pos);
 
-        *this << T(m_stream.device()->size() - pos - sizeof(T));
+        *this << T(m_stream.device()->size() - pos - sizeof(T) + add);
+        m_stream.device()->seek(m_stream.device()->size());
+    }
+
+    template <class T>
+    void EndBlockAbsolute(quint8 index = 0, qint8 add = 0)
+    {
+        if (m_blockPos.count() == 0)
+            return;
+
+        qint64 pos = m_blockPos.take(index);
+        m_stream.device()->seek(pos);
+
+        *this << T(m_stream.device()->size() + add);
+        m_stream.device()->seek(m_stream.device()->size());
     }
 
 private:

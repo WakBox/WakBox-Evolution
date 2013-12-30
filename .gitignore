@@ -85,3 +85,11 @@
 /build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/cryptography/wakbox.pub
 /build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/debug/Cryptography.o
 /build-AuthServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/libmysql.dll
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/cryptography/wakbox.ppk
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/cryptography/wakbox.pub
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/debug/Cryptography.o
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/debug/LoginHandler.o
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/debug/WorldHandler.o
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/libmysql.dll
+/build-WorldServer-Desktop_Qt_5_0_2_MinGW_32bit-Debug/worldserver.log
+/worldserver/WorldServer.pro.user.32b334c
