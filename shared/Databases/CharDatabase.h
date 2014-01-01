@@ -17,6 +17,9 @@ enum CharDatabaseQueries
     /**
      * DATABASE_STATEMENT_SUMMARY
      */
+    SELECT_CHARACTERS_BY_ACCOUNT_ID,
+    SELECT_CHARACTER_BY_GUID,
+    DELETE_CHARACTER_BY_GUID
 };
 
 #endif

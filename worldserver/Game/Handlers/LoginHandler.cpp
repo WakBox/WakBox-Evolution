@@ -3,7 +3,7 @@
 #include "Cryptography/Cryptography.h"
 #include "Utils/Util.h"
 
-void WorldSession::HandleClientVersion(WorldPacket &packet)
+void WorldSession::HandleClientVersion(WorldPacket& packet)
 {
     quint8 version, change;
     quint16 revision;
@@ -35,7 +35,7 @@ void WorldSession::HandleClientVersion(WorldPacket &packet)
     }
 }
 
-void WorldSession::HandleClientAuthentication(WorldPacket &packet)
+void WorldSession::HandleClientAuthentication(WorldPacket& packet)
 {
     QByteArray buffer;
     buffer.resize(packet.GetPacket().length());
@@ -49,71 +49,71 @@ void WorldSession::HandleClientAuthentication(WorldPacket &packet)
     QString account = decrypted.ReadString();
     QString password = decrypted.ReadString();
 
-    // Send login result
-
     QSqlQuery result = Database::Auth()->Query(SELECT_ACCOUNT_BY_USERNAME, QVariantList() << account);
-    WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
-    LoginResult loginResult = LOGIN_RESULT_INVALID_LOGIN;
 
     if (!result.first())
     {
-        data << (quint8)loginResult;
-        SendPacket(data);
+        SendLoginErrorResult(LOGIN_RESULT_INVALID_LOGIN);
         return;
     }
 
     QSqlRecord fields = result.record();
     QString hashPassword = result.value(fields.indexOf("hash_password")).toString();
 
-    if (Utils::HashPassword(account, password) == hashPassword)
+    if (Utils::HashPassword(account, password) != hashPassword)
     {
-        loginResult = LOGIN_RESULT_SUCCESS;
+        SendLoginErrorResult(LOGIN_RESULT_INVALID_LOGIN);
+        return;
     }
 
-    data << (quint8)loginResult;
+    m_accountInfos.id = result.value(fields.indexOf("account_id")).toULongLong();
 
-    if (loginResult != LOGIN_RESULT_SUCCESS)
-    {
-        if (loginResult == LOGIN_RESULT_ACCOUNT_BANNED)
-        {
-            // data << quint32(banDelay);
-        }
-
-        return SendPacket(data);
-    }
+    WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
+    data << LOGIN_RESULT_SUCCESS;
 
     data.StartBlock<quint16>();
     {
         data << quint8(1);
-        data << quint8(0);
-        data << quint32(6);
-        data << quint8(0);
-        data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
-        data << quint8(0);
-        data << quint64(0); // Subscribe
-        data << quint32(0); // isAdmin ? 1 : 0
-        data.WriteString(account);
-        data.WriteString("??");
-        data << quint16(00);
+        {
+            data << quint8(0);
+            data << quint32(6);
+            data << quint8(0);
+
+            data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
+            data << quint8(0);
+            data << quint64(0); // Subscribe
+            data << quint32(0); // isAdmin ? 1 : 0
+
+            data.WriteString(account);
+            data.WriteString("??");
+
+            data << quint16(0);
+        }
     }
     data.EndBlock<quint16>();
 
     SendPacket(data);
-
-    // Send World list
     SendWorldList();
+}
+
+void WorldSession::SendLoginErrorResult(LoginResult result)
+{
+    WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
+    data << quint8(result);
+    SendPacket(data);
 }
 
 void WorldSession::SendWorldList()
 {
     QSqlQuery result = Database::Auth()->Query(SELECT_WORLD_ID, QVariantList() << ConfigMgr::Instance()->GetWorldConfig()->GetUShort("WorldId"));
-    WorldPacket data(SMSG_WORLD_LIST);
 
-    QSqlRecord fields = result.record();
+    WorldPacket data(SMSG_WORLD_LIST);
     data << quint8(result.size());
 
-    while (result.next())
+    if (result.first())
     {
+        QSqlRecord fields = result.record();
+
         data.StartBlock<quint8>();
         {
             quint8 blockCount = 3;
@@ -139,7 +139,7 @@ void WorldSession::SendWorldList()
                 data.EndBlockAbsolute<quint32>(2, -6);
                 data << quint8(1);
 
-                data.WriteString(result.value(fields.indexOf("name")).toString() + "y");
+                data.WriteString(result.value(fields.indexOf("name")).toString());
                 data.WriteString(result.value(fields.indexOf("language")).toString());
             }
 
