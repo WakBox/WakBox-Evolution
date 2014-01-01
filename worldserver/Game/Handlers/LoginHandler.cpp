@@ -69,7 +69,7 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
     m_accountInfos.id = result.value(fields.indexOf("account_id")).toULongLong();
 
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
-    data << LOGIN_RESULT_SUCCESS;
+    data << quint8(LOGIN_RESULT_SUCCESS);
 
     data.StartBlock<quint16>();
     {
