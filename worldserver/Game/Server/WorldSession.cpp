@@ -6,12 +6,22 @@
 
 WorldSession::WorldSession(QTcpSocket *socket) : SocketHandler(socket)
 {
+    m_accountInfos.id = 0;
+    m_accountInfos.username = QString();
+    m_accountInfos.pseudo = QString();
+    m_accountInfos.gmLevel = 0;
+    m_accountInfos.subscriptionTime = 0;
+    m_accountInfos.charactersCount = 0;
+
+    SetCharacter(NULL);
+
     connect(m_socket, SIGNAL(disconnected()), this, SLOT(OnClose()));
     Log::Write(LOG_TYPE_NORMAL, "New incoming connection from %s", m_socket->peerAddress().toString().toLatin1().data());
 }
 
 WorldSession::~WorldSession()
 {
+    delete m_character;
 }
 
 void WorldSession::ProcessPacket()

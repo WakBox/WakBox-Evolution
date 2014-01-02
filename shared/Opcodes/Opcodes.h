@@ -13,6 +13,7 @@ enum Opcodes
     CMSG_CLIENT_VERSION                         = 7,
     CMSG_CLIENT_AUTH                            = 1025,
     CMSG_WORLD_SELECT                           = 1201,
+    CMSG_CHAR_SELECT                            = 2049,
     CMSG_CHAR_CREATE                            = 2053,
     CMSG_LEAVE_CHAR_SELECT                      = 2055,
     CMSG_CHAR_DELETE                            = 2073,
@@ -24,10 +25,13 @@ enum Opcodes
     SMSG_WORLD_LIST                             = 1200,
     SMSG_WORLD_SELECT_RESULT                    = 1202,
     SMSG_CHAR_LIST                              = 2048,
+    SMSG_CHAR_SELECT                            = 2050,
     SMSG_CHAR_DELETE                            = 2052,
+    SMSG_CHAR_CREATE                            = 2054,
     SMSG_LEAVE_CHAR_SELECT                      = 2056,
     SMSG_SERVER_TIME                            = 2063,
-    SMSG_CHAR_DELETE_CONFIRM                    = 2076
+    SMSG_CHAR_DELETE_CONFIRM                    = 2076,
+    SMSG_ENTER_WORLD                            = 20002
 };
 
 struct OpcodeHandler

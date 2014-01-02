@@ -67,6 +67,10 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
     }
 
     m_accountInfos.id = result.value(fields.indexOf("account_id")).toULongLong();
+    m_accountInfos.username = result.value(fields.indexOf("username")).toString();
+    m_accountInfos.pseudo = result.value(fields.indexOf("pseudo")).toString();
+    m_accountInfos.gmLevel = (quint8)result.value(fields.indexOf("username")).toUInt();
+    m_accountInfos.subscriptionTime = result.value(fields.indexOf("subscription_time")).toUInt();
 
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
     data << quint8(LOGIN_RESULT_SUCCESS);
@@ -81,8 +85,8 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
 
             data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
             data << quint8(0);
-            data << quint64(0); // Subscribe
-            data << quint32(0); // isAdmin ? 1 : 0
+            data << quint64(m_accountInfos.subscriptionTime);
+            data << quint32((m_accountInfos.gmLevel >= 3) ? 1 : 0);
 
             data.WriteString(account);
             data.WriteString("??");

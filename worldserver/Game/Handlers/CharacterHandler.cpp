@@ -1,4 +1,5 @@
 #include "Server/WorldSession.h"
+#include "Entities/ObjectMgr.h"
 
 void WorldSession::SendCharactersList()
 {
@@ -63,7 +64,7 @@ void WorldSession::SendCharactersList()
             data << quint8(0); //no creation data
 
             // XP
-            data << quint64(46);//quint64(result.value(fields.indexOf("xp")).toULongLong());
+            data << quint64(result.value(fields.indexOf("xp")).toULongLong());
             data << quint16(0); // Free points
 
             data << quint16(0);
@@ -123,6 +124,13 @@ void WorldSession::HandleCharDelete(WorldPacket& packet)
     }
 
     SendSecretAnswerRequest();
+
+    // - this is TMP
+    WorldPacket data(SMSG_CHAR_DELETE_CONFIRM);
+    data << success;
+    SendPacket(data);
+
+    SendCharDeleteResult(guid, success);
 }
 
 void WorldSession::SendCharDeleteResult(quint64 guid, quint8 success)
@@ -153,5 +161,106 @@ void WorldSession::HandleSecretAnswerResponse(WorldPacket& packet)
 
 void WorldSession::HandleCharCreate(WorldPacket& packet)
 {
+    quint64 unk;
+    quint8 gender, skinColor, hairColor, pupilColor;
+    quint8 skinColorFactor, hairColorFactor, cloth, face;
+    quint16 breed;
+    QString name;
 
+    packet >> unk;
+
+    packet >> gender >> skinColor >> hairColor >> pupilColor;
+    packet >> skinColorFactor >> hairColorFactor >> cloth >> face;
+
+    packet >> breed;
+
+    name = packet.ReadString();
+
+    WorldPacket data(SMSG_CHAR_CREATE);
+    QSqlQuery result = Database::Char()->Query(SELECT_CHARACTER_BY_NAME, QVariantList() << name);
+
+    if (!result.first())
+    {
+        // TODO
+        // Check max char by account
+
+        sCharacterCreateInfos charCreateInfos(name, breed, gender, skinColor, hairColor, pupilColor,
+                                              skinColorFactor, hairColorFactor, cloth, face);
+
+        QScopedPointer<Character> newChar(new Character(this));
+
+        if(newChar->Create(ObjectMgr::Instance()->GenerateGuid(GUIDTYPE_CHARACTER), charCreateInfos))
+        {
+            newChar->SaveToDB(true);
+
+            data << quint8(0);
+            SendPacket(data);
+
+            SendSelectCharacterResult(true);
+            SendCharactersList();
+            return;
+        }
+    }
+
+    data << quint8(10);
+    SendPacket(data);
+}
+
+void WorldSession::HandleCharSelect(WorldPacket& packet)
+{
+    quint64 guid;
+    packet >> guid;
+
+    // Check if characters isn't already loaded or in loading.
+    /*
+    if (PlayerLoading() || GetPlayer() != NULL)
+    {
+        TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "Player tries to login again, AccountId = %d", GetAccountId());
+        return;
+    }
+
+    m_playerLoading = true;
+    */
+
+    // Is this character owned by this account ?
+
+    Character* character = new Character(this);
+    if (!character->LoadFromDB(guid))
+    {
+        delete character;
+        // m_playerLoading = false;
+        return;
+    }
+
+    SendSelectCharacterResult(true);
+    SendEnterWorld(character);
+
+}
+
+void WorldSession::SendSelectCharacterResult(bool result)
+{
+    WorldPacket data(SMSG_CHAR_SELECT);
+    data << quint8((result) ? 0 : 1);
+    SendPacket(data);
+}
+
+void WorldSession::SendEnterWorld(Character* character)
+{
+    WorldPacket data(SMSG_ENTER_WORLD);
+    data << quint64(character->GetGuid());
+    data.StartBlock<quint16>();
+    {
+        data << quint8(15);
+        data << quint32(0); // Nation Id
+        data << quint64(0); // Ranks
+        data << quint64(0); // Jobs
+        data << quint64(0); // Votedate
+        data << quint8(0); // Government Opionion
+        data << quint8(0); // IsCandidate (bool)
+
+        data << quint16(0); // Guild info
+    }
+    data.EndBlock<quint16>();
+
+    SendPacket(data);
 }

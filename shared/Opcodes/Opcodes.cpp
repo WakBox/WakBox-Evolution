@@ -13,6 +13,7 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(CMSG_CLIENT_VERSION,                         &WorldSession::HandleClientVersion);
     ADD_OPCODE_HANDLER(CMSG_CLIENT_AUTH,                            &WorldSession::HandleClientAuthentication);
     ADD_OPCODE_HANDLER(CMSG_WORLD_SELECT,                           &WorldSession::HandleWorldSelect);
+    ADD_OPCODE_HANDLER(CMSG_CHAR_SELECT,                            &WorldSession::HandleCharSelect);
     ADD_OPCODE_HANDLER(CMSG_LEAVE_CHAR_SELECT,                      &WorldSession::HandleLeaveCharSelect);
     ADD_OPCODE_HANDLER(CMSG_CHAR_CREATE,                            &WorldSession::HandleCharCreate);
     ADD_OPCODE_HANDLER(CMSG_CHAR_DELETE,                            &WorldSession::HandleCharDelete);
@@ -23,10 +24,12 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(SMSG_WORLD_LIST,                             &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_WORLD_SELECT_RESULT,                    &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CHAR_LIST,                              &WorldSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_CHAR_DELETE_CONFIRM,                    &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CHAR_SELECT,                            &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CHAR_DELETE,                            &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CHAR_CREATE,                            &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_LEAVE_CHAR_SELECT,                      &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SERVER_TIME,                            &WorldSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_CHAR_DELETE,                            &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CHAR_DELETE_CONFIRM,                    &WorldSession::HandleServerSide);
 
 #undef ADD_OPCODE_HANDLER
 }

@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Game/Entities/ObjectMgr.h"
 
 template<> World*  Singleton<World>::m_instance = 0;
 
@@ -24,6 +25,7 @@ World::~World()
 
 bool World::Initialize()
 {
+    ObjectMgr::Instance()->SetHighestGuids();
     return true;
 }
 

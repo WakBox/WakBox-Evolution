@@ -8,6 +8,7 @@
 #include "Databases/Database.h"
 #include "Define.h"
 #include "Network/SocketHandler.h"
+#include "Entities/Character/Character.h"
 #include "World/world.h"
 
 enum LoginResult
@@ -33,7 +34,10 @@ struct sAccountInfos
     QString pseudo;
     quint8 gmLevel;
     qint64 subscriptionTime;
+    quint8 charactersCount;
 };
+
+class Character;
 
 class WorldSession : public SocketHandler
 {
@@ -43,6 +47,9 @@ public:
     ~WorldSession();
 
     sAccountInfos GetAccountInfos() { return m_accountInfos; }
+
+    void SetCharacter(Character* character) { m_character = character; }
+    Character* GetCharacter() const { return m_character; }
 
     virtual void ProcessPacket();
 
@@ -54,6 +61,7 @@ public:
     void HandleClientVersion(WorldPacket& packet);
     void HandleClientAuthentication(WorldPacket& packet);
     void HandleWorldSelect(WorldPacket& packet);
+    void HandleCharSelect(WorldPacket& packet);
     void HandleLeaveCharSelect(WorldPacket& /*packet*/);
     void HandleCharCreate(WorldPacket& packet);
     void HandleCharDelete(WorldPacket& packet);
@@ -68,12 +76,15 @@ public:
     void SendCharactersList();
     void SendCharDeleteResult(quint64 guid, quint8 success);
     void SendSecretAnswerRequest();
+    void SendSelectCharacterResult(bool result);
+    void SendEnterWorld(Character* character);
 
 public slots:
     void OnClose();
 
 private:
     sAccountInfos m_accountInfos;
+    Character* m_character;
 };
 
 #endif // WORLDSESSION_H
