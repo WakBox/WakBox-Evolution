@@ -9,7 +9,7 @@
 #include "Define.h"
 #include "Network/SocketHandler.h"
 #include "Entities/Character/Character.h"
-#include "World/world.h"
+#include "World/World.h"
 
 enum LoginResult
 {
@@ -58,26 +58,40 @@ public:
     void HandleServerSide(WorldPacket& /*packet*/) {}
 
     // CMSG Handlers
+    void HandleClientDisconnect(WorldPacket& /*packet*/);
     void HandleClientVersion(WorldPacket& packet);
     void HandleClientAuthentication(WorldPacket& packet);
+    void HandlePingCommand(WorldPacket& packet);
+    void HandleInteractiveElement(WorldPacket& packet);
+    void HandleGroupInvite(WorldPacket& packet);
     void HandleWorldSelect(WorldPacket& packet);
     void HandleCharSelect(WorldPacket& packet);
     void HandleLeaveCharSelect(WorldPacket& /*packet*/);
+    void HandleWhoisCommand(WorldPacket& packet);
     void HandleCharCreate(WorldPacket& packet);
     void HandleCharDelete(WorldPacket& packet);
-    void HandleSecretAnswerResponse(WorldPacket& packet);
+    void HandleChatMessage(WorldPacket& packet);
+    void HandlePrivateMessage(WorldPacket& packet);
+    void HandleTradeMessage(WorldPacket& packet);
+    void HandleRecruitMessage(WorldPacket& packet);
+    void HandleCharMovement(WorldPacket& packet);
+    void HandleCharDirection(WorldPacket& packet);
+    void HandleCharEmote(WorldPacket& packet);
+    void HandleSwitchChar(WorldPacket& /*packet*/);
+    void HandleClientLanguage(WorldPacket& packet);
+    void HandleServerTimeCommand(WorldPacket& /*packet*/);
 
     // SMSG Handlers
-
     void SendRSAPublicKey();
     void SendLoginErrorResult(LoginResult result);
     void SendWorldList();
     void SendServerTime();
     void SendCharactersList();
-    void SendCharDeleteResult(quint64 guid, quint8 success);
-    void SendSecretAnswerRequest();
     void SendSelectCharacterResult(bool result);
-    void SendEnterWorld(Character* character);
+    void SendEnterWorld();
+    void SendCharacterStatsEnterWorld();
+    void SendCharacterPosition();
+    void SendUpdateObject();
 
 public slots:
     void OnClose();

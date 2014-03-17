@@ -4,7 +4,7 @@
 #include <QtCore>
 #include <iostream>
 #include "Log.h"
-#include "Configuration/Configmgr.h"
+#include "Configuration/ConfigMgr.h"
 #include "Utils/Singleton.h"
 
 using namespace std;

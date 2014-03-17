@@ -1,4 +1,4 @@
-#include "worldserver.h"
+#include "WorldServer.h"
 #include "Game/World/World.h"
 #include "Cryptography/Cryptography.h"
 

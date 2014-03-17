@@ -1,8 +1,8 @@
 #include <QCoreApplication>
 #include <csignal>
 
-#include "logs/log.h"
-#include "game/chat/commandline.h"
+#include "Logs/Log.h"
+#include "Game/Chat/CommandLine.h"
 
 void stop(int /*s*/)
 {
@@ -22,6 +22,16 @@ int main(int argc, char *argv[])
 
     QTime t;
     t.start();
+
+    Log::Write(LOG_TYPE_NORMAL, "WW      WW         kk     BBBBB                 ");
+    Log::Write(LOG_TYPE_NORMAL, "WW      WW   aa aa kk  kk BB   B   oooo  xx  xx ");
+    Log::Write(LOG_TYPE_NORMAL, "WW   W  WW  aa aaa kkkkk  BBBBBB  oo  oo   xx   ");
+    Log::Write(LOG_TYPE_NORMAL, " WW WWW WW aa  aaa kk kk  BB   BB oo  oo   xx   ");
+    Log::Write(LOG_TYPE_NORMAL, "  WW   WW   aaa aa kk  kk BBBBBB   oooo  xx  xx ");
+    Log::Write(LOG_TYPE_NORMAL, "");
+    Log::Write(LOG_TYPE_NORMAL, "Wakfu sandbox developped by Sgt Fatality.");
+    Log::Write(LOG_TYPE_NORMAL, "Special thanks to : Velocity, scalexm, nightwolf93, Smarken, Crystal.");
+    Log::Write(LOG_TYPE_NORMAL, "");
 
     if (!WorldServer::Instance()->Initialize())
         return close();

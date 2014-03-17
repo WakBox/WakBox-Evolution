@@ -1,5 +1,7 @@
 #include "Server/WorldSession.h"
 #include "Entities/ObjectMgr.h"
+#include "Miscellaneous/SharedDefines.h"
+#include "Utils/Util.h"
 
 void WorldSession::SendCharactersList()
 {
@@ -12,6 +14,7 @@ void WorldSession::SendCharactersList()
     {
         QSqlRecord fields = result.record();
 
+        // Must check packet struct
         data.StartBlock<quint16>();
         {
             // Block type
@@ -35,58 +38,20 @@ void WorldSession::SendCharactersList()
             data << qint16(result.value(fields.indexOf("title")).toUInt());
 
             //Stuff
-            data << quint16(0); // Size
-            /*{
-                buffer.writeShort(22); //position
-                buffer.writeLong(28243842327118258L); //uid
-                buffer.writeInt(12237); //refid
-                buffer.writeShort(1); //amt
-                buffer.writeByte(0); //hasTimestamp
-                buffer.writeByte(1); { //haspet
-                    buffer.writeInt(5); //defId
-                    buffer.writeBigString("");
-                    buffer.writeInt(14152);
-                    buffer.writeInt(0); //equippedRefItemId
-                    buffer.writeInt(20); //hp
-                    buffer.writeInt(10); //xp
-                    buffer.writeByte(5); //fightCounter
-                    buffer.writeLong(1351188368000L);
-                    buffer.writeLong(1351188368000L);
-                    buffer.writeLong(1351188368000L);
-                    buffer.writeInt(0); //sleeprefitemid
-                    buffer.writeLong(0); //sleepdate
-                }
-                buffer.writeByte(0); //hasxp
-                buffer.writeByte(0); //hasgems
-            }
-            */
+            data << quint8(0); // Size
 
-            data << quint8(0); //no creation data
+            data << quint8(1); // creation data
+            {
+                data << quint8(0); // isNewChar
+                data << quint8(0); // needsRecustom
+            }
 
             // XP
+            data << quint16(0); // unk (freepoints ??)
             data << quint64(result.value(fields.indexOf("xp")).toULongLong());
-            data << quint16(0); // Free points
 
-            data << quint16(0);
-            /*int[] points = new int[] {40, 37, 39, 36, 41, 38};
-            buffer.writeShort(6);
-            for (int i=0; i<points.length; i++) {
-                buffer.writeByte(points[i]);
-                buffer.writeShort(0);
-            }
-            */
-
-            data << quint16(0);
-            /*buffer.writeShort(6); //characteristicBonusPointCount
-            for (int i=0; i<points.length; i++) {
-                buffer.writeByte(points[i]);
-                buffer.writeShort(0);
-            }
-            */
-
-            data << quint32(0); // Gauge
-
-            data << quint32(1); //Nation
+            // Nation
+            data << quint32(0);
         }
         data.EndBlock<quint16>();
     }
@@ -117,46 +82,10 @@ void WorldSession::HandleCharDelete(WorldPacket& packet)
         }
     }
 
-    if (!success)
-    {
-        SendCharDeleteResult(guid, success);
-        return;
-    }
-
-    SendSecretAnswerRequest();
-
-    // - this is TMP
-    WorldPacket data(SMSG_CHAR_DELETE_CONFIRM);
-    data << success;
-    SendPacket(data);
-
-    SendCharDeleteResult(guid, success);
-}
-
-void WorldSession::SendCharDeleteResult(quint64 guid, quint8 success)
-{
     WorldPacket data(SMSG_CHAR_DELETE);
     data << guid;
     data << success;
     SendPacket(data);
-}
-
-void WorldSession::SendSecretAnswerRequest()
-{
-    // TODO
-}
-
-void WorldSession::HandleSecretAnswerResponse(WorldPacket& packet)
-{
-    //Database::Char()->Query(DELETE_CHARACTER, QVariantList() << GetAccountInfos().id << guid);
-
-    /* Si tout est OK
-    WorldPacket data(SMSG_CHAR_DELETE_CONFIRM);
-    data << success;
-    SendPacket(data);
-
-    SendCharDeleteResult(guid, success);
-    */
 }
 
 void WorldSession::HandleCharCreate(WorldPacket& packet)
@@ -191,13 +120,19 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
 
         if(newChar->Create(ObjectMgr::Instance()->GenerateGuid(GUIDTYPE_CHARACTER), charCreateInfos))
         {
+            if (breed = CHARACTER_BREED_TUTORIAL)
+            {
+                newChar->SetPosition(0, 0, 0);
+                newChar->SetDirection(7);
+                newChar->SetInstanceId(621);
+            }
+
             newChar->SaveToDB(true);
 
             data << quint8(0);
             SendPacket(data);
 
             SendSelectCharacterResult(true);
-            SendCharactersList();
             return;
         }
     }
@@ -233,8 +168,35 @@ void WorldSession::HandleCharSelect(WorldPacket& packet)
     }
 
     SendSelectCharacterResult(true);
-    SendEnterWorld(character);
 
+    SendCharacterStatsEnterWorld();
+    SendCharacterPosition();
+
+    WorldPacket data(SMSG_SEND_CHAR_POSITION);
+    data << character->GetPositionX();
+    data << character->GetPositionY();
+    SendPacket(data);
+
+    SendUpdateObject();
+
+    // Tmp test
+    WorldPacket data2(SMSG_INTERACTIVE_ELEMENTS);
+    data2 << quint16(1);
+    data2 << quint64(20114);
+    data2 << quint16(18);
+    data2 << quint8(1);
+    data2 << quint8(2);
+    data2 << quint32(6);
+    data2 << quint8(1);
+    data2 << quint16(1);
+    data2 << quint8(1);
+    data2 << quint8(1);
+    data2 << quint8(1);
+    data2 << quint8(1);
+    data2 << quint32(1);
+    SendPacket(data2);
+
+    SendEnterWorld();
 }
 
 void WorldSession::SendSelectCharacterResult(bool result)
@@ -244,23 +206,238 @@ void WorldSession::SendSelectCharacterResult(bool result)
     SendPacket(data);
 }
 
-void WorldSession::SendEnterWorld(Character* character)
+void WorldSession::SendCharacterStatsEnterWorld()
 {
-    WorldPacket data(SMSG_ENTER_WORLD);
-    data << quint64(character->GetGuid());
+    Character* character = GetCharacter();
+    if (!character)
+        return;
+
+    WorldPacket data(SMSG_CHARACTER_STATS_ENTER_WORLD);
+
+    // *** Reserved Character Unique ID
+        data << quint16(20);
+        for (quint8 i = 0; i < 20; ++i)
+            data << quint64(27973262776467742 + i);
+    // ********************************
+
+    data.StartBlock<quint32>();
+    {
+        data << quint8(6); // Char part Id => ?
+        data << character->GetGuid();
+        data << quint8(0); // idType => ?
+        data << GetAccountInfos().id;
+        data.WriteString(character->GetName(), true);
+        data << character->GetBreed();
+        data << character->GetHealth();
+
+        // *** Position, map
+            data << character->GetPositionX();
+            data << character->GetPositionY();
+            data << character->GetPositionZ();
+            data << character->GetInstanceId();
+            data << character->GetDirection();
+        // *****************
+
+        // *** Skin
+            data << character->GetGender();
+            data << character->GetSkinColor();
+            data << character->GetHairColor();
+            data << character->GetPupilColor();
+            data << character->GetSkinColorFactor();
+            data << character->GetHairColorFactor();
+            data << character->GetClothIndex();
+            data << character->GetFaceIndex();
+        // ********
+
+        // *** Titles
+            data << qint16(-1); // Titles
+        // **********
+
+        // *** Inventory
+            data << quint16(0); // Inventory size
+        // *************
+
+        // *** Emote Id
+            data << quint16(1); // Size
+            data << quint32(20015); // EmoteId
+        // ************
+
+        // *** Landmark
+            data << quint16(1); // Size
+            data << quint8(30); // LandmarkId
+        // ************
+
+        data << quint16(0); // ZaapsCount
+        data << quint16(0); // dragosCount
+        data << quint16(0); // boatscount
+        data << quint16(0); // cannonCount
+        data << quint16(0); // phoenixCount
+        data << qint32(-1); // selectedPhoenix
+
+        // *** Spell Inventory
+        data << quint16(0); // spellInventoryVersion
+        data << quint32(0); // lockedSpellId
+        data << quint16(0); // Spell size
+        // *******************
+
+        // *** Equipment Inventory
+        data << quint16(0); // Count
+        data << quint16(0); // questInvCount
+        data << quint16(0); // tempInvCount
+        // ***********************
+
+        // *** Bags
+            data << quint16(0); // Bags count
+        // ********
+
+        // *** BreedSpecific
+            data << quint8(0); // hasOsaSpecific
+        // *****************
+
+        // *** SkillInventory
+            data << quint16(0); // SkillInventory size
+        // ******************
+
+        // *** Craft
+        data << quint16(0); // Craft count
+        // *********
+
+
+        // *** AptitudeInventory
+        data << quint16(0); // Count
+        // *********************
+
+        // *** AptitudeInventory2
+        data << quint16(0); // Count
+        // *********************
+
+        data << quint16(21); // Unk
+        data << quint8(0); // hasInFightData
+        data << quint8(0); // hasOutFightData
+
+        // *** DimensionalBagLocalClient
+        data << character->GetGuid();
+        data.WriteString(character->GetName(), true);
+        data << character->GetGuildId();
+        data << quint8(0); // Rooms count
+
+        data << quint32(408); // CustomViewModelId
+        data << quint8(0); // HasWallet
+        data << quint8(0); // dimensionalBagLocked
+
+        data << quint16(0); // groupeEntriesSize
+        data << quint16(0); // IndividualEntriesSize
+        // *****************************
+
+        // *** Challenges
+        data << quint8(0); // hasCurrentScenario
+        data << quint8(0); // HasCurrentChallengeInfo
+        data << quint16(0); // pastScnerioSize
+        // **************
+
+        // *** XP
+        data << character->GetXP();
+        data << character->GetXPFreePoints();
+        data << quint16(0); // xpBonusPoints size
+        data << quint16(0); // m_characteristicBonusPoints size
+        data << character->GetXPGauge();
+        // ******
+
+        // *** Titles
+        data << quint16(0); // availableTitlesCount
+        // **********
+
+        // *** CitizenPoint
+        data << quint16(0); // nationCitizenScoresSize
+        data << quint16(0); // offendedNationsSize
+        // **********
+
+        // *** PassportInfo
+        data << quint8(0); // isPassportActive
+        // ****************
+
+        // *** SocialStates
+        data << quint8(0); // afkState
+        data << quint8(0); // dndstate
+        // ****************
+
+        // *** Pet
+        data << quint8(0); // HasPet
+        // *******
+
+        // *** AchievementsData
+        data << quint16(0); // Size
+        // ********************
+
+        // *** LockToClient
+        data << quint16(0); // Lock size ?
+        // ****************
+
+        // *** Unknown
+        for (quint16 j = 0; j < 302; ++j)
+            data << quint8(0);
+
+        // *** AccountInformation
+        data << quint32(0); // AdminRights
+        data << quint32(1); // AccountFlags
+        // **********************
+
+        // *** DimensionalBagViewsInventory
+        data << quint16(0); // Size
+        // ********************************
+
+        // *** Unk
+        data << quint16(0); // Size
+        data << quint8(0);
+        data << quint8(0);
+        data << quint8(0);
+        data << quint8(0);
+        data << quint8(0);
+        // *******
+    }
+    data.EndBlock<quint32>();
+
+    SendPacket(data);
+}
+
+void WorldSession::SendCharacterPosition()
+{
+    Character* character = GetCharacter();
+    if (!character)
+        return;
+
+    WorldPacket data(SMSG_SEND_CHARACTER_POSITION);
+
     data.StartBlock<quint16>();
     {
-        data << quint8(15);
-        data << quint32(0); // Nation Id
-        data << quint64(0); // Ranks
-        data << quint64(0); // Jobs
-        data << quint64(0); // Votedate
-        data << quint8(0); // Government Opionion
-        data << quint8(0); // IsCandidate (bool)
+        data << quint8(22); // Unk
+        data << character->GetGuid();
+        data << quint8(0); // idType
+        data << GetAccountInfos().id;
 
-        data << quint16(0); // Guild info
+        data << character->GetPositionX();
+        data << character->GetPositionY();
+        data << character->GetPositionZ();
+        data << character->GetInstanceId();
+        data << character->GetDirection();
+    }
+    data.EndBlock<quint16>();
+
+    data.StartBlock<quint16>();
+    {
+        data << quint16(0); // Protectors size
+        // TODO : bnY.java
+
+        data << quint16(0); // Size of something else ?
+        data << quint16(0);
     }
     data.EndBlock<quint16>();
 
     SendPacket(data);
+}
+
+void WorldSession::HandleSwitchChar(WorldPacket& /*packet*/)
+{
+    // Save perso, delete pointer, etc...
+    SendCharactersList();
 }

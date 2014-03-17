@@ -21,6 +21,7 @@ WorldSession::WorldSession(QTcpSocket *socket) : SocketHandler(socket)
 
 WorldSession::~WorldSession()
 {
+    qDebug() << "delete m_character";
     delete m_character;
 }
 
@@ -43,20 +44,22 @@ void WorldSession::ProcessPacket()
 
         qint8 unk;
         quint16 opcode;
+        QByteArray data;
 
         in >> unk;
         in >> opcode;
+        data = in.device()->readAll();
 
         if (OpcodeTable::Exists(opcode))
         {
             OpcodeHandler opcodeHandler = OpcodeTable::Get(opcode);
             Log::Write(LOG_TYPE_DEBUG, "Received packet opcode %s <%u> (size : %u).", opcodeHandler.name.toLatin1().data(), opcode, m_packetSize);
 
-            WorldPacket packet(opcode, in.device()->readAll());
+            WorldPacket packet(opcode, data);
             (this->*opcodeHandler.handler)(packet);
         }
         else
-            Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u>.", opcode);
+            Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u> (size : %u).", opcode, m_packetSize);
 
         m_packetSize = 0;
     }
@@ -64,6 +67,13 @@ void WorldSession::ProcessPacket()
 
 void WorldSession::OnClose()
 {
+    Character* character = GetCharacter();
+    if (character)
+    {
+        character->SaveToDB();
+        qDebug() << "Character " << character->GetName() << " saved to DB.";
+    }
+
     World::Instance()->RemoveSession(this);
     SocketHandler::OnClose();
 }

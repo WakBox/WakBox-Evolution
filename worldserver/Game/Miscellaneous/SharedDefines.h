@@ -18,7 +18,17 @@ enum CharacterBreed
     CHARACTER_BREED_PANDAWA         = 12,
     CHARACTER_BREED_ROGUE           = 13,
     CHARACTER_BREED_MASQUERAIDER    = 14,
-    CHARACTER_BREED_FOGGERNAUT      = 16
+    CHARACTER_BREED_FOGGERNAUT      = 16,
+    CHARACTER_BREED_TUTORIAL        = 17
+};
+
+enum Nations
+{
+    NATION_NONE                     = 0,
+    NATION_AMAKNA                   = 30,
+    NATION_BONTA                    = 31,
+    NATION_BRAKMAR                  = 32,
+    NATION_SUFOKIA                  = 33
 };
 
 #endif

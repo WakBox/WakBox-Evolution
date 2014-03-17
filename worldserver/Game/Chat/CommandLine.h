@@ -49,7 +49,7 @@ public:
             }
             else if (feof(stdin))
             {
-                // Close WorldServer, etc.
+                // Close WorldServer, etc. ?????
                 qDebug() << "test";
             }
         }

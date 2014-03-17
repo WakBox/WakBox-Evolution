@@ -72,6 +72,11 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
     m_accountInfos.gmLevel = (quint8)result.value(fields.indexOf("username")).toUInt();
     m_accountInfos.subscriptionTime = result.value(fields.indexOf("subscription_time")).toUInt();
 
+    // Send opcode 2 (connection retry ticket)
+    WorldPacket data2(SMSG_CONNECTION_RETRY_TICKET);
+    SendPacket(data2);
+
+
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
     data << quint8(LOGIN_RESULT_SUCCESS);
 
@@ -84,14 +89,21 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
             data << quint8(0);
 
             data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
-            data << quint8(0);
+            data << quint32(1); // m_subscriptionLevel
             data << quint64(m_accountInfos.subscriptionTime);
-            data << quint32((m_accountInfos.gmLevel >= 3) ? 1 : 0);
 
-            data.WriteString(account);
-            data.WriteString("??");
+            data << quint32(0); // m_accountExpirationDate
 
-            data << quint16(0);
+            //data << quint32((m_accountInfos.gmLevel >= 3) ? 1 : 0);
+            // Admin rights ?
+            for (quint8 i = 0; i < 72; ++i)
+                data << quint32(8);
+
+            data.WriteString(m_accountInfos.pseudo);
+
+            data << quint32(0); // Unk
+            data << quint8(0); // Unk
+            data << quint8(0); // Unk
         }
     }
     data.EndBlock<quint16>();
@@ -163,4 +175,14 @@ void WorldSession::SendWorldList()
     }
 
     SendPacket(data);
+}
+
+void WorldSession::HandleClientDisconnect(WorldPacket& /*packet*/)
+{
+    Character* character = GetCharacter();
+    if (!character)
+        return;
+
+    //qDebug() << "Character " << character->GetName() << " saved to DB";
+    //character->SaveToDB();
 }

@@ -23,7 +23,7 @@ public:
     TypeId GetTypeId() { return m_typeId; }
 
     void SetGuid(quint64 guid) { m_guid = guid; }
-    quint32 GetGuid() const { return m_guid; }
+    quint64 GetGuid() const { return m_guid; }
 
     Character* ToCharacter() { if (GetTypeId() == TYPEID_CHARACTER) return reinterpret_cast<Character*>(this); else return NULL; }
 
