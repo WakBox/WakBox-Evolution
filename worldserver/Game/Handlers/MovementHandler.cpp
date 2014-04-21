@@ -9,7 +9,7 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     packet >> fromX >> fromY >> fromZ >> stepsCount;
     quint8 steps[stepsCount];
 
-    qDebug() << "Movement packet | fromX : " << fromX << " fromY : " << fromY << " fromZ : " << fromZ << " StepsCount : " << stepsCount << " Steps :";
+    //qDebug() << "Movement packet | fromX : " << fromX << " fromY : " << fromY << " fromZ : " << fromZ << " StepsCount : " << stepsCount << " Steps :";
 
     for (quint8 i = 0; i < stepsCount; ++i)
     {
@@ -62,7 +62,7 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
         }
     }
 
-    qDebug () << "New position : " << fromX << " - " << fromY;
+    //qDebug () << "New position : " << fromX << " - " << fromY;
 
     character->SetPosition(fromX, fromY, fromZ);
     character->SetDirection(steps[stepsCount - 1]);

@@ -64,7 +64,6 @@ public:
     void HandlePingCommand(WorldPacket& packet);
     void HandleInteractiveElement(WorldPacket& packet);
     void HandleGroupInvite(WorldPacket& packet);
-    void HandleWorldSelect(WorldPacket& packet);
     void HandleCharSelect(WorldPacket& packet);
     void HandleLeaveCharSelect(WorldPacket& /*packet*/);
     void HandleWhoisCommand(WorldPacket& packet);
@@ -84,7 +83,7 @@ public:
     // SMSG Handlers
     void SendRSAPublicKey();
     void SendLoginErrorResult(LoginResult result);
-    void SendWorldList();
+    void SendWorldSelectResult();
     void SendServerTime();
     void SendCharactersList();
     void SendSelectCharacterResult(bool result);

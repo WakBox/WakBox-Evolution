@@ -37,8 +37,11 @@ void WorldSession::HandleClientVersion(WorldPacket& packet)
 
 void WorldSession::HandleClientAuthentication(WorldPacket& packet)
 {
+    quint32 bufferSize;
+    packet >> bufferSize;
+
     QByteArray buffer;
-    buffer.resize(packet.GetPacket().length());
+    buffer.resize(bufferSize);
     packet.ReadRawBytes(buffer.data(), buffer.size());
 
     WorldPacket decrypted(0, Cryptography::Instance()->Decrypt(buffer));
@@ -72,10 +75,9 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
     m_accountInfos.gmLevel = (quint8)result.value(fields.indexOf("username")).toUInt();
     m_accountInfos.subscriptionTime = result.value(fields.indexOf("subscription_time")).toUInt();
 
-    // Send opcode 2 (connection retry ticket)
+    // Send opcode 2 (connection retry ticket, not implemented)
     WorldPacket data2(SMSG_CONNECTION_RETRY_TICKET);
     SendPacket(data2);
-
 
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
     data << quint8(LOGIN_RESULT_SUCCESS);
@@ -90,90 +92,29 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
 
             data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
             data << quint32(1); // m_subscriptionLevel
+            data << quint32(0); // antiAddictionLevel
             data << quint64(m_accountInfos.subscriptionTime);
 
-            data << quint32(0); // m_accountExpirationDate
-
-            //data << quint32((m_accountInfos.gmLevel >= 3) ? 1 : 0);
             // Admin rights ?
-            for (quint8 i = 0; i < 72; ++i)
-                data << quint32(8);
+            for (quint8 i = 0; i <= 75; ++i)
+                data << quint32(0);
 
             data.WriteString(m_accountInfos.pseudo);
 
-            data << quint32(0); // Unk
-            data << quint8(0); // Unk
-            data << quint8(0); // Unk
+            data << quint32(0); // m_accountCommunity ID, see Wl.java for IDs
+            data << quint16(0); // size of hdv, see bOE.java something with m_accountCommunity and check TS.java
         }
     }
     data.EndBlock<quint16>();
 
     SendPacket(data);
-    SendWorldList();
+    SendWorldSelectResult();
 }
 
 void WorldSession::SendLoginErrorResult(LoginResult result)
 {
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
     data << quint8(result);
-    SendPacket(data);
-}
-
-void WorldSession::SendWorldList()
-{
-    QSqlQuery result = Database::Auth()->Query(SELECT_WORLD_ID, QVariantList() << ConfigMgr::Instance()->GetWorldConfig()->GetUShort("WorldId"));
-
-    WorldPacket data(SMSG_WORLD_LIST);
-    data << quint8(result.size());
-
-    if (result.first())
-    {
-        QSqlRecord fields = result.record();
-
-        data.StartBlock<quint8>();
-        {
-            quint8 blockCount = 3;
-            data << blockCount;
-
-            for (quint8 i = 0; i < blockCount; ++i)
-            {
-                data << i;
-                data.StartBlock<quint32>(i + 1);
-            }
-
-            // Block 0
-            {
-                data.EndBlockAbsolute<quint32>(1, -6);
-                data << quint8(0);
-
-                data << quint32(result.value(fields.indexOf("world_id")).toUInt());
-                data.WriteString("1W");
-            }
-
-            // Block 1
-            {
-                data.EndBlockAbsolute<quint32>(2, -6);
-                data << quint8(1);
-
-                data.WriteString(result.value(fields.indexOf("name")).toString());
-                data.WriteString(result.value(fields.indexOf("language")).toString());
-            }
-
-            // Block 2
-            {
-                data.EndBlockAbsolute<quint32>(3, -6);
-                data << quint8(2);
-
-                // 0 = offline, 1 = online
-                data << quint8(result.value(fields.indexOf("status")).toUInt());
-                // 0 = not full, 1 = full
-                data << quint8(0);
-                data << quint8(result.value(fields.indexOf("population")).toUInt());
-            }
-        }
-        data.EndBlock<quint8>();
-    }
-
     SendPacket(data);
 }
 
