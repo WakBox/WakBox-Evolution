@@ -17,6 +17,8 @@ enum WorldDatabaseQueries
     /**
      * DATABASE_STATEMENT_SUMMARY
      */
+
+    SELECT_INTERACTIVE_ELEMENTS
 };
 
 #endif

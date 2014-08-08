@@ -1,5 +1,7 @@
 #include "ObjectMgr.h"
 #include "Configuration/ConfigMgr.h"
+#include "Logs/Log.h"
+#include "Define.h"
 
 template<> ObjectMgr*  Singleton<ObjectMgr>::m_instance = 0;
 
@@ -30,4 +32,23 @@ quint32 ObjectMgr::GenerateGuid(GuidType type)
             Q_ASSERT(false && "ObjectMgr::GenerateGuid : unknown guid type.");
             return 0;
     }
+}
+
+void ObjectMgr::LoadInteractiveElements()
+{
+    QTime t;
+    t.start();
+
+    QSqlQuery result = Database::World()->Query(SELECT_INTERACTIVE_ELEMENTS);
+    QSqlRecord rows = result.record();
+
+    while (result.next())
+        m_interactiveElements[(quint32)result.value(rows.indexOf("interactive_element_id")).toUInt()] = result.value(rows.indexOf("script_name")).toString();
+
+    Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u interactive elements in %u ms.", m_interactiveElements.count(), t.elapsed());
+}
+
+const QString &ObjectMgr::GetInteractiveElementScriptNameById(quint32 id)
+{
+    return m_interactiveElements.value(id, QString());
 }

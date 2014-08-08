@@ -11,6 +11,8 @@ enum GuidType
     GUIDTYPE_CHARACTER = 1
 };
 
+typedef QMap<quint32, QString> InteractiveElementsMap;
+
 class Character;
 
 class ObjectMgr : public Singleton<ObjectMgr>
@@ -22,8 +24,12 @@ public:
     void SetHighestGuids();
     quint32 GenerateGuid(GuidType type);
 
+    void LoadInteractiveElements();
+    const QString &GetInteractiveElementScriptNameById(quint32 id);
+
 private:
     quint32 m_highCharacterGuid;
+    InteractiveElementsMap m_interactiveElements;
 };
 
 #endif // OBJECTMGR_H

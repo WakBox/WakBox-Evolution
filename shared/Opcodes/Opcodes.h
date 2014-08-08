@@ -54,6 +54,7 @@ enum Opcodes
     SMSG_UPDATE_OBJECT                          = 4102,
     SMSG_CHAR_DIRECTION                         = 4118,
     SMSG_SEND_CHAR_POSITION                     = 4125,
+    SMSG_SCENARIO_SCRIPT                        = 11100,
     SMSG_SERVER_TIME_COMMAND                    = 15001,
     SMSG_ENTER_WORLD                            = 20002
 };

@@ -23,6 +23,8 @@ public:
     void AddSession(WorldSession* session);
     void RemoveSession(WorldSession* session);
 
+    void Update(quint64 diff);
+
 private:
     bool m_running;
     SessionList m_sessions;

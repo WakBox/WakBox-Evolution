@@ -92,14 +92,17 @@ bool Character::LoadFromDB(quint64 guid)
     return true;
 }
 
-void Character::SaveToDB(bool create)
+bool Character::SaveToDB(bool create)
 {
     if (create)
     {
-        Database::Char()->Query(INSERT_CHARACTER, QVariantList()
+        QSqlQuery result = Database::Char()->Query(INSERT_CHARACTER, QVariantList()
                                 << GetGuid() << GetSession()->GetAccountInfos().id << m_name << m_breed << m_gender << m_level << m_xp
                                 << m_skinColor << m_hairColor << m_pupilColor << m_skinColorFactor << m_hairColorFactor << m_clothIndex << m_faceIndex << m_title
                                 << GetPositionX() << GetPositionY() << GetPositionZ() << GetDirection() << GetInstanceId());
+
+        if (result.lastError().number() > QSqlError::NoError)
+            return false;
 
         //Database::Auth()->PQuery(AUTH_UPDATE_ACCOUNT_CHARS, GetSession()->GetAccountInfos().id, ConfigMgr::Instance()->World()->GetInt("ServerId"), GetSession()->GetCharsCount() + 1);
     }
@@ -108,4 +111,6 @@ void Character::SaveToDB(bool create)
         Database::Char()->Query(UPDATE_CHARACTER, QVariantList()
                                 << GetPositionX() << GetPositionY() << GetPositionZ() << GetDirection() << GetInstanceId() << GetGuid());
     }
+
+    return true;
 }

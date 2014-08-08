@@ -1,5 +1,6 @@
 #include "WorldServer.h"
 #include "Game/World/World.h"
+#include "Game/World/WorldRunnable.h"
 #include "Cryptography/Cryptography.h"
 
 template<> WorldServer*  Singleton<WorldServer>::m_instance = 0;

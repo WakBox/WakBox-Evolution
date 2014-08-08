@@ -135,17 +135,22 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
                 newChar->SetInstanceId(621);
             }
 
-            newChar->SaveToDB(true);
+            if (newChar->SaveToDB(true))
+            {
+                data << (quint8)CHARACTER_CREATION_RESULT_SUCCESS;
+                SendPacket(data);
 
-            data << quint8(0);
-            SendPacket(data);
-
-            SendSelectCharacterResult(true);
-            return;
+                // Auto-connect in world => TODO
+                //SendSelectCharacterResult(true);
+                return;
+            }
+            else
+                data << (quint8)CHARACTER_CREATION_RESULT_FAILED;
         }
     }
+    else
+        data << (quint8)CHARACTER_CREATION_RESULT_NAME_EXISTS;
 
-    data << quint8(10);
     SendPacket(data);
 }
 

@@ -67,7 +67,7 @@ public:
 
     bool Create(quint64 guid, sCharacterCreateInfos characterCreateInfos);
     bool LoadFromDB(quint64 guid);
-    void SaveToDB(bool create = false);
+    bool SaveToDB(bool create = false);
 
 private:
     WorldSession* m_session;

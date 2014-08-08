@@ -6,10 +6,12 @@
 #include <QtNetwork>
 
 #include "Databases/Database.h"
+#include "Miscellaneous/SharedDefines.h"
 #include "Define.h"
 #include "Network/SocketHandler.h"
 #include "Entities/Character/Character.h"
 #include "World/World.h"
+#include "Scripting/ScriptMgr.h"
 
 enum LoginResult
 {

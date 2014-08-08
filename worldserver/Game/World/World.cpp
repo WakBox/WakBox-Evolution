@@ -1,5 +1,6 @@
 #include "World.h"
 #include "Game/Entities/ObjectMgr.h"
+#include "Game/Scripting/ScriptMgr.h"
 
 template<> World*  Singleton<World>::m_instance = 0;
 
@@ -26,6 +27,9 @@ World::~World()
 bool World::Initialize()
 {
     ObjectMgr::Instance()->SetHighestGuids();
+    ObjectMgr::Instance()->LoadInteractiveElements();
+
+    ScriptMgr::Instance()->Initialize();
     return true;
 }
 
@@ -39,3 +43,7 @@ void World::RemoveSession(WorldSession* session)
     m_sessions.removeOne(session);
 }
 
+void World::Update(quint64 diff)
+{
+    ScriptMgr::Instance()->OnUpdate(diff);
+}

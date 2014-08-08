@@ -56,31 +56,7 @@ void WorldSession::HandleInteractiveElement(WorldPacket &packet)
 
     qDebug() << "Client ask for interactive element " << id << " , type " << type;
 
-    // Envoie comme quoi l'élémentId n'est plus "usable" (différence avec le paquet de spawn 200)
-    WorldPacket data(SMSG_INTERACTIVE_ELEMENT_UPDATE);
-
-    data << quint64(20114); // Instance ElementId
-
-    data.StartBlock<quint16>();
-    {
-        data << quint8(1); // BlockCount
-
-        data << quint8(2); // blockId
-        data << quint32(6); // offset
-
-        data << quint8(2); // BlockId
-
-        data << quint16(1); // ?
-        data << quint8(1); // isVisible
-        data << quint8(0); // isUsable
-        data << quint8(0); // ?
-        data << quint8(0); // ?
-        data << quint8(0); // ?
-        data << quint32(0); // ?
-    }
-    data.EndBlock<quint16>();
-
-    SendPacket(data);
+    ScriptMgr::Instance()->OnInteractiveElementActive(this->GetCharacter(), id, (InteractiveElementType)type);
 }
 
 void WorldSession::SendUpdateObject()

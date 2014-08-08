@@ -2,7 +2,8 @@
 #include <csignal>
 
 #include "Logs/Log.h"
-#include "Game/Chat/CommandLine.h"
+#include "Chat/CommandLine.h"
+#include "World/WorldRunnable.h"
 
 void stop(int /*s*/)
 {
@@ -42,6 +43,9 @@ int main(int argc, char *argv[])
     Chat::Instance();
     CommandLine commandLine(&a);
     commandLine.start();
+
+    WorldRunnable worldRunnable;
+    worldRunnable.start();
 
     signal(SIGINT, &stop);
     signal(SIGTERM, &stop);

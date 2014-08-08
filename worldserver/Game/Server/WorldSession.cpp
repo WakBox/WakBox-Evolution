@@ -39,7 +39,7 @@ void WorldSession::ProcessPacket()
             in >> m_packetSize;
         }
 
-        if ((m_socket->bytesAvailable() + 2) < m_packetSize)
+        if (m_socket->bytesAvailable() < (m_packetSize - 2))
             return;
 
         qint8 unk;
@@ -48,7 +48,7 @@ void WorldSession::ProcessPacket()
 
         in >> unk;
         in >> opcode;
-        data = in.device()->readAll();
+        data = in.device()->read((qint64)(m_packetSize - 5));
 
         if (OpcodeTable::Exists(opcode))
         {
