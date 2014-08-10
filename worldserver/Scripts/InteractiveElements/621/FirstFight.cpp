@@ -1,4 +1,5 @@
 #include "Game/Scripting/ScriptMgr.h"
+#include "Utils/Util.h"
 
 class InteractiveElement_Tutorial_FirstFight : InteractiveElementScript
 {
@@ -6,10 +7,15 @@ public:
     InteractiveElement_Tutorial_FirstFight() : InteractiveElementScript("InteractiveElement_Tutorial_FirstFight")
     {
         m_spawned = false;
+        m_randomMove = 6000;
     }
 
     void OnActive(Character* character, InteractiveElementType /*type*/)
     {
+        // Seuelement une instance du script ou bien ? Du coup va poser des problèmes
+        // si plusieurs joueurs en même temps ? Du coup gérer la création de nouvelles instances de scripts ?
+        m_char = character;
+
         // Envoie comme quoi l'élémentId n'est plus "usable" (différence avec le paquet de spawn 200)
         WorldPacket data(SMSG_INTERACTIVE_ELEMENT_UPDATE);
 
@@ -66,7 +72,7 @@ public:
             data2 << qint32(-17); // Y
             data2 << qint16(0); // Z
             data2 << quint16(-1); // InstanceId
-            data2 << quint8(1); // Direction
+            data2 << quint8(3); // Direction
 
             // APPEARANCE
             data2 << quint8(1); // Show
@@ -126,8 +132,8 @@ public:
             // XP_CHARACTERISTICS
             data2 << quint16(0);
             data2 << quint16(0);
-            data2 << quint16(0);
-            data2 << quint32(0);
+            //data2 << quint16(0);
+            //data2 << quint32(0);
 
             // Pourquoi sniff size 110 et la on est déjà à 117 ??            
         }
@@ -136,6 +142,7 @@ public:
         character->GetSession()->SendPacket(data2);
 
         // Activation du script (mouvement de la fenêtre entre autre)
+        // Root aussi le joueur ?
         WorldPacket data3(SMSG_SCENARIO_SCRIPT);
         data3 << quint8(0); // Event
         data3 << quint32(12603); // Function
@@ -198,11 +205,10 @@ public:
             // EQUIPMENT_APPEARANCE
             data4 << quint8(0); // size
 
-            // RUNNING_EFFECTS
+            // RUNNING_EFFECTS should be wrong
             data4 << quint8(1); // hasInFightData
-            data4 << quint16(2); // data size
+            data4 << quint16(1); // data size
             data4 << quint8(13); // data
-            data4 << quint8(1); // data
 
             data4 << quint8(1); // hasOutFightData
             data4 << quint16(0); // size
@@ -235,8 +241,8 @@ public:
             // XP_CHARACTERISTICS
             data4 << quint16(0);
             data4 << quint16(0);
-            data4 << quint16(0);
-            data4 << quint32(0);
+            //data4 << quint16(0);
+            //data4 << quint32(0);
 
             // Pourquoi sniff size 110 et la on est déjà à 117 ??
         }
@@ -244,15 +250,51 @@ public:
 
         character->GetSession()->SendPacket(data4);
 
+        // Texte : "Hé toi le nouveau" etc.
+        WorldPacket data5(SMSG_SCENARIO_SCRIPT);
+        data5 << quint8(0); // Event
+        data5 << quint32(12687); // Function
+        data5 << quint32(1611); // ScenarioId
+        data5 << quint8(1); // Long size?
+        data5 << qint64(-1706442045669878); // Param
+        character->GetSession()->SendPacket(data5);
+
+        // Flèche sur le wapin
+        WorldPacket data6(SMSG_SCENARIO_SCRIPT);
+        data6 << quint8(0); // Event
+        data6 << quint32(12691); // Function
+        data6 << quint32(1611); // ScenarioId
+        data6 << quint8(1); // Long size?
+        data6 << qint64(-1706442045669898); // Param
+        character->GetSession()->SendPacket(data6);
+
         m_spawned = true;
     }
 
     void OnUpdate(quint64 diff)
     {
+        if (m_spawned && m_char)
+        {
+            m_randomMove -= diff;
+            if (m_randomMove <= 0)
+            {
+                WorldPacket data(SMSG_UPDATE_POSITION);
+                data << qint64(-1706442045669898);
+                data << qint32(Utils::irand(-2, 2));
+                data << qint32(Utils::irand(-19, -15));
+                data << qint16(0);
+                data << quint8(Utils::randList(QList<qint32>() << 1 << 3 << 5 << 7));
+                m_char->GetSession()->SendPacket(data);
+
+                m_randomMove = 6000;
+            }
+        }
     }
 
 private:
     bool m_spawned;
+    qint16 m_randomMove;
+    Character* m_char;
 };
 
 void AddScript_InteractiveElement_Tutorial_FirstFight()

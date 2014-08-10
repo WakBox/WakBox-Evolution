@@ -5,9 +5,14 @@
 #include "Chat/CommandLine.h"
 #include "World/WorldRunnable.h"
 
+CommandLine* commandLine = new CommandLine;
+WorldRunnable* worldRunnable = new WorldRunnable;
+
 void stop(int /*s*/)
 {
     WorldServer::Instance()->Delete();
+    commandLine->exit();
+    worldRunnable->exit();
     QCoreApplication::exit();
 }
 
@@ -40,12 +45,8 @@ int main(int argc, char *argv[])
     Log::Write(LOG_TYPE_NORMAL, "Press ctrl + c to quit.");
     Log::Write(LOG_TYPE_NORMAL, "SumBox::Worldserver started in %s sec.", QString::number(t.elapsed() / IN_MILLISECONDS).toLatin1().data());
 
-    Chat::Instance();
-    CommandLine commandLine(&a);
-    commandLine.start();
-
-    WorldRunnable worldRunnable;
-    worldRunnable.start();
+    commandLine->start();
+    worldRunnable->start();
 
     signal(SIGINT, &stop);
     signal(SIGTERM, &stop);

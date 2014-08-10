@@ -23,14 +23,15 @@ win32 {
     INCLUDEPATH += C:/CryptoCPP/include
 }
 
-INCLUDEPATH += . ../shared ../worldserver ../worldserver/Game
-DEPENDPATH += . ../shared ../worldserver ../worldserver/Game
+INCLUDEPATH += . ../dep ../shared ../worldserver ../worldserver/Game
+DEPENDPATH += . ../dep ../shared ../worldserver ../worldserver/Game
 
 SOURCES += main.cpp \
     WorldServer.cpp
 
 HEADERS += WorldServer.h
 
+include(../dep/Dep.pri)
 include(../shared/Shared.pri)
 include(Game/Game.pri)
-include(Scripts/Scripts.pri)
+include(Scripts/Scripts.pri)

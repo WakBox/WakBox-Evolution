@@ -78,6 +78,7 @@ public:
     void HandleCharMovement(WorldPacket& packet);
     void HandleCharDirection(WorldPacket& packet);
     void HandleCharEmote(WorldPacket& packet);
+    void HandleStartFight(WorldPacket& packet);
     void HandleSwitchChar(WorldPacket& /*packet*/);
     void HandleClientLanguage(WorldPacket& packet);
     void HandleServerTimeCommand(WorldPacket& /*packet*/);

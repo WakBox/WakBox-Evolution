@@ -1,4 +1,5 @@
 #include "WorldServer.h"
+#include "Chat/Chat.h"
 #include "Game/World/World.h"
 #include "Game/World/WorldRunnable.h"
 #include "Cryptography/Cryptography.h"
@@ -19,6 +20,7 @@ WorldServer::~WorldServer()
     Cryptography::Delete();
     Database::Delete();
     Log::Delete();
+    Chat::Delete();
 
     m_server->close();
     delete m_server;
@@ -60,6 +62,7 @@ bool WorldServer::Initialize()
     else
        Log::Write(LOG_TYPE_NORMAL, "Worldserver started on port %i : waiting for connections", ConfigMgr::World()->GetInt("WorldServerPort"));
 
+    Chat::Instance();
     return true;
 }
 

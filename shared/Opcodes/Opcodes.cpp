@@ -27,6 +27,7 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(CMSG_CHAR_MOVEMENT,                          &WorldSession::HandleCharMovement);
     ADD_OPCODE_HANDLER(CMSG_CHAR_DIRECTION,                         &WorldSession::HandleCharDirection);
     ADD_OPCODE_HANDLER(CMSG_CHAR_EMOTE,                             &WorldSession::HandleCharEmote);
+    ADD_OPCODE_HANDLER(CMSG_START_FIGHT,                            &WorldSession::HandleStartFight);
     ADD_OPCODE_HANDLER(CMSG_SWITCH_CHAR,                            &WorldSession::HandleSwitchChar);
     ADD_OPCODE_HANDLER(CMSG_CLIENT_LANGUAGE,                        &WorldSession::HandleClientLanguage);
     ADD_OPCODE_HANDLER(CMSG_SERVER_TIME_COMMAND,                    &WorldSession::HandleServerTimeCommand);
@@ -54,6 +55,7 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(SMSG_UPDATE_OBJECT,                          &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CHAR_DIRECTION,                         &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SEND_CHAR_POSITION,                     &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_UPDATE_POSITION,                        &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SCENARIO_SCRIPT,                        &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SERVER_TIME_COMMAND,                    &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_ENTER_WORLD,                            &WorldSession::HandleServerSide);

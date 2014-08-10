@@ -2,6 +2,8 @@
 #include "Game/Entities/ObjectMgr.h"
 #include "Game/Scripting/ScriptMgr.h"
 
+#include "Utils/Util.h"
+
 template<> World*  Singleton<World>::m_instance = 0;
 
 World::World()

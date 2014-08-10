@@ -13,7 +13,7 @@ class CommandLine : public QThread
 {
     Q_OBJECT
 public:
-    CommandLine(QObject* parent) : QThread(parent) {}
+    CommandLine(QObject* parent = 0) : QThread(parent) {}
 
     virtual void run()
     {

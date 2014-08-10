@@ -27,6 +27,7 @@ enum Opcodes
     CMSG_CHAR_MOVEMENT                          = 4113,
     CMSG_CHAR_DIRECTION                         = 4117,
     CMSG_CHAR_EMOTE                             = 4119,
+    CMSG_START_FIGHT                            = 4529,
     CMSG_SWITCH_CHAR                            = 11003,
     CMSG_CLIENT_LANGUAGE                        = 13001,
     CMSG_SERVER_TIME_COMMAND                    = 15000,
@@ -54,6 +55,7 @@ enum Opcodes
     SMSG_UPDATE_OBJECT                          = 4102,
     SMSG_CHAR_DIRECTION                         = 4118,
     SMSG_SEND_CHAR_POSITION                     = 4125,
+    SMSG_UPDATE_POSITION                        = 4127,
     SMSG_SCENARIO_SCRIPT                        = 11100,
     SMSG_SERVER_TIME_COMMAND                    = 15001,
     SMSG_ENTER_WORLD                            = 20002

@@ -8,7 +8,8 @@ enum TypeId
 {
     TYPEID_OBJECT              = 0,
     TYPEID_CHARACTER           = 1,
-    TYPEID_UNIT                = 2
+    TYPEID_UNIT                = 2,
+    TYPEID_MONSTER             = 3
 };
 
 class Unit;
