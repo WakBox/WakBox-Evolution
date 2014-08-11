@@ -255,7 +255,7 @@ public:
         data5 << quint8(0); // Event
         data5 << quint32(12687); // Function
         data5 << quint32(1611); // ScenarioId
-        data5 << quint8(1); // Long size?
+        data5 << quint8(1); // Params size?
         data5 << qint64(-1706442045669878); // Param
         character->GetSession()->SendPacket(data5);
 
