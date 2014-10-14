@@ -13,26 +13,6 @@ public:
     Database();
     ~Database();
 
-    static AuthDatabase* Auth()
-    {
-        return Database::Instance()->GetAuthDatabase();
-    }
-
-    static CharDatabase* Char()
-    {
-        return Database::Instance()->GetCharDatabase();
-    }
-
-    static WorldDatabase* World()
-    {
-        return Database::Instance()->GetWorldDatabase();
-    }
-
-    bool OpenAuthDatabase();
-    bool OpenCharDatabase();
-    bool OpenWorldDatabase();
-
-private:
     AuthDatabase* GetAuthDatabase()
     {
         return m_authDatabase;
@@ -48,9 +28,19 @@ private:
         return m_worldDatabase;
     }
 
+    bool OpenAuthDatabase();
+    bool OpenCharDatabase();
+    bool OpenWorldDatabase();
+
+private:
     AuthDatabase* m_authDatabase;
     CharDatabase* m_charDatabase;
     WorldDatabase* m_worldDatabase;
 };
+
+#define sDatabase Database::Instance()
+#define sAuthDatabase sDatabase->GetAuthDatabase()
+#define sCharDatabase sDatabase->GetCharDatabase()
+#define sWorldDatabase sDatabase->GetWorldDatabase()
 
 #endif

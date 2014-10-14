@@ -1,6 +1,6 @@
 #include "Server/WorldSession.h"
 #include "Configuration/ConfigMgr.h"
-#include "Cryptography/Cryptography.h"
+#include "Cryptography/CryptographyMgr.h"
 #include "Utils/Util.h"
 
 void WorldSession::HandleClientVersion(WorldPacket& packet)
@@ -26,7 +26,7 @@ void WorldSession::HandleClientVersion(WorldPacket& packet)
     }
     else
     {
-        QByteArray publicKey = Cryptography::Instance()->GetPublicKey();
+        QByteArray publicKey = sCryptographyMgr->GetPublicKey();
 
         WorldPacket data(SMSG_RSA_PUBLIC_KEY);
         data << quint64(0x8000000000000000);
@@ -44,7 +44,7 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
     buffer.resize(bufferSize);
     packet.ReadRawBytes(buffer.data(), buffer.size());
 
-    WorldPacket decrypted(0, Cryptography::Instance()->Decrypt(buffer));
+    WorldPacket decrypted(0, sCryptographyMgr->Decrypt(buffer));
 
     quint64 rsaVerification;
     decrypted >> rsaVerification;
@@ -52,7 +52,7 @@ void WorldSession::HandleClientAuthentication(WorldPacket& packet)
     QString account = decrypted.ReadString();
     QString password = decrypted.ReadString();
 
-    QSqlQuery result = Database::Auth()->Query(SELECT_ACCOUNT_BY_USERNAME, QVariantList() << account);
+    QSqlQuery result = sAuthDatabase->Query(SELECT_ACCOUNT_BY_USERNAME, QVariantList() << account);
 
     if (!result.first())
     {

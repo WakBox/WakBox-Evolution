@@ -85,7 +85,7 @@ void WorldSession::HandleCharDirection(WorldPacket& packet)
     SendPacket(data);
 }
 
-void WorldSession::HandleCharEmote(WorldPacket& packet)
+void WorldSession::HandleCharEmote(WorldPacket& /*packet*/)
 {
     // We receive an empty packet
     // We send back the current position of the player (x, y) -> 4124

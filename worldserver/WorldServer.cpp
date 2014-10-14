@@ -2,7 +2,7 @@
 #include "Chat/Chat.h"
 #include "Game/World/World.h"
 #include "Game/World/WorldRunnable.h"
-#include "Cryptography/Cryptography.h"
+#include "Cryptography/CryptographyMgr.h"
 
 template<> WorldServer*  Singleton<WorldServer>::m_instance = 0;
 
@@ -17,7 +17,7 @@ WorldServer::~WorldServer()
 
     World::Delete();
     ConfigMgr::Delete();
-    Cryptography::Delete();
+    CryptographyMgr::Delete();
     Database::Delete();
     Log::Delete();
     Chat::Delete();
@@ -28,24 +28,24 @@ WorldServer::~WorldServer()
 
 bool WorldServer::Initialize()
 {
-    if (!ConfigMgr::Instance()->LoadWorldConfig("worldserver.conf"))
+    if (!sConfigMgr->LoadWorldConfig("worldserver.conf"))
         return false;
 
-    Log::Instance()->Initialize(ConfigMgr::World()->GetUShort("LogConsoleLevel"), ConfigMgr::World()->GetUShort("LogFileLevel"), ConfigMgr::World()->GetQString("LogFile"));
+    Log::Instance()->Initialize(sWorldConfig->GetUShort("LogConsoleLevel"), sWorldConfig->GetUShort("LogFileLevel"), sWorldConfig->GetQString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting WorldServer...");
 
-    if (!Database::Instance()->OpenAuthDatabase())
+    if (!sDatabase->OpenAuthDatabase())
         return false;
 
-    if (!Database::Instance()->OpenCharDatabase())
+    if (!sDatabase->OpenCharDatabase())
         return false;
 
-    if (!Database::Instance()->OpenWorldDatabase())
+    if (!sDatabase->OpenWorldDatabase())
         return false;
 
     OpcodeTable::Load();
 
-    if (!Cryptography::Instance()->Initialize())
+    if (!sCryptographyMgr->Initialize())
         return false;
 
     if (!World::Instance()->Initialize())
@@ -54,13 +54,13 @@ bool WorldServer::Initialize()
         return false;
     }
 
-    if(!WorldServer::Instance()->Start(QHostAddress::LocalHost, quint16(ConfigMgr::World()->GetInt("WorldServerPort"))))
+    if(!Start(QHostAddress::LocalHost, quint16(sWorldConfig->GetInt("WorldServerPort"))))
     {
         Log::Write(LOG_TYPE_NORMAL, m_server->errorString().toLatin1().data());
         return false;
     }
     else
-       Log::Write(LOG_TYPE_NORMAL, "Worldserver started on port %i : waiting for connections", ConfigMgr::World()->GetInt("WorldServerPort"));
+       Log::Write(LOG_TYPE_NORMAL, "Worldserver started on port %i : waiting for connections", sWorldConfig->GetInt("WorldServerPort"));
 
     Chat::Instance();
     return true;

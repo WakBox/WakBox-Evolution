@@ -28,10 +28,10 @@ World::~World()
 
 bool World::Initialize()
 {
-    ObjectMgr::Instance()->SetHighestGuids();
-    ObjectMgr::Instance()->LoadInteractiveElements();
+    sObjectMgr->SetHighestGuids();
+    sObjectMgr->LoadInteractiveElements();
 
-    ScriptMgr::Instance()->Initialize();
+    sScriptMgr->Initialize();
     return true;
 }
 
@@ -47,5 +47,5 @@ void World::RemoveSession(WorldSession* session)
 
 void World::Update(quint64 diff)
 {
-    ScriptMgr::Instance()->OnUpdate(diff);
+    sScriptMgr->OnUpdate(diff);
 }

@@ -29,7 +29,7 @@ public:
     ServerScript(const QString& name);
 
     virtual void OnLoad() {}
-    virtual void OnUpdate(quint64 diff) {}
+    virtual void OnUpdate(quint64 /*diff*/) {}
 };
 
 class InteractiveElementScript : public ServerScript
@@ -37,7 +37,7 @@ class InteractiveElementScript : public ServerScript
 public:
     InteractiveElementScript(const QString& name);
 
-    virtual void OnActive(Character* character, InteractiveElementType type) {}
+    virtual void OnActive(Character* /*character*/, InteractiveElementType /*type*/) {}
 };
 
 class ScriptMgr : public Singleton<ScriptMgr>
@@ -59,5 +59,7 @@ public:
 
 private:
 };
+
+#define sScriptMgr ScriptMgr::Instance()
 
 #endif // SCRIPTMGR_H

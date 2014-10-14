@@ -26,4 +26,6 @@ private:
     QTcpServer* m_server;
 };
 
+#define sWorldServer WorldServer::Instance()
+
 #endif // WORLDSERVER_H

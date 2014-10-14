@@ -5,7 +5,7 @@
 
 void WorldSession::SendCharactersList()
 {
-    QSqlQuery result = Database::Char()->Query(SELECT_CHARACTERS_BY_ACCOUNT_ID, QVariantList() << GetAccountInfos().id);
+    QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTERS_BY_ACCOUNT_ID, QVariantList() << GetAccountInfos().id);
 
     WorldPacket data(SMSG_CHAR_LIST);
     data << quint8(result.size());
@@ -78,14 +78,14 @@ void WorldSession::HandleCharDelete(WorldPacket& packet)
     quint64 guid;
     packet >> guid;
 
-    QSqlQuery result = Database::Char()->Query(SELECT_CHARACTER_BY_GUID, QVariantList() << guid);
+    QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTER_BY_GUID, QVariantList() << guid);
     quint8 success = 0;
 
     if (result.first())
     {
         if (result.value(result.record().indexOf("account_id")) == GetAccountInfos().id)
         {
-            Database::Char()->Query(DELETE_CHARACTER_BY_GUID, QVariantList() << guid);
+            sCharDatabase->Query(DELETE_CHARACTER_BY_GUID, QVariantList() << guid);
             success = 1;
         }
     }
@@ -114,7 +114,7 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
     name = packet.ReadString();
 
     WorldPacket data(SMSG_CHAR_CREATE);
-    QSqlQuery result = Database::Char()->Query(SELECT_CHARACTER_BY_NAME, QVariantList() << name);
+    QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTER_BY_NAME, QVariantList() << name);
 
     if (!result.first())
     {
@@ -128,7 +128,7 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
 
         if(newChar->Create(ObjectMgr::Instance()->GenerateGuid(GUIDTYPE_CHARACTER), charCreateInfos))
         {
-            if (breed = CHARACTER_BREED_TUTORIAL)
+            if (breed == CHARACTER_BREED_TUTORIAL)
             {
                 newChar->SetPosition(0, 0, 0);
                 newChar->SetDirection(7);

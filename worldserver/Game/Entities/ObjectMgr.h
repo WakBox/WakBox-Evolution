@@ -25,11 +25,13 @@ public:
     quint32 GenerateGuid(GuidType type);
 
     void LoadInteractiveElements();
-    const QString &GetInteractiveElementScriptNameById(quint32 id);
+    const QString GetInteractiveElementScriptNameById(quint32 id);
 
 private:
     quint32 m_highCharacterGuid;
     InteractiveElementsMap m_interactiveElements;
 };
+
+#define sObjectMgr ObjectMgr::Instance()
 
 #endif // OBJECTMGR_H

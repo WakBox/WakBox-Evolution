@@ -32,7 +32,7 @@ void WorldSession::HandleTradeMessage(WorldPacket& packet)
     qDebug() << "Trade message : " << message;
 }
 
-void WorldSession::HandleRecruitMessage(WorldPacket& packet)
+void WorldSession::HandleRecruitMessage(WorldPacket& /*packet*/)
 {
 
 }

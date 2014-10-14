@@ -28,7 +28,7 @@ Database::~Database()
 
 bool Database::OpenAuthDatabase()
 {
-    ConnectionInfo cinfos = ConnectionInfo(ConfigMgr::World()->GetQString("AuthDatabase"));
+    ConnectionInfo cinfos = ConnectionInfo(sWorldConfig->GetQString("AuthDatabase"));
     m_authDatabase = new AuthDatabase(cinfos);
 
     if(!m_authDatabase->Open())
@@ -39,7 +39,7 @@ bool Database::OpenAuthDatabase()
 
 bool Database::OpenCharDatabase()
 {
-    ConnectionInfo cinfos = ConnectionInfo(ConfigMgr::World()->GetQString("CharDatabase"));
+    ConnectionInfo cinfos = ConnectionInfo(sWorldConfig->GetQString("CharDatabase"));
     m_charDatabase = new CharDatabase(cinfos);
 
     if(!m_charDatabase->Open())
@@ -50,7 +50,7 @@ bool Database::OpenCharDatabase()
 
 bool Database::OpenWorldDatabase()
 {
-    ConnectionInfo cinfos = ConnectionInfo(ConfigMgr::World()->GetQString("WorldDatabase"));
+    ConnectionInfo cinfos = ConnectionInfo(sWorldConfig->GetQString("WorldDatabase"));
     m_worldDatabase = new WorldDatabase(cinfos);
 
     if(!m_worldDatabase->Open())

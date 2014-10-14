@@ -1,17 +1,17 @@
-#include "Cryptography.h"
+#include "CryptographyMgr.h"
 #include "Logs/Log.h"
 
-template<> Cryptography*  Singleton<Cryptography>::m_instance = 0;
+template<> CryptographyMgr*  Singleton<CryptographyMgr>::m_instance = 0;
 
-Cryptography::Cryptography()
+CryptographyMgr::CryptographyMgr()
 {
     m_privateKey = CryptoPP::InvertibleRSAFunction();
     m_publicKey = QByteArray();
 }
 
-Cryptography::~Cryptography() {}
+CryptographyMgr::~CryptographyMgr() {}
 
-bool Cryptography::Initialize()
+bool CryptographyMgr::Initialize()
 {
     if (LoadKeyPair())
         return true;
@@ -19,7 +19,7 @@ bool Cryptography::Initialize()
         return GenerateKeyPair();
 }
 
-bool Cryptography::GenerateKeyPair()
+bool CryptographyMgr::GenerateKeyPair()
 {
     QDir dir;
     dir.mkdir("cryptography");
@@ -40,7 +40,7 @@ bool Cryptography::GenerateKeyPair()
     return LoadKeyPair();
 }
 
-bool Cryptography::LoadKeyPair()
+bool CryptographyMgr::LoadKeyPair()
 {
     if (!QFile::exists("cryptography/wakbox.ppk"))
         return false;
@@ -56,7 +56,7 @@ bool Cryptography::LoadKeyPair()
     return true;
 }
 
-QByteArray Cryptography::Decrypt(QByteArray buffer)
+QByteArray CryptographyMgr::Decrypt(QByteArray buffer)
 {
     CryptoPP::AutoSeededRandomPool prng;
     std::string result;

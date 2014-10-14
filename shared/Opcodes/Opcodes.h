@@ -53,9 +53,12 @@ enum Opcodes
     SMSG_CHARACTER_STATS_ENTER_WORLD            = 4098,
     SMSG_SEND_CHARACTER_POSITION                = 4100,
     SMSG_UPDATE_OBJECT                          = 4102,
+    SMSG_UPDATE_CREATURE_STATE                  = 4112,
     SMSG_CHAR_DIRECTION                         = 4118,
     SMSG_SEND_CHAR_POSITION                     = 4125,
     SMSG_UPDATE_POSITION                        = 4127,
+    SMSG_PROPERTIES_UPDATE                      = 4130,
+    SMSG_START_FIGHT                            = 4530,
     SMSG_SCENARIO_SCRIPT                        = 11100,
     SMSG_SERVER_TIME_COMMAND                    = 15001,
     SMSG_ENTER_WORLD                            = 20002

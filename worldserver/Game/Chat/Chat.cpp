@@ -60,6 +60,7 @@ bool Chat::HandleAccountCreateCommand(QString& args)
         return false;
 
     // TODO : Add account in DB
+    return true;
 }
 
 bool Chat::HandleHelloCommand(QString& /*args*/)

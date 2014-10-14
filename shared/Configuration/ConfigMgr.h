@@ -12,13 +12,13 @@ public:
     ~ConfigMgr();
 
     Configuration* GetWorldConfig() { Q_ASSERT(m_world); return m_world; }
-
-    static Configuration* World() { return ConfigMgr::Instance()->GetWorldConfig(); }
-
     bool LoadWorldConfig(QString fileName);
 
 private:
     Configuration* m_world;
 };
+
+#define sConfigMgr ConfigMgr::Instance()
+#define sWorldConfig sConfigMgr->GetWorldConfig()
 
 #endif

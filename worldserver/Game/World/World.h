@@ -30,4 +30,6 @@ private:
     SessionList m_sessions;
 };
 
+#define sWorld World::Instance()
+
 #endif

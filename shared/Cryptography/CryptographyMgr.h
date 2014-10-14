@@ -11,11 +11,11 @@
 
 #include "Utils/Singleton.h"
 
-class Cryptography : public Singleton<Cryptography>
+class CryptographyMgr : public Singleton<CryptographyMgr>
 {
 public:
-    Cryptography();
-    ~Cryptography();
+    CryptographyMgr();
+    ~CryptographyMgr();
 
     bool Initialize();
     bool GenerateKeyPair();
@@ -28,5 +28,7 @@ private:
     CryptoPP::InvertibleRSAFunction m_privateKey;
     QByteArray m_publicKey;
 };
+
+#define sCryptographyMgr CryptographyMgr::Instance()
 
 #endif
