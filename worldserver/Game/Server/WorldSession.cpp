@@ -1,7 +1,7 @@
 #include "WorldSession.h"
-#include "Opcodes/Opcodes.h"
 #include "Logs/Log.h"
 #include "Configuration/ConfigMgr.h"
+#include "Entities/Character/Character.h"
 #include "World/World.h"
 
 WorldSession::WorldSession(QTcpSocket *socket) : SocketHandler(socket)
@@ -63,6 +63,14 @@ void WorldSession::ProcessPacket()
 
         m_packetSize = 0;
     }
+}
+
+void WorldSession::SendPacket(WorldPacket& data)
+{
+    data.WriteHeader();
+    m_socket->write(data.GetPacket());
+
+    Log::Write(LOG_TYPE_DEBUG, "Send packet %s <%u> (size : %u).", OpcodeTable::Get(data.GetOpcode()).name.toLatin1().data(), data.GetOpcode(), data.GetPacket().size());
 }
 
 void WorldSession::OnClose()

@@ -18,7 +18,7 @@ enum AuthDatabaseQueries
      * DATABASE_STATEMENT_SUMMARY
      */
     SELECT_ACCOUNT_BY_USERNAME,
-    SELECT_WORLD_ID
+    SELECT_REALMS,
 };
 
 #endif

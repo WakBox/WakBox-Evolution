@@ -1,6 +1,8 @@
 #ifndef SHAREDDEFINES_H
 #define SHAREDDEFINES_H
 
+#include "Server/Protocol/Opcodes.h"
+
 enum CharacterCreationResult
 {
     CHARACTER_CREATION_RESULT_SUCCESS = 0,

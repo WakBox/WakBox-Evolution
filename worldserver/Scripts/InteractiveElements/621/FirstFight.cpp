@@ -280,10 +280,10 @@ public:
             {
                 WorldPacket data(SMSG_UPDATE_POSITION);
                 data << qint64(-1706442045669898);
-                data << qint32(Utils::irand(-2, 2));
-                data << qint32(Utils::irand(-19, -15));
+                //data << qint32(Utils::irand(-2, 2));
+                //data << qint32(Utils::irand(-19, -15));
                 data << qint16(0);
-                data << quint8(Utils::randList(QList<qint32>() << 1 << 3 << 5 << 7));
+                //data << quint8(Utils::randList(QList<qint32>() << 1 << 3 << 5 << 7));
                 m_char->GetSession()->SendPacket(data);
 
                 m_randomMove = 6000;

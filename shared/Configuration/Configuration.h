@@ -11,8 +11,7 @@ public:
     Configuration();
     ~Configuration();
 
-    QString GetQString(QString name);
-    std::string GetString(QString name);
+    QString GetString(QString name);
     bool GetBool(QString name);
     int GetInt(QString name);
     ushort GetUShort(QString name);

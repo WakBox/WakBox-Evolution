@@ -5,7 +5,6 @@
 #include <QObject>
 #include <QtNetwork>
 
-#include "Game/Server/WorldSession.h"
 #include "Utils/Singleton.h"
 
 class WorldServer : public Singleton<WorldServer>

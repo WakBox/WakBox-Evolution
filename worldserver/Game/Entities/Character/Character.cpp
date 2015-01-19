@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Server/WorldSession.h"
 #include "Utils/Util.h"
 
 Character::Character(WorldSession* session) : Unit()

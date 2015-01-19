@@ -4,7 +4,6 @@
 #include <QtNetwork>
 #include <QTcpSocket>
 #include "Packets/WorldPacket.h"
-#include "Opcodes/Opcodes.h"
 
 class WorldPacket;
 
@@ -17,7 +16,7 @@ public:
     QString GetIp() const { return m_socket->peerAddress().toString(); }
 
     virtual void ProcessPacket() = 0;
-    void SendPacket(WorldPacket& data);
+    virtual void SendPacket(WorldPacket& data) = 0;
 
 public slots:
     void OnRead();

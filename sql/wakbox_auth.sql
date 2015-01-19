@@ -46,25 +46,30 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `world_list`
+-- Structure de la table `realms`
 --
 
-CREATE TABLE IF NOT EXISTS `world_list` (
-  `world_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
-  `population` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `realms` (
+  `realm_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
+  `port` smallint(5) unsigned NOT NULL DEFAULT '5556',
+  `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1.39.4',
+  `community` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `player_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `player_limit` int(10) unsigned NOT NULL DEFAULT '500',
   `security_access_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`world_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  `locked` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`realm_id`),
+  UNIQUE KEY `idx_name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
 --
--- Contenu de la table `world_list`
+-- Contenu de la table `realms`
 --
 
-INSERT INTO `world_list` (`world_id`, `name`, `language`, `population`, `status`, `security_access_level`) VALUES
-(1, 'Wakbox', 'fr', 0, 1, 0);
+INSERT INTO `realms` (`realm_id`, `name`, `address`, `port`, `version`, `community`, `player_count`, `player_limit`, `security_access_level`, `locked`) VALUES
+(1, 'WakBox', '127.0.0.1', 5556, '1.39.4', 0, 0, 500, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

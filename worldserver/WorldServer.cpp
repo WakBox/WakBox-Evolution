@@ -1,8 +1,9 @@
 #include "WorldServer.h"
 #include "Chat/Chat.h"
+#include "Cryptography/CryptographyMgr.h"
+#include "Game/Server/WorldSession.h"
 #include "Game/World/World.h"
 #include "Game/World/WorldRunnable.h"
-#include "Cryptography/CryptographyMgr.h"
 
 template<> WorldServer*  Singleton<WorldServer>::m_instance = 0;
 
@@ -31,7 +32,7 @@ bool WorldServer::Initialize()
     if (!sConfigMgr->LoadWorldConfig("worldserver.conf"))
         return false;
 
-    Log::Instance()->Initialize(sWorldConfig->GetUShort("LogConsoleLevel"), sWorldConfig->GetUShort("LogFileLevel"), sWorldConfig->GetQString("LogFile"));
+    Log::Instance()->Initialize(sWorldConfig->GetUShort("LogConsoleLevel"), sWorldConfig->GetUShort("LogFileLevel"), sWorldConfig->GetString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting WorldServer...");
 
     if (!sDatabase->OpenAuthDatabase())

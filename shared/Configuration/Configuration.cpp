@@ -50,14 +50,9 @@ QString Configuration::GetValue(QString name)
     return QString();
 }
 
-QString Configuration::GetQString(QString name)
+QString Configuration::GetString(QString name)
 {
     return GetValue(name);
-}
-
-std::string Configuration::GetString(QString name)
-{
-    return GetValue(name).toStdString();
 }
 
 bool Configuration::GetBool(QString name)

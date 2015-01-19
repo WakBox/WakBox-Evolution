@@ -1,7 +1,4 @@
 #include "Util.h"
-#include "SFMT/SFMT.h"
-
-static SFMTRand SFMT;
 
 QByteArray Utils::FromHexString(QString packet)
 {
@@ -33,19 +30,4 @@ QString Utils::HashPassword(QString account, QString password)
 {
     QString data = account + ":" + password;
     return QString(QCryptographicHash::hash(data.toLatin1(), QCryptographicHash::Sha1).toHex());
-}
-
-qint32 Utils::irand(qint32 min, qint32 max)
-{
-    return qint32(SFMT.IRandom(min, max));
-}
-
-quint32 Utils::urand(quint32 min, quint32 max)
-{
-    return quint32(SFMT.URandom(min, max));
-}
-
-qint32 Utils::randList(QList<qint32> list)
-{
-    return list.at(Utils::urand(0, list.size() - 1));
 }

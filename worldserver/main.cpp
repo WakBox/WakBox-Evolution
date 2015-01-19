@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <csignal>
 
+#include "Define.h"
 #include "Logs/Log.h"
 #include "Chat/CommandLine.h"
 #include "World/WorldRunnable.h"

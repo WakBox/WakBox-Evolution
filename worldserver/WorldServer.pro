@@ -19,7 +19,7 @@ unix {
 }
 
 win32 {
-    LIBS += -L"C:/CryptoCPP/lib" -lcryptopp
+    LIBS += -L"C:/CryptoCPP/lib" -lcryptopp562
     INCLUDEPATH += C:/CryptoCPP/include
 }
 
@@ -34,4 +34,4 @@ HEADERS += WorldServer.h
 include(../dep/Dep.pri)
 include(../shared/Shared.pri)
 include(Game/Game.pri)
-include(Scripts/Scripts.pri)
+include(Scripts/Scripts.pri)

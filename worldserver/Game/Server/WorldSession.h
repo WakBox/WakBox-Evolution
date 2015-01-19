@@ -9,25 +9,8 @@
 #include "Miscellaneous/SharedDefines.h"
 #include "Define.h"
 #include "Network/SocketHandler.h"
-#include "Entities/Character/Character.h"
 #include "World/World.h"
 #include "Scripting/ScriptMgr.h"
-
-enum LoginResult
-{
-    LOGIN_RESULT_SUCCESS                    = 0,
-    LOGIN_RESULT_INVALID_LOGIN              = 2,
-    LOGIN_RESULT_ALREADY_CONNECTED          = 3,
-    LOGIN_RESULT_SAVE_IN_PROGRESSS          = 4,
-    LOGIN_RESULT_ACCOUNT_BANNED             = 5,
-    LOGIN_RESULT_ACCOUNT_LOCKED             = 9,
-    LOGIN_RESULT_SERVER_DOWN                = 10,
-    LOGIN_RESULT_TOO_MANY_CONNECTIONS       = 11,
-    LOGIN_RESULT_INVALID_PARTNER            = 12,
-    LOGIN_RESULT_INVALID_MAIL               = 20,
-    LOGIN_RESULT_ACCOUNT_UNDER_MODERATION   = 21,
-    LOGIN_RESULT_CLOSED_BETA                = 127
-};
 
 struct sAccountInfos
 {
@@ -54,15 +37,13 @@ public:
     Character* GetCharacter() const { return m_character; }
 
     virtual void ProcessPacket();
+    virtual void SendPacket(WorldPacket& data);
 
     // Default handlers
     void HandleNULL(WorldPacket& /*packet*/) {}
     void HandleServerSide(WorldPacket& /*packet*/) {}
 
     // CMSG Handlers
-    void HandleClientDisconnect(WorldPacket& /*packet*/);
-    void HandleClientVersion(WorldPacket& packet);
-    void HandleClientAuthentication(WorldPacket& packet);
     void HandlePingCommand(WorldPacket& packet);
     void HandleInteractiveElement(WorldPacket& packet);
     void HandleGroupInvite(WorldPacket& packet);
@@ -84,8 +65,6 @@ public:
     void HandleServerTimeCommand(WorldPacket& /*packet*/);
 
     // SMSG Handlers
-    void SendRSAPublicKey();
-    void SendLoginErrorResult(LoginResult result);
     void SendWorldSelectResult();
     void SendServerTime();
     void SendCharactersList();
