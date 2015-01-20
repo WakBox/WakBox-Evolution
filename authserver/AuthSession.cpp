@@ -9,26 +9,28 @@ AuthHandlerMap  AuthTable::authHandlers;
 
 void AuthTable::InitHandlers()
 {
-    #define ADD_OPCODE_HANDLER(opcode, handler) \
-        AddOpcodeHandler(opcode, #opcode, handler);
+    #define ADD_OPCODE_HANDLER(opcode, status, handler) \
+        AddOpcodeHandler(opcode, #opcode, status, handler);
 
-    ADD_OPCODE_HANDLER(CMSG_CLIENT_DISCONNECT,                      &AuthSession::HandleClientDisconnect);
-    ADD_OPCODE_HANDLER(CMSG_CLIENT_VERSION,                         &AuthSession::HandleClientVersion);
-    ADD_OPCODE_HANDLER(CMSG_CLIENT_AUTH,                            &AuthSession::HandleClientAuthentication);
-    ADD_OPCODE_HANDLER(CMSG_PUBLIC_KEY_REQUEST,                     &AuthSession::HandlePublicKeyRequest);
-    ADD_OPCODE_HANDLER(CMSG_REALMS_REQUEST,                         &AuthSession::HandleRealmsRequest);
-    ADD_OPCODE_HANDLER(CMSG_AUTH_TOKEN_REQUEST,                     &AuthSession::HandleAuthTokenRequest);
+    ADD_OPCODE_HANDLER(CMSG_CLIENT_DISCONNECT,         STATUS_AUTHED,   &AuthSession::HandleClientDisconnect);
+    ADD_OPCODE_HANDLER(CMSG_CLIENT_VERSION,            STATUS_ALWAYS,   &AuthSession::HandleClientVersion);
+    ADD_OPCODE_HANDLER(CMSG_CLIENT_AUTH,               STATUS_ALWAYS,   &AuthSession::HandleClientAuthentication);
+    ADD_OPCODE_HANDLER(CMSG_PUBLIC_KEY_REQUEST,        STATUS_ALWAYS,   &AuthSession::HandlePublicKeyRequest);
+    ADD_OPCODE_HANDLER(CMSG_REALMS_REQUEST,            STATUS_AUTHED,   &AuthSession::HandleRealmsRequest);
+    ADD_OPCODE_HANDLER(CMSG_AUTH_TOKEN_REQUEST,        STATUS_AUTHED,   &AuthSession::HandleAuthTokenRequest);
 
-    ADD_OPCODE_HANDLER(SMSG_CONNECTION_RETRY_TICKET,                &AuthSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_CLIENT_VERSION_RESULT,                  &AuthSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_CLIENT_AUTH_RESULT,                     &AuthSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_PUBLIC_KEY,                             &AuthSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_REALMS_LIST,                            &AuthSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_AUTH_TOKEN_RESULT,                      &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CONNECTION_RETRY_TICKET,   STATUS_NEVER,    &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CLIENT_VERSION_RESULT,     STATUS_NEVER,    &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CLIENT_AUTH_RESULT,        STATUS_NEVER,    &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_PUBLIC_KEY,                STATUS_NEVER,    &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_REALMS_LIST,               STATUS_NEVER,    &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_AUTH_TOKEN_RESULT,         STATUS_NEVER,    &AuthSession::HandleServerSide);
 }
 
 AuthSession::AuthSession(QTcpSocket *socket) : SocketHandler(socket)
 {
+    m_logout = false;
+    m_accountId = 0;
     m_username = QString();
 
     connect(m_socket, SIGNAL(disconnected()), this, SLOT(OnClose()));
@@ -37,10 +39,14 @@ AuthSession::AuthSession(QTcpSocket *socket) : SocketHandler(socket)
 
 AuthSession::~AuthSession()
 {
+    OnClose();
 }
 
 void AuthSession::ProcessPacket()
 {
+    if (m_logout)
+        return;
+
     QDataStream in(m_socket);
 
     while (m_socket->bytesAvailable())
@@ -70,7 +76,30 @@ void AuthSession::ProcessPacket()
             Log::Write(LOG_TYPE_DEBUG, "Received packet opcode %s <%u> (size : %u).", opcodeHandler.name.toLatin1().data(), opcode, m_packetSize);
 
             WorldPacket packet(opcode, data);
-            (this->*opcodeHandler.handler)(packet);
+
+            switch (opcodeHandler.status)
+            {
+            case STATUS_UNHANDLED:
+                Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u> (size : %u).", opcode, data.size());
+                break;
+            case STATUS_NEVER:
+                Log::Write(LOG_TYPE_DEBUG, "Received not allowed packet <%u> (size : %u).", opcode, data.size());
+                break;
+            default:
+                if (opcodeHandler.status == STATUS_ALWAYS ||
+                    (opcodeHandler.status == STATUS_AUTHED && m_accountId != 0))
+                {
+                    (this->*opcodeHandler.handler)(packet);
+                    Log::Write(LOG_TYPE_DEBUG, "Received packet opcode %s <%u> (size : %u).", opcodeHandler.name.toLatin1().data(), opcode, data.size());
+                }
+                else
+                {
+                    // Report IP too
+                    Log::Write(LOG_TYPE_DEBUG, "Warning ! Received packet with wrong status (hack !?) <%u> (size : %u).", opcode, data.size());
+                    OnClose();
+                }
+                break;
+            }
         }
         else
             Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u> (size : %u).", opcode, m_packetSize);
@@ -89,8 +118,9 @@ void AuthSession::SendPacket(WorldPacket& data)
 
 void AuthSession::OnClose()
 {
-    AuthServer::Instance()->RemoveSocket(this);
+    m_logout = true;
     SocketHandler::OnClose();
+    AuthServer::Instance()->RemoveSocket(this);
 }
 
 void AuthSession::HandleClientVersion(WorldPacket& packet)

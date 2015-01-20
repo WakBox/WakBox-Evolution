@@ -28,6 +28,14 @@ enum AuthOpcodes
     SMSG_AUTH_TOKEN_RESULT                      = 1212,
 };
 
+enum OpcodeStatus
+{
+    STATUS_UNHANDLED = 0,
+    STATUS_ALWAYS,
+    STATUS_NEVER,
+    STATUS_AUTHED
+};
+
 enum LoginResult
 {
     LOGIN_RESULT_SUCCESS                        = 0,
@@ -86,6 +94,7 @@ public slots:
     virtual void OnClose();
 
 private:
+    bool m_logout;
     quint32 m_accountId;
     QString m_username;
 };
@@ -93,6 +102,7 @@ private:
 struct AuthHandler
 {
     QString name;
+    OpcodeStatus status;
     void (AuthSession::*handler)(WorldPacket& packet);
 };
 
@@ -104,10 +114,11 @@ class AuthTable
 public:
     static void InitHandlers();
 
-    static void AddOpcodeHandler(quint16 opcode, char const* name, authHandler handler)
+    static void AddOpcodeHandler(quint16 opcode, char const* name, OpcodeStatus status, authHandler handler)
     {
         AuthHandler opcodeHandler;
         opcodeHandler.name = QString(name);
+        opcodeHandler.status = status;
         opcodeHandler.handler = handler;
 
         authHandlers.insert((AuthOpcodes)opcode, opcodeHandler);
