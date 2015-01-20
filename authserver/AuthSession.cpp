@@ -17,16 +17,20 @@ void AuthTable::InitHandlers()
     ADD_OPCODE_HANDLER(CMSG_CLIENT_AUTH,                            &AuthSession::HandleClientAuthentication);
     ADD_OPCODE_HANDLER(CMSG_PUBLIC_KEY_REQUEST,                     &AuthSession::HandlePublicKeyRequest);
     ADD_OPCODE_HANDLER(CMSG_REALMS_REQUEST,                         &AuthSession::HandleRealmsRequest);
+    ADD_OPCODE_HANDLER(CMSG_AUTH_TOKEN_REQUEST,                     &AuthSession::HandleAuthTokenRequest);
 
     ADD_OPCODE_HANDLER(SMSG_CONNECTION_RETRY_TICKET,                &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CLIENT_VERSION_RESULT,                  &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CLIENT_AUTH_RESULT,                     &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_PUBLIC_KEY,                             &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_REALMS_LIST,                            &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_AUTH_TOKEN_RESULT,                      &AuthSession::HandleServerSide);
 }
 
 AuthSession::AuthSession(QTcpSocket *socket) : SocketHandler(socket)
 {
+    m_username = QString();
+
     connect(m_socket, SIGNAL(disconnected()), this, SLOT(OnClose()));
     Log::Write(LOG_TYPE_NORMAL, "New incoming connection from %s", m_socket->peerAddress().toString().toLatin1().data());
 }
@@ -101,9 +105,7 @@ void AuthSession::HandleClientVersion(WorldPacket& packet)
     build =  packet.ReadString();
 
     QString clientVersion = QString(QString::number(version) + "." + QString::number(revision) + "." + QString::number(change));
-    qDebug() << "Received version packet : " << clientVersion << " build : " << build;
-
-    SendClientVersionResult(clientVersion, sWorldConfig->GetString("AcceptClientVersion"));
+    SendClientVersionResult(clientVersion, sAuthConfig->GetString("AcceptClientVersion"));
 }
 
 void AuthSession::SendClientVersionResult(QString clientVersion, QString expectedVersion)
@@ -124,8 +126,8 @@ void AuthSession::HandlePublicKeyRequest(WorldPacket& /*packet*/)
     QByteArray publicKey = sCryptographyMgr->GetPublicKey();
 
     WorldPacket data(SMSG_PUBLIC_KEY);
-    data << quint64(0x8000000000000000);
-    data.WriteRawBytes(publicKey.data(), publicKey.length());
+    data << quint64(0x8000000000000000); // Salt
+    data.WriteRawBytes(publicKey);
     SendPacket(data);
 }
 
@@ -140,13 +142,13 @@ void AuthSession::HandleClientAuthentication(WorldPacket& packet)
 
     WorldPacket decrypted(0, sCryptographyMgr->Decrypt(buffer));
 
-    quint64 rsaVerification;
-    decrypted >> rsaVerification;
+    quint64 salt;
+    decrypted >> salt;
 
-    QString account = decrypted.ReadString();
+    m_username = decrypted.ReadString();
     QString password = decrypted.ReadString();
 
-    QSqlQuery result = sAuthDatabase->Query(SELECT_ACCOUNT_BY_USERNAME, QVariantList() << account);
+    QSqlQuery result = sAuthDatabase->Query(SELECT_ACCOUNT_BY_USERNAME, QVariantList() << m_username);
 
     if (!result.first())
     {
@@ -157,7 +159,7 @@ void AuthSession::HandleClientAuthentication(WorldPacket& packet)
     QSqlRecord fields = result.record();
     QString hashPassword = result.value(fields.indexOf("hash_password")).toString();
 
-    if (Utils::HashPassword(account, password) != hashPassword)
+    if (Utils::HashPassword(m_username, password) != hashPassword)
     {
         SendLoginErrorResult(LOGIN_RESULT_ERROR_INVALID_LOGIN);
         return;
@@ -186,26 +188,77 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
     QSqlQuery result = sAuthDatabase->Query(SELECT_REALMS);
 
     WorldPacket data(SMSG_REALMS_LIST);
+    Packet data2;
+
     data << result.size();
 
     while (result.next())
     {
         QSqlRecord fields = result.record();
+        int realmId = result.value(fields.indexOf("realm_id")).toInt();
 
-        data << result.value(fields.indexOf("realm_id")).toInt();
+        data << realmId;
         data.WriteString(result.value(fields.indexOf("name")).toString(), STRING_SIZE_4);
 
         data << result.value(fields.indexOf("community")).toInt();
         data.WriteString(result.value(fields.indexOf("address")).toString(), STRING_SIZE_4);
 
-        data << int(1);
+        data << (int) 1;
         data << result.value(fields.indexOf("port")).toInt();
 
-        data << result.value(fields.indexOf("realm_id")).toInt();
+        data << (quint8) realmId;
+
+        // Next part
+
+        data2 << realmId;
+        data2.StartBlock<int>();
+        {
+            QStringList version = result.value(fields.indexOf("version")).toString().split(".");
+            data2 << (quint8)  version.at(0).toUShort();
+            data2 << (quint16) version.at(1).toUShort();
+            data2 << (quint8)  version.at(2).toUShort();
+            data2.WriteString("-1");
+        }
+        data2.EndBlock<int>();
+
+        data2.StartBlock<int>();
+        {
+            /* Config example
+            COMMUNITY_CHECK_ENABLE 208 : "true"
+            COMMUNITY_REQUIRED 209 : 0
+            COMMUNITY_FORBIDDEN 210 : ""
+            AUTHORIZED_PARTNERS 220 : "default"
+            SERVER_ID 420 : 1
+            */
+
+            data2 << (int) 0;
+        }
+        data2.EndBlock<int>();
+
+        data2 << result.value(fields.indexOf("player_count")).toInt();
+        data2 << result.value(fields.indexOf("player_limit")).toInt();
+        data2 << (quint8) result.value(fields.indexOf("locked")).toBool();
     }
 
+    data << result.size();
+    data.Append(data2);
 
+    SendPacket(data);
+}
 
+void AuthSession::HandleAuthTokenRequest(WorldPacket& packet)
+{
+    quint32 serverId;
+    quint64 accountId;
+
+    packet >> serverId;
+    packet >> accountId;
+
+    QString token = Utils::GenerateToken(m_username);
+
+    WorldPacket data(SMSG_AUTH_TOKEN_RESULT);
+    data << (quint8) 0; // ResultCode
+    data.WriteString(token, STRING_SIZE_4);
     SendPacket(data);
 }
 

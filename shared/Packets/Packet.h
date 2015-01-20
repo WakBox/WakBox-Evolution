@@ -11,7 +11,7 @@ typedef QMap<quint8, qint64> BlockPosMap;
 class Packet
 {
 public:
-    Packet(quint16 opcode, QByteArray packet = QByteArray()) : m_opcode(opcode), m_buffer(packet), m_stream(&m_buffer, QIODevice::ReadWrite)
+    Packet(quint16 opcode = 0, QByteArray packet = QByteArray()) : m_opcode(opcode), m_buffer(packet), m_stream(&m_buffer, QIODevice::ReadWrite)
     {
     }
 
@@ -23,6 +23,11 @@ public:
     QByteArray GetPacket()
     {
         return m_buffer;
+    }
+
+    void Append(Packet& packet)
+    {
+        WriteRawBytes(packet.GetPacket());
     }
 
     template <class T>
@@ -37,9 +42,9 @@ public:
         m_stream.writeBytes(s, len);
     }
 
-    void WriteRawBytes(const char* s, int len)
+    void WriteRawBytes(QByteArray bytes)
     {
-        m_stream.writeRawData(s, len);
+        m_stream.writeRawData(bytes.data(), bytes.length());
     }
 
     void WriteString(QString s, quint8 size = STRING_SIZE_1)
@@ -51,7 +56,7 @@ public:
         else
             *this << (quint8)s.length();
 
-        WriteRawBytes(s.toLatin1().constData(), (uint)s.length());
+        WriteRawBytes(s.toLatin1());
     }
 
     template <class T>

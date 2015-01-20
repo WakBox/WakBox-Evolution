@@ -26,8 +26,14 @@ QByteArray Utils::FromHexString(QString packet)
     return buffer;
 }
 
-QString Utils::HashPassword(QString account, QString password)
+QString Utils::HashPassword(QString username, QString password)
 {
-    QString data = account + ":" + password;
+    QString data = username + ":" + password;
+    return QString(QCryptographicHash::hash(data.toLatin1(), QCryptographicHash::Sha1).toHex());
+}
+
+QString Utils::GenerateToken(QString username)
+{
+    QString data = username + "-" + QDateTime::currentDateTime().toMSecsSinceEpoch();
     return QString(QCryptographicHash::hash(data.toLatin1(), QCryptographicHash::Sha1).toHex());
 }

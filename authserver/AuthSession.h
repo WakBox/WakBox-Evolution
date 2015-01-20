@@ -12,18 +12,20 @@
 enum AuthOpcodes
 {
     // Client messages (CMSG)
-    CMSG_CLIENT_DISCONNECT = 1,
-    CMSG_CLIENT_VERSION = 7,
-    CMSG_CLIENT_AUTH = 1026,
-    CMSG_PUBLIC_KEY_REQUEST = 1033,
-    CMSG_REALMS_REQUEST = 1035,
+    CMSG_CLIENT_DISCONNECT                      = 1,
+    CMSG_CLIENT_VERSION                         = 7,
+    CMSG_CLIENT_AUTH                            = 1026,
+    CMSG_PUBLIC_KEY_REQUEST                     = 1033,
+    CMSG_REALMS_REQUEST                         = 1035,
+    CMSG_AUTH_TOKEN_REQUEST                     = 1211,
 
     // Server messages (SMSG)
-    SMSG_CONNECTION_RETRY_TICKET = 2,
-    SMSG_CLIENT_VERSION_RESULT = 8,
-    SMSG_CLIENT_AUTH_RESULT = 1027,
-    SMSG_PUBLIC_KEY = 1034,
-    SMSG_REALMS_LIST = 1036,
+    SMSG_CONNECTION_RETRY_TICKET                = 2,
+    SMSG_CLIENT_VERSION_RESULT                  = 8,
+    SMSG_CLIENT_AUTH_RESULT                     = 1027,
+    SMSG_PUBLIC_KEY                             = 1034,
+    SMSG_REALMS_LIST                            = 1036,
+    SMSG_AUTH_TOKEN_RESULT                      = 1212,
 };
 
 enum LoginResult
@@ -75,6 +77,7 @@ public:
     void HandlePublicKeyRequest(WorldPacket& /*packet*/);
     void HandleClientAuthentication(WorldPacket& packet);
     void HandleRealmsRequest(WorldPacket& /*packet*/);
+    void HandleAuthTokenRequest(WorldPacket& packet);
 
     void SendClientVersionResult(QString clientVersion, QString expectedVersion);
     void SendLoginErrorResult(LoginResult result);
@@ -83,6 +86,7 @@ public slots:
     virtual void OnClose();
 
 private:
+    QString m_username;
 };
 
 struct AuthHandler

@@ -35,10 +35,10 @@ AuthServer::~AuthServer()
 
 bool AuthServer::Initialize()
 {
-    if (!sConfigMgr->LoadWorldConfig("authserver.conf"))
+    if (!sConfigMgr->LoadAuthConfig("authserver.conf"))
         return false;
 
-    Log::Instance()->Initialize(sWorldConfig->GetUShort("LogConsoleLevel"), sWorldConfig->GetUShort("LogFileLevel"), sWorldConfig->GetString("LogFile"));
+    Log::Instance()->Initialize(sAuthConfig->GetUShort("LogConsoleLevel"), sAuthConfig->GetUShort("LogFileLevel"), sAuthConfig->GetString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting AuthServer...");
 
     if (!sDatabase->OpenAuthDatabase())
