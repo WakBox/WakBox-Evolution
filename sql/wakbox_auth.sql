@@ -23,15 +23,15 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `account`
+-- Structure de la table `accounts`
 --
 
-CREATE TABLE IF NOT EXISTS `account` (
+CREATE TABLE IF NOT EXISTS `accounts` (
   `account_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `pseudo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `hash_password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `session_key` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `session_token` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `gm_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `join_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

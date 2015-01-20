@@ -86,6 +86,7 @@ public slots:
     virtual void OnClose();
 
 private:
+    quint32 m_accountId;
     QString m_username;
 };
 

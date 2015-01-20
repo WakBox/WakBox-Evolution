@@ -19,6 +19,8 @@ enum AuthDatabaseQueries
      */
     SELECT_ACCOUNT_BY_USERNAME,
     SELECT_REALMS,
+
+    UPDATE_SESSION_TOKEN,
 };
 
 #endif

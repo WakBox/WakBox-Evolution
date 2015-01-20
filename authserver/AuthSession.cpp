@@ -156,14 +156,15 @@ void AuthSession::HandleClientAuthentication(WorldPacket& packet)
         return;
     }
 
-    QSqlRecord fields = result.record();
-    QString hashPassword = result.value(fields.indexOf("hash_password")).toString();
+    QString hashPassword = result.value("hash_password").toString();
 
     if (Utils::HashPassword(m_username, password) != hashPassword)
     {
         SendLoginErrorResult(LOGIN_RESULT_ERROR_INVALID_LOGIN);
         return;
     }
+
+    m_accountId = result.value("account_id").toUInt();
 
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
     data << quint8(LOGIN_RESULT_SUCCESS);
@@ -194,17 +195,16 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
 
     while (result.next())
     {
-        QSqlRecord fields = result.record();
-        int realmId = result.value(fields.indexOf("realm_id")).toInt();
+        int realmId = result.value("realm_id").toInt();
 
         data << realmId;
-        data.WriteString(result.value(fields.indexOf("name")).toString(), STRING_SIZE_4);
+        data.WriteString(result.value("name").toString(), STRING_SIZE_4);
 
-        data << result.value(fields.indexOf("community")).toInt();
-        data.WriteString(result.value(fields.indexOf("address")).toString(), STRING_SIZE_4);
+        data << result.value("community").toInt();
+        data.WriteString(result.value("address").toString(), STRING_SIZE_4);
 
         data << (int) 1;
-        data << result.value(fields.indexOf("port")).toInt();
+        data << result.value("port").toInt();
 
         data << (quint8) realmId;
 
@@ -213,7 +213,7 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
         data2 << realmId;
         data2.StartBlock<int>();
         {
-            QStringList version = result.value(fields.indexOf("version")).toString().split(".");
+            QStringList version = result.value("version").toString().split(".");
             data2 << (quint8)  version.at(0).toUShort();
             data2 << (quint16) version.at(1).toUShort();
             data2 << (quint8)  version.at(2).toUShort();
@@ -235,9 +235,9 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
         }
         data2.EndBlock<int>();
 
-        data2 << result.value(fields.indexOf("player_count")).toInt();
-        data2 << result.value(fields.indexOf("player_limit")).toInt();
-        data2 << (quint8) result.value(fields.indexOf("locked")).toBool();
+        data2 << result.value("player_count").toInt();
+        data2 << result.value("player_limit").toInt();
+        data2 << (quint8) result.value("locked").toBool();
     }
 
     data << result.size();
@@ -256,6 +256,8 @@ void AuthSession::HandleAuthTokenRequest(WorldPacket& packet)
 
     QString token = Utils::GenerateToken(m_username);
 
+    sAuthDatabase->Query(UPDATE_SESSION_TOKEN, QVariantList() << token << m_accountId);
+
     WorldPacket data(SMSG_AUTH_TOKEN_RESULT);
     data << (quint8) 0; // ResultCode
     data.WriteString(token, STRING_SIZE_4);
@@ -264,7 +266,5 @@ void AuthSession::HandleAuthTokenRequest(WorldPacket& packet)
 
 void AuthSession::HandleClientDisconnect(WorldPacket&)
 {
-    // TODO
+    sAuthServer->RemoveSocket(this);
 }
-
-
