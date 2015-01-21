@@ -41,7 +41,7 @@ bool AuthServer::Initialize()
     Log::Instance()->Initialize(sAuthConfig->GetUShort("LogConsoleLevel"), sAuthConfig->GetUShort("LogFileLevel"), sAuthConfig->GetString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting AuthServer...");
 
-    if (!sDatabase->OpenAuthDatabase())
+    if (!sDatabase->OpenAuthDatabase(sAuthConfig->GetString("AuthDatabase")))
         return false;
 
     if (!sCryptographyMgr->Initialize())

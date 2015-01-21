@@ -8,7 +8,7 @@ typedef QMap<QString, QString> ConfigMap;
 class Configuration
 {
 public:
-    Configuration();
+    Configuration(QString filename);
     ~Configuration();
 
     QString GetString(QString name);
@@ -17,12 +17,13 @@ public:
     ushort GetUShort(QString name);
     uint GetUInt(QString name);
 
-    Configuration* OpenFile(QString fileName);
+    bool Load();
+    bool Reload() { return Load(); }
 
 private:
     QString GetValue(QString name);
 
-    QFile* m_file;
+    QString m_filename;
     ConfigMap m_config;
 };
 

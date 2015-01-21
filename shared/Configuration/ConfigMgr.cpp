@@ -20,24 +20,38 @@ ConfigMgr::~ConfigMgr()
     m_world = NULL;
 }
 
-bool ConfigMgr::LoadAuthConfig(QString fileName)
+bool ConfigMgr::LoadAuthConfig(QString name)
 {
-    Configuration* authConfig = new Configuration();
-    m_auth = authConfig->OpenFile(fileName);
-
-    if (m_auth)
-        return true;
+    if (FileExists(name))
+    {
+        m_auth = new Configuration(name);
+        if (m_auth->Load())
+            return true;
+    }
 
     return false;
 }
 
-bool ConfigMgr::LoadWorldConfig(QString fileName)
+bool ConfigMgr::LoadWorldConfig(QString name)
 {
-    Configuration* worldConfig = new Configuration();
-    m_world = worldConfig->OpenFile(fileName);
-
-    if (m_world)
-        return true;
+    if (FileExists(name))
+    {
+        m_world = new Configuration(name);
+        if (m_world->Load())
+            return true;
+    }
 
     return false;
+}
+
+bool ConfigMgr::FileExists(QString name)
+{
+    QFile file(name);
+    bool exists = file.open(QIODevice::ReadOnly);
+
+    if (!exists)
+        cout << "Cannot open configuration file " << name.toLatin1().data() << " : " << file.errorString().toLatin1().data() << endl;
+
+    file.close();
+    return exists;
 }

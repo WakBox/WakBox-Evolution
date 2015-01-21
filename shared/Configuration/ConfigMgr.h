@@ -11,11 +11,20 @@ public:
     ConfigMgr();
     ~ConfigMgr();
 
-    Configuration* GetAuthConfig() { Q_ASSERT(m_auth); return m_auth; }
-    Configuration* GetWorldConfig() { Q_ASSERT(m_world); return m_world; }
+    Configuration* GetAuthConfig()
+    {
+        return m_auth;
+    }
+
+    Configuration* GetWorldConfig()
+    {
+        return m_world;
+    }
 
     bool LoadAuthConfig(QString fileName);
     bool LoadWorldConfig(QString fileName);
+
+    bool FileExists(QString name);
 
 private:
     Configuration* m_auth;

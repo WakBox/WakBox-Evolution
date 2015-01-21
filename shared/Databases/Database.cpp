@@ -26,10 +26,9 @@ Database::~Database()
     delete m_worldDatabase;
 }
 
-bool Database::OpenAuthDatabase()
+bool Database::OpenAuthDatabase(ConnectionInfo info)
 {
-    ConnectionInfo cinfos = ConnectionInfo(sAuthConfig->GetString("AuthDatabase"));
-    m_authDatabase = new AuthDatabase(cinfos);
+    m_authDatabase = new AuthDatabase(info);
 
     if(!m_authDatabase->Open())
         return false;
@@ -37,10 +36,9 @@ bool Database::OpenAuthDatabase()
     return true;
 }
 
-bool Database::OpenCharDatabase()
+bool Database::OpenCharDatabase(ConnectionInfo info)
 {
-    ConnectionInfo cinfos = ConnectionInfo(sWorldConfig->GetString("CharDatabase"));
-    m_charDatabase = new CharDatabase(cinfos);
+    m_charDatabase = new CharDatabase(info);
 
     if(!m_charDatabase->Open())
         return false;
@@ -48,10 +46,9 @@ bool Database::OpenCharDatabase()
     return true;
 }
 
-bool Database::OpenWorldDatabase()
+bool Database::OpenWorldDatabase(ConnectionInfo info)
 {
-    ConnectionInfo cinfos = ConnectionInfo(sWorldConfig->GetString("WorldDatabase"));
-    m_worldDatabase = new WorldDatabase(cinfos);
+    m_worldDatabase = new WorldDatabase(info);
 
     if(!m_worldDatabase->Open())
         return false;

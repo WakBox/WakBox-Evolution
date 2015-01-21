@@ -25,6 +25,8 @@ void AuthTable::InitHandlers()
     ADD_OPCODE_HANDLER(SMSG_PUBLIC_KEY,                STATUS_NEVER,    &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_REALMS_LIST,               STATUS_NEVER,    &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_AUTH_TOKEN_RESULT,         STATUS_NEVER,    &AuthSession::HandleServerSide);
+
+	#undef ADD_OPCODE_HANDLER
 }
 
 AuthSession::AuthSession(QTcpSocket *socket) : SocketHandler(socket)

@@ -28,12 +28,12 @@ enum AuthOpcodes
     SMSG_AUTH_TOKEN_RESULT                      = 1212,
 };
 
-enum OpcodeStatus
+enum SessionStatus
 {
-    STATUS_UNHANDLED = 0,
-    STATUS_ALWAYS,
-    STATUS_NEVER,
-    STATUS_AUTHED
+    STATUS_UNHANDLED = 0,       // Opcode not handled
+    STATUS_ALWAYS,              // Opcode always accepted
+    STATUS_NEVER,               // Opcode not accepted from client (deprecated or server side only)
+    STATUS_AUTHED               // Player authenticated
 };
 
 enum LoginResult
@@ -102,7 +102,7 @@ private:
 struct AuthHandler
 {
     QString name;
-    OpcodeStatus status;
+    SessionStatus status;
     void (AuthSession::*handler)(WorldPacket& packet);
 };
 
@@ -114,7 +114,7 @@ class AuthTable
 public:
     static void InitHandlers();
 
-    static void AddOpcodeHandler(quint16 opcode, char const* name, OpcodeStatus status, authHandler handler)
+    static void AddOpcodeHandler(quint16 opcode, char const* name, SessionStatus status, authHandler handler)
     {
         AuthHandler opcodeHandler;
         opcodeHandler.name = QString(name);

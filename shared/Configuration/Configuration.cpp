@@ -1,43 +1,29 @@
 #include "Configuration.h"
 #include "Logs/Log.h"
 
-Configuration::Configuration()
+Configuration::Configuration(QString filename)
 {
-    m_file = NULL;
+    m_filename = filename;
     m_config.clear();
 }
 Configuration::~Configuration()
 {
-    if (m_file)
-        m_file->close();
-
-    m_file = NULL;
     m_config.clear();
 }
 
-Configuration* Configuration::OpenFile(QString fileName)
+bool Configuration::Load()
 {
-    m_file = new QFile(fileName);
-    if(!m_file->open(QIODevice::ReadOnly))
-    {
-        QString error = m_file->errorString();
-        cout << "Cannot open configuration file " << fileName.toLatin1().data() << " : " << error.toLatin1().data() << endl;
+    m_config.clear();
 
-        delete m_file;
-        return NULL;
-    }
-
-    QSettings settings(fileName, QSettings::IniFormat);
+    QSettings settings(m_filename, QSettings::IniFormat);
     const QStringList keys = settings.allKeys();
-
 
     QStringList::const_iterator itr;
     for (itr = keys.constBegin(); itr != keys.constEnd(); ++itr)
         m_config.insert((*itr), settings.value((*itr)).toString());
 
-    cout << "Configuration file " << fileName.toLatin1().data() << " successfully loaded." << endl;
-    m_file->close();
-    return this;
+    cout << "Configuration file " << m_filename.toLatin1().data() << " successfully loaded." << endl;
+    return true;
 }
 
 QString Configuration::GetValue(QString name)

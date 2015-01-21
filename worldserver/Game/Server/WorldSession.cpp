@@ -56,7 +56,31 @@ void WorldSession::ProcessPacket()
             Log::Write(LOG_TYPE_DEBUG, "Received packet opcode %s <%u> (size : %u).", opcodeHandler.name.toLatin1().data(), opcode, m_packetSize);
 
             WorldPacket packet(opcode, data);
-            (this->*opcodeHandler.handler)(packet);
+
+            switch (opcodeHandler.status)
+            {
+            case STATUS_UNHANDLED:
+                Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u> (size : %u).", opcode, data.size());
+                break;
+            case STATUS_NEVER:
+                Log::Write(LOG_TYPE_DEBUG, "Received not allowed packet <%u> (size : %u).", opcode, data.size());
+                break;
+            default:
+                // TODO manage status STATUS_IN_WORLD and STATUS_TRANSFER
+                if (opcodeHandler.status == STATUS_ALWAYS ||
+                    (opcodeHandler.status == STATUS_AUTHED && GetAccountInfos().id != 0))
+                {
+                    (this->*opcodeHandler.handler)(packet);
+                    Log::Write(LOG_TYPE_DEBUG, "Received packet opcode %s <%u> (size : %u).", opcodeHandler.name.toLatin1().data(), opcode, data.size());
+                }
+                else
+                {
+                    // Report IP too
+                    Log::Write(LOG_TYPE_DEBUG, "Warning ! Received packet with wrong status (hack !?) <%u> (size : %u).", opcode, data.size());
+                    OnClose();
+                }
+                break;
+            }
         }
         else
             Log::Write(LOG_TYPE_DEBUG, "Received unhandled packet <%u> (size : %u).", opcode, m_packetSize);

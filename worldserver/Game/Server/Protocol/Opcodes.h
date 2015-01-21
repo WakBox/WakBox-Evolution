@@ -55,12 +55,23 @@ enum Opcodes
     SMSG_ENTER_WORLD                            = 20002
 };
 
+enum SessionStatus
+{
+    STATUS_UNHANDLED = 0,       // Opcode not handled
+    STATUS_ALWAYS,              // Opcode always accepted
+    STATUS_NEVER,               // Opcode not accepted from client (deprecated or server side only)
+    STATUS_AUTHED,              // Player authenticated
+    STATUS_IN_WORLD,            // Player in world
+    STATUS_TRANSFER             // Player transferring (not in world)
+};
+
 class WorldPacket;
 class WorldSession;
 
 struct OpcodeHandler
 {
     QString name;
+    SessionStatus status;
     void (WorldSession::*handler)(WorldPacket& packet);
 };
 
@@ -72,10 +83,11 @@ class OpcodeTable
 public:
     static void Load();
 
-    static void Add(quint16 opcode, char const* name, opcodeHandler handler)
+    static void Add(quint16 opcode, char const* name, SessionStatus status, opcodeHandler handler)
     {
         OpcodeHandler opcodeHandler;
         opcodeHandler.name = QString(name);
+        opcodeHandler.status = status;
         opcodeHandler.handler = handler;
 
         opcodesList.insert(Opcodes(opcode), opcodeHandler);

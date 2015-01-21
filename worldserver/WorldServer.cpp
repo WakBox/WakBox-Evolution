@@ -35,13 +35,13 @@ bool WorldServer::Initialize()
     Log::Instance()->Initialize(sWorldConfig->GetUShort("LogConsoleLevel"), sWorldConfig->GetUShort("LogFileLevel"), sWorldConfig->GetString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting WorldServer...");
 
-    if (!sDatabase->OpenAuthDatabase())
+    if (!sDatabase->OpenAuthDatabase(sWorldConfig->GetString("AuthDatabase")))
         return false;
 
-    if (!sDatabase->OpenCharDatabase())
+    if (!sDatabase->OpenCharDatabase(sWorldConfig->GetString("CharDatabase")))
         return false;
 
-    if (!sDatabase->OpenWorldDatabase())
+    if (!sDatabase->OpenWorldDatabase(sWorldConfig->GetString("WorldDatabase")))
         return false;
 
     OpcodeTable::Load();

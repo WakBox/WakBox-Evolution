@@ -28,9 +28,9 @@ public:
         return m_worldDatabase;
     }
 
-    bool OpenAuthDatabase();
-    bool OpenCharDatabase();
-    bool OpenWorldDatabase();
+    bool OpenAuthDatabase(ConnectionInfo info);
+    bool OpenCharDatabase(ConnectionInfo info);
+    bool OpenWorldDatabase(ConnectionInfo info);
 
 private:
     AuthDatabase* m_authDatabase;
