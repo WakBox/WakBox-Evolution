@@ -29,13 +29,16 @@ WorldServer::~WorldServer()
 
 bool WorldServer::Initialize()
 {
+    if (!sConfigMgr->LoadAuthConfig("authserver.conf"))
+        return false;
+
     if (!sConfigMgr->LoadWorldConfig("worldserver.conf"))
         return false;
 
     Log::Instance()->Initialize(sWorldConfig->GetUShort("LogConsoleLevel"), sWorldConfig->GetUShort("LogFileLevel"), sWorldConfig->GetString("LogFile"));
     Log::Write(LOG_TYPE_NORMAL, "Starting WorldServer...");
 
-    if (!sDatabase->OpenAuthDatabase(sWorldConfig->GetString("AuthDatabase")))
+    if (!sDatabase->OpenAuthDatabase(sAuthConfig->GetString("AuthDatabase")))
         return false;
 
     if (!sDatabase->OpenCharDatabase(sWorldConfig->GetString("CharDatabase")))

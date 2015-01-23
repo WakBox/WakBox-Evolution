@@ -1,16 +1,11 @@
 #include "Server/WorldSession.h"
 
-void WorldSession::SendWorldSelectResult()
+void WorldSession::SendWorldSelectResult(bool result)
 {
     WorldPacket data(SMSG_WORLD_SELECT_RESULT);
-    data << quint8(0); // 0 = success, 1 = error
+    data << (quint8) !result;
+    qDebug() << "WORLD SELECT result : " << (quint8) !result;
     SendPacket(data);
-
-    // Send 2078 ?
-    SendServerTime();
-    // Send 2067 ?
-    SendCharactersList();
-    // Send 2077 ?
 }
 
 void WorldSession::SendEnterWorld()

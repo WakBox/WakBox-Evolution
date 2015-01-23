@@ -6,6 +6,12 @@
 enum Opcodes
 {
     // Client messages (CMSG)
+    CMSG_CLIENT_VERSION                         = 7,
+    CMSG_PUBLIC_KEY_REQUEST                     = 1033,
+    CMSG_AUTH_TOKEN                             = 1213,
+
+
+
     CMSG_PING_COMMAND                           = 107,
     CMSG_INTERACTIVE_ELEMENT                    = 201,
     CMSG_GROUP_INVITE                           = 501,
@@ -27,19 +33,29 @@ enum Opcodes
     CMSG_SERVER_TIME_COMMAND                    = 15000,
 
     // Server messages (SMSG)
+    SMSG_CLIENT_VERSION_RESULT                  = 8,
+    SMSG_CLIENT_IP                              = 110,
+    SMSG_PUBLIC_KEY_RESULT                      = 1034,
+    SMSG_WORLD_SELECT_RESULT                    = 1202,
+    SMSG_CHAR_LIST                              = 2048,
+    SMSG_CLIENT_CALENDAR_SYNC                   = 2063,
+    SMSG_SYSTEM_CONFIGURATION                   = 2067,
+    SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE      = 2069,
+    SMSG_FREE_COMPANION_BREED_ID                = 2078,
+
+
     SMSG_CONNECTION_RETRY_TICKET                = 2,
     SMSG_PING_COMMAND                           = 108,
     SMSG_INTERACTIVE_ELEMENT_SPAWN              = 200,
     SMSG_INTERACTIVE_ELEMENT_UPDATE             = 202,
     SMSG_WORLD_LIST                             = 1200,
-    SMSG_WORLD_SELECT_RESULT                    = 1202,
-    SMSG_CHAR_LIST                              = 2048,
+
+
     SMSG_CHAR_SELECT                            = 2050,
     SMSG_CHAR_DELETE                            = 2052,
     SMSG_CHAR_CREATE                            = 2054,
     SMSG_LEAVE_CHAR_SELECT                      = 2056,
     SMSG_WHOIS_COMMAND                          = 2061,
-    SMSG_SERVER_TIME                            = 2063,
     SMSG_CHAT_MESSAGE                           = 3152,
     SMSG_CHARACTER_STATS_ENTER_WORLD            = 4098,
     SMSG_SEND_CHARACTER_POSITION                = 4100,

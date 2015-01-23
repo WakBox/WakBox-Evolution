@@ -1,9 +1,10 @@
 #include "Server/WorldSession.h"
 
-void WorldSession::SendServerTime()
+void WorldSession::SendClientCalendarSync()
 {
-    WorldPacket data(SMSG_SERVER_TIME);
-    data << (quint64)QDateTime::currentDateTime().toTime_t() * 1000;
+    WorldPacket data(SMSG_CLIENT_CALENDAR_SYNC);
+    // m_synchronizationTime
+    data << (quint64) QDateTime::currentDateTime().toTime_t() * 1000;
     SendPacket(data);
 }
 

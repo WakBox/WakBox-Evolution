@@ -43,7 +43,12 @@ public:
     void HandleNULL(WorldPacket& /*packet*/) {}
     void HandleServerSide(WorldPacket& /*packet*/) {}
 
-    // CMSG Handlers
+    // CMSG handlers
+    void HandleClientVersion(WorldPacket& packet);
+    void HandlePublicKeyRequest(WorldPacket& /*packet*/);
+    void HandleClientAuthToken(WorldPacket& packet);
+
+
     void HandlePingCommand(WorldPacket& packet);
     void HandleInteractiveElement(WorldPacket& packet);
     void HandleGroupInvite(WorldPacket& packet);
@@ -64,9 +69,13 @@ public:
     void HandleClientLanguage(WorldPacket& packet);
     void HandleServerTimeCommand(WorldPacket& /*packet*/);
 
-    // SMSG Handlers
-    void SendWorldSelectResult();
-    void SendServerTime();
+    // SMSG handlers
+    void SendClientVersionResult(QString clientVersion, QString expectedVersion);
+    void SendWorldSelectResult(bool result);
+    void SendClientCalendarSync();
+
+
+
     void SendCharactersList();
     void SendSelectCharacterResult(bool result);
     void SendEnterWorld();

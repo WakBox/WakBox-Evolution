@@ -46,6 +46,21 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ip_banned`
+--
+
+CREATE TABLE IF NOT EXISTS `ip_banned` (
+  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ban_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ban_reason` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `banned_by` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `unban_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `realms`
 --
 

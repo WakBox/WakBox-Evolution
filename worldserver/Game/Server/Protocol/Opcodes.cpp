@@ -9,6 +9,9 @@ void OpcodeTable::Load()
         Add(opcode, #opcode, status, handler);
 
     // Client messages (CMSG)
+    ADD_OPCODE_HANDLER(CMSG_CLIENT_VERSION,                         STATUS_ALWAYS,      &WorldSession::HandleClientVersion);
+    ADD_OPCODE_HANDLER(CMSG_PUBLIC_KEY_REQUEST,                     STATUS_ALWAYS,      &WorldSession::HandlePublicKeyRequest);
+    ADD_OPCODE_HANDLER(CMSG_AUTH_TOKEN,                             STATUS_ALWAYS,      &WorldSession::HandleClientAuthToken);
     //    ADD_OPCODE_HANDLER(CMSG_PING_COMMAND,                           &WorldSession::HandlePingCommand);
     //    ADD_OPCODE_HANDLER(CMSG_INTERACTIVE_ELEMENT,                    &WorldSession::HandleInteractiveElement);
     //    ADD_OPCODE_HANDLER(CMSG_GROUP_INVITE,                           &WorldSession::HandleGroupInvite);
@@ -30,18 +33,25 @@ void OpcodeTable::Load()
     //    ADD_OPCODE_HANDLER(CMSG_SERVER_TIME_COMMAND,                    &WorldSession::HandleServerTimeCommand);
 
     // Server messages (SMSG)
+    ADD_OPCODE_HANDLER(SMSG_CLIENT_VERSION_RESULT,                  STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CLIENT_IP,                              STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_PUBLIC_KEY_RESULT,                      STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_WORLD_SELECT_RESULT,                    STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CHAR_LIST,                              STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CLIENT_CALENDAR_SYNC,                   STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_SYSTEM_CONFIGURATION,                   STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE,      STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_FREE_COMPANION_BREED_ID,                STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
+
+
     //    ADD_OPCODE_HANDLER(SMSG_PING_COMMAND,                           &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_INTERACTIVE_ELEMENT_SPAWN,              &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_INTERACTIVE_ELEMENT_UPDATE,             &WorldSession::HandleServerSide);
-    //    ADD_OPCODE_HANDLER(SMSG_WORLD_LIST,                             &WorldSession::HandleServerSide);
-    //    ADD_OPCODE_HANDLER(SMSG_WORLD_SELECT_RESULT,                    &WorldSession::HandleServerSide);
-    //    ADD_OPCODE_HANDLER(SMSG_CHAR_LIST,                              &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHAR_SELECT,                            &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHAR_DELETE,                            &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHAR_CREATE,                            &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_LEAVE_CHAR_SELECT,                      &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_WHOIS_COMMAND,                          &WorldSession::HandleServerSide);
-    //    ADD_OPCODE_HANDLER(SMSG_SERVER_TIME,                            &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHAT_MESSAGE,                           &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHARACTER_STATS_ENTER_WORLD,            &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_SEND_CHARACTER_POSITION,                &WorldSession::HandleServerSide);

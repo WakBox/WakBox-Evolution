@@ -8,41 +8,39 @@ void WorldSession::SendCharactersList()
     QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTERS_BY_ACCOUNT_ID, QVariantList() << GetAccountInfos().id);
 
     WorldPacket data(SMSG_CHAR_LIST);
-    data << quint8(result.size());
+    data << (quint8) result.size();
 
     while (result.next())
     {
-        QSqlRecord fields = result.record();
-
         // Must check packet struct
         data.StartBlock<quint16>();
         {
             // Character Part ID
-            data << quint8(4);
+            data << (quint8) CHARACTER_SERIALIZATION_TYPE_FOR_CHARACTER_LIST;
 
             // ID
-            data << quint64(result.value(fields.indexOf("guid")).toULongLong());
+            data << quint64(result.value("guid").toULongLong());
 
             // IDENTITY
-            data << quint8(0); // idType ?
-            data << quint64(result.value(fields.indexOf("account_id")).toULongLong());
+            data << (quint8) CHARACTER_TYPE_ID_PLAYER; // typeId (player = 0, non-player = 1)
+            data << quint64(result.value("account_id").toULongLong());
 
             // NAME
-            data.WriteString(result.value(fields.indexOf("name")).toString(), true);
+            data.WriteString(result.value("name").toString(), true);
 
             // BREED
-            data << quint16(result.value(fields.indexOf("breed")).toUInt());
+            data << quint16(result.value("breed").toUInt());
 
             // APPEARANCE
-            data << quint8(result.value(fields.indexOf("gender")).toUInt());
-            data << quint8(result.value(fields.indexOf("skin_color")).toUInt());
-            data << quint8(result.value(fields.indexOf("hair_color")).toUInt());
-            data << quint8(result.value(fields.indexOf("pupil_color")).toUInt());
-            data << quint8(result.value(fields.indexOf("skin_color_factor")).toUInt());
-            data << quint8(result.value(fields.indexOf("hair_color_factor")).toUInt());
-            data << quint8(result.value(fields.indexOf("cloth")).toUInt());
-            data << quint8(result.value(fields.indexOf("face")).toUInt());
-            data << qint16(result.value(fields.indexOf("title")).toUInt());
+            data << quint8(result.value("gender").toUInt());
+            data << quint8(result.value("skin_color").toUInt());
+            data << quint8(result.value("hair_color").toUInt());
+            data << quint8(result.value("pupil_color").toUInt());
+            data << quint8(result.value("skin_color_factor").toUInt());
+            data << quint8(result.value("hair_color_factor").toUInt());
+            data << quint8(result.value("cloth").toUInt());
+            data << quint8(result.value("face").toUInt());
+            data << qint16(result.value("title").toUInt());
 
             // EQUIPMENT_APPEARANCE
             data << quint8(0); // size
@@ -56,7 +54,7 @@ void WorldSession::SendCharactersList()
             }
 
             // XP
-            data << quint64(result.value(fields.indexOf("xp")).toULongLong());
+            data << quint64(result.value("xp").toULongLong());
 
             // CHARACTER_LIST_NATION_ID
             data << quint32(0);
