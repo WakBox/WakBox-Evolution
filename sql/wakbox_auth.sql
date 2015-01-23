@@ -86,6 +86,17 @@ CREATE TABLE IF NOT EXISTS `realms` (
 INSERT INTO `realms` (`realm_id`, `name`, `address`, `port`, `version`, `community`, `player_count`, `player_limit`, `security_access_level`, `locked`) VALUES
 (1, 'WakBox', '127.0.0.1', 5556, '1.39.4', 0, 0, 500, 0, 0);
 
+--
+-- Table structure for table `realm_characters`
+--
+
+CREATE TABLE IF NOT EXISTS `realm_characters` (
+  `realm_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `account_id` int(10) unsigned NOT NULL,
+  `num_characters` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`realm_id`,`account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

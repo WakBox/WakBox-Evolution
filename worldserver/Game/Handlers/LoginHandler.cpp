@@ -3,6 +3,15 @@
 
 void WorldSession::HandleClientVersion(WorldPacket& packet)
 {
+    QStringList ip = GetIp().split(".");
+
+    WorldPacket data(SMSG_CLIENT_IP);
+
+    for (quint8 i = 0; i < ip.size(); ++i)
+        data << (quint8) ip.at(i).toUInt();
+
+    SendPacket(data);
+
     quint8 version, change;
     quint16 revision;
     QString build;
@@ -47,11 +56,57 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     QString token = packet.ReadString((quint8) tokenLength);
     QSqlQuery result = sAuthDatabase->Query(SELECT_ACCOUNT_BY_TOKEN, QVariantList() << token);
 
+    WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
+
     if (!result.first())
     {
-        SendWorldSelectResult(false);
+        data << (quint8) LOGIN_RESULT_ERROR_INVALID_LOGIN;
+        SendPacket(data);
+
         return;
     }
+
+    m_accountInfos.id               = result.value("account_id").toULongLong();
+    m_accountInfos.username         = result.value("username").toString();
+    m_accountInfos.pseudo           = result.value("pseudo").toString();
+    m_accountInfos.gmLevel          = result.value("gm_level").toUInt();
+    m_accountInfos.subscriptionTime = result.value("subscription_time").toUInt();
+
+    data << (quint8) LOGIN_RESULT_SUCCESS;
+
+    // if ban (=> ban check per realm?)
+    // int banDuration in minutes
+
+    data.StartBlock<quint16>();
+    {
+        // block number
+        data << quint8(1);
+        {
+            data << quint8(0);      // block id
+            data << quint32(6);     // block start
+
+            data << quint8(0);      // block id
+
+            data << quint64(result.value("account_id").toULongLong());
+            data << quint32(1); // m_subscriptionLevel
+            data << quint32(0); // antiAddictionLevel
+            data << quint64(m_accountInfos.subscriptionTime);
+
+            // Admin rights => TODO
+            for (quint8 i = 1; i <= MAX_ADMIN_RIGHT; ++i)
+                data << quint32(0);
+
+            data.WriteString(m_accountInfos.pseudo);
+
+            data << (quint32) COMMUNITY_FR; // m_accountCommunity => TODO Community in accounts table
+
+            // Account data (flags) TODO
+            data << quint16(0); // flagCount
+        }
+    }
+    data.EndBlock<quint16>();
+
+    SendPacket(data);
 
     SendWorldSelectResult(true);
 
@@ -64,4 +119,24 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     // byte m_additionalSlots = 0
 
     SendCharactersList();
+}
+
+// TODO ! An other token for reconnect????
+void WorldSession::HandleAuthTokenRequest(WorldPacket& packet)
+{
+    quint64 address;
+    quint16 languageLength;
+
+    packet >> address;
+    packet >> languageLength;
+    QString language = packet.ReadString(languageLength);
+
+    // Hardcoded token for now
+    QString token = "74aed5af0c8551977d418cee34fa394bfd398565ba7b018d74c59999449ca";
+
+    WorldPacket data(SMSG_AUTH_TOKEN_RESULT);
+    data.WriteString(token, STRING_SIZE_4);
+    SendPacket(data);
+
+    // Send SMSG_COMPANION_LIST
 }

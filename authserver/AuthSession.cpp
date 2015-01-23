@@ -21,6 +21,7 @@ void AuthTable::InitHandlers()
 
     ADD_OPCODE_HANDLER(SMSG_CONNECTION_RETRY_TICKET,   STATUS_NEVER,    &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CLIENT_VERSION_RESULT,     STATUS_NEVER,    &AuthSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CLIENT_IP,                 STATUS_NEVER,    &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CLIENT_AUTH_RESULT,        STATUS_NEVER,    &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_PUBLIC_KEY,                STATUS_NEVER,    &AuthSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_REALMS_LIST,               STATUS_NEVER,    &AuthSession::HandleServerSide);
@@ -37,6 +38,15 @@ AuthSession::AuthSession(QTcpSocket *socket) : SocketHandler(socket)
 
     connect(m_socket, SIGNAL(disconnected()), this, SLOT(OnClose()));
     Log::Write(LOG_TYPE_NORMAL, "New incoming connection from %s", m_socket->peerAddress().toString().toLatin1().data());
+
+    QStringList ip = GetIp().split(".");
+
+    WorldPacket data(SMSG_CLIENT_IP);
+
+    for (quint8 i = 0; i < ip.size(); ++i)
+        data << (quint8) ip.at(i).toUInt();
+
+    SendPacket(data);
 }
 
 AuthSession::~AuthSession()

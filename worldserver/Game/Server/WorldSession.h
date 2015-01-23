@@ -47,6 +47,7 @@ public:
     void HandleClientVersion(WorldPacket& packet);
     void HandlePublicKeyRequest(WorldPacket& /*packet*/);
     void HandleClientAuthToken(WorldPacket& packet);
+    void HandleAuthTokenRequest(WorldPacket& packet);
 
 
     void HandlePingCommand(WorldPacket& packet);

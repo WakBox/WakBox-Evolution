@@ -22,6 +22,7 @@ enum AuthOpcodes
     // Server messages (SMSG)
     SMSG_CONNECTION_RETRY_TICKET                = 2,
     SMSG_CLIENT_VERSION_RESULT                  = 8,
+    SMSG_CLIENT_IP                              = 110,
     SMSG_CLIENT_AUTH_RESULT                     = 1027,
     SMSG_PUBLIC_KEY                             = 1034,
     SMSG_REALMS_LIST                            = 1036,
@@ -34,35 +35,6 @@ enum SessionStatus
     STATUS_ALWAYS,              // Opcode always accepted
     STATUS_NEVER,               // Opcode not accepted from client (deprecated or server side only)
     STATUS_AUTHED               // Player authenticated
-};
-
-enum LoginResult
-{
-    LOGIN_RESULT_SUCCESS                        = 0,
-    LOGIN_RESULT_ERROR_INVALID_LOGIN            = 2,
-    LOGIN_RESULT_ALREADY_CONNECTED              = 3,
-    LOGIN_RESULT_SAVE_IN_PROGRESSS              = 4,
-    LOGIN_RESULT_ERROR_BANNED                   = 5,
-    LOGIN_RESULT_ERROR_INTERNAL                 = 7,
-    LOGIN_RESULT_ACCOUNT_LOCKED                 = 9,
-    LOGIN_RESULT_SERVER_DOWN                    = 10,
-    LOGIN_RESULT_TOO_MANY_CONNECTIONS           = 11,
-    LOGIN_RESULT_ERROR_INVALID_PARTNER          = 12,
-    LOGIN_RESULT_NICKNAME_NOT_SET               = 13,
-    LOGIN_RESULT_NICKNAME_INVALID_CONTENT       = 14,
-    LOGIN_RESULT_NICKNAME_DUPLICATE             = 15,
-    LOGIN_RESULT_NICKNAME_TOO_LONG              = 16,
-    LOGIN_RESULT_NICKNAME_TOO_SHORT             = 17,
-    LOGIN_RESULT_NICKNAME_EQUALS_LOGIN          = 18,
-    LOGIN_RESULT_NICKNAME_ERROR                 = 19,
-    LOGIN_RESULT_ERROR_ACCOUNT_INVALID_EMAIL    = 20,
-    LOGIN_RESULT_ACCOUNT_UNDER_MODERATION       = 21,
-    LOGIN_RESULT_ERROR_OTP_AUTH_FAILED          = 22,
-    LOGIN_RESULT_ERROR_EXTERNAL_ACCOUNT_LINKED  = 23,
-    LOGIN_RESULT_ERROR_EXTERNAL_NO_ACCOUNT      = 24,
-    LOGIN_RESULT_ERROR_FORBIDDEN_COMMUNITY      = 25,
-    LOGIN_RESULT_SECURITY_CARD                  = 26,
-    LOGIN_RESULT_CLOSED_BETA                    = 127
 };
 
 class AuthSession : public SocketHandler

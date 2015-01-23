@@ -9,6 +9,7 @@ enum Opcodes
     CMSG_CLIENT_VERSION                         = 7,
     CMSG_PUBLIC_KEY_REQUEST                     = 1033,
     CMSG_AUTH_TOKEN                             = 1213,
+    CMSG_AUTH_TOKEN_REQUEST                     = 2079,
 
 
 
@@ -35,6 +36,7 @@ enum Opcodes
     // Server messages (SMSG)
     SMSG_CLIENT_VERSION_RESULT                  = 8,
     SMSG_CLIENT_IP                              = 110,
+    SMSG_CLIENT_AUTH_RESULT                     = 1025,
     SMSG_PUBLIC_KEY_RESULT                      = 1034,
     SMSG_WORLD_SELECT_RESULT                    = 1202,
     SMSG_CHAR_LIST                              = 2048,
@@ -42,6 +44,7 @@ enum Opcodes
     SMSG_SYSTEM_CONFIGURATION                   = 2067,
     SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE      = 2069,
     SMSG_FREE_COMPANION_BREED_ID                = 2078,
+    SMSG_AUTH_TOKEN_RESULT                      = 2079,
 
 
     SMSG_CONNECTION_RETRY_TICKET                = 2,
@@ -73,7 +76,7 @@ enum Opcodes
 
 enum SessionStatus
 {
-    STATUS_UNHANDLED = 0,       // Opcode not handled
+    STATUS_UNHANDLED,           // Opcode not handled
     STATUS_ALWAYS,              // Opcode always accepted
     STATUS_NEVER,               // Opcode not accepted from client (deprecated or server side only)
     STATUS_AUTHED,              // Player authenticated
