@@ -43,6 +43,7 @@ enum Opcodes
     SMSG_CLIENT_CALENDAR_SYNC                   = 2063,
     SMSG_SYSTEM_CONFIGURATION                   = 2067,
     SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE      = 2069,
+    SMSG_COMPANION_LIST                         = 2077,
     SMSG_FREE_COMPANION_BREED_ID                = 2078,
     SMSG_AUTH_TOKEN_RESULT                      = 2079,
 

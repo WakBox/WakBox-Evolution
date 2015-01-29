@@ -113,8 +113,8 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     // Send SMSG_FREE_COMPANION_BREED_ID
 
     SendClientCalendarSync();
+    SendSystemConfiguration();
 
-    // Send SMSG_SYSTEM_CONFIGURATION
     // Send SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE
     // byte m_additionalSlots = 0
 
@@ -133,10 +133,11 @@ void WorldSession::HandleAuthTokenRequest(WorldPacket& packet)
 
     // Hardcoded token for now
     QString token = "74aed5af0c8551977d418cee34fa394bfd398565ba7b018d74c59999449ca";
+    qDebug() << "Received token : " << token;
 
     WorldPacket data(SMSG_AUTH_TOKEN_RESULT);
     data.WriteString(token, STRING_SIZE_4);
     SendPacket(data);
 
-    // Send SMSG_COMPANION_LIST
+    SendCompanionList();
 }

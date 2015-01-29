@@ -12,7 +12,7 @@ void AuthTable::InitHandlers()
     #define ADD_OPCODE_HANDLER(opcode, status, handler) \
         AddOpcodeHandler(opcode, #opcode, status, handler);
 
-    ADD_OPCODE_HANDLER(CMSG_CLIENT_DISCONNECT,         STATUS_AUTHED,   &AuthSession::HandleClientDisconnect);
+    ADD_OPCODE_HANDLER(CMSG_CLIENT_DISCONNECT,         STATUS_ALWAYS,   &AuthSession::HandleClientDisconnect);
     ADD_OPCODE_HANDLER(CMSG_CLIENT_VERSION,            STATUS_ALWAYS,   &AuthSession::HandleClientVersion);
     ADD_OPCODE_HANDLER(CMSG_CLIENT_AUTH,               STATUS_ALWAYS,   &AuthSession::HandleClientAuthentication);
     ADD_OPCODE_HANDLER(CMSG_PUBLIC_KEY_REQUEST,        STATUS_ALWAYS,   &AuthSession::HandlePublicKeyRequest);
