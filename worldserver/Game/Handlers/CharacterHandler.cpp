@@ -3,6 +3,13 @@
 #include "Miscellaneous/SharedDefines.h"
 #include "Utils/Util.h"
 
+void WorldSession::SendAdditionalSlotsUpdate()
+{
+    WorldPacket data(SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE);
+    data << (quint8) 0;
+    SendPacket(data);
+}
+
 void WorldSession::SendCharactersList()
 {
     QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTERS_BY_ACCOUNT_ID, QVariantList() << GetAccountInfos().id);

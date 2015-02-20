@@ -74,9 +74,10 @@ public:
     void SendClientVersionResult(QString clientVersion, QString expectedVersion);
     void SendWorldSelectResult(bool result);
     void SendClientCalendarSync();
+    void SendSystemConfiguration();
+    void SendAdditionalSlotsUpdate();
     void SendCharactersList();
     void SendCompanionList();
-    void SendSystemConfiguration();
 
     //
     void SendSelectCharacterResult(bool result);

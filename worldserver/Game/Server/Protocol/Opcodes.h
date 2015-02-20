@@ -33,6 +33,9 @@ enum Opcodes
     CMSG_CLIENT_LANGUAGE                        = 13001,
     CMSG_SERVER_TIME_COMMAND                    = 15000,
 
+    // Messages (MSG)
+    MSG_AUTH_TOKEN                              = 2079,
+
     // Server messages (SMSG)
     SMSG_CLIENT_VERSION_RESULT                  = 8,
     SMSG_CLIENT_IP                              = 110,
@@ -45,8 +48,6 @@ enum Opcodes
     SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE      = 2069,
     SMSG_COMPANION_LIST                         = 2077,
     SMSG_FREE_COMPANION_BREED_ID                = 2078,
-    SMSG_AUTH_TOKEN_RESULT                      = 2079,
-
 
     SMSG_CONNECTION_RETRY_TICKET                = 2,
     SMSG_PING_COMMAND                           = 108,

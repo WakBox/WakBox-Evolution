@@ -34,6 +34,9 @@ void OpcodeTable::Load()
     //    ADD_OPCODE_HANDLER(CMSG_CLIENT_LANGUAGE,                        &WorldSession::HandleClientLanguage);
     //    ADD_OPCODE_HANDLER(CMSG_SERVER_TIME_COMMAND,                    &WorldSession::HandleServerTimeCommand);
 
+    // Messages (MSG)
+    ADD_OPCODE_HANDLER(MSG_AUTH_TOKEN,                              STATUS_AUTHED,      &WorldSession::HandleAuthTokenRequest);
+
     // Server messages (SMSG)
     ADD_OPCODE_HANDLER(SMSG_CLIENT_VERSION_RESULT,                  STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CLIENT_IP,                              STATUS_NEVER,       &WorldSession::HandleServerSide);
@@ -43,12 +46,9 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(SMSG_CHAR_LIST,                              STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CLIENT_CALENDAR_SYNC,                   STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SYSTEM_CONFIGURATION,                   STATUS_NEVER,       &WorldSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE,      STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE,      STATUS_NEVER,   &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_COMPANION_LIST,                         STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_FREE_COMPANION_BREED_ID,                STATUS_UNHANDLED,   &WorldSession::HandleServerSide);
-    // TEMP STATUS_AUTHED because same opcode than a CMSG (MSG support or status check change)
-    ADD_OPCODE_HANDLER(SMSG_AUTH_TOKEN_RESULT,                      STATUS_AUTHED,      &WorldSession::HandleAuthTokenRequest);
-
 
     //    ADD_OPCODE_HANDLER(SMSG_PING_COMMAND,                           &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_INTERACTIVE_ELEMENT_SPAWN,              &WorldSession::HandleServerSide);

@@ -114,10 +114,7 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
 
     SendClientCalendarSync();
     SendSystemConfiguration();
-
-    // Send SMSG_ADDITIONAL_CHARACTER_SLOTS_UPDATE
-    // byte m_additionalSlots = 0
-
+    SendAdditionalSlotsUpdate();
     SendCharactersList();
 }
 
@@ -135,7 +132,7 @@ void WorldSession::HandleAuthTokenRequest(WorldPacket& packet)
     QString token = "74aed5af0c8551977d418cee34fa394bfd398565ba7b018d74c59999449ca";
     qDebug() << "Received token : " << token;
 
-    WorldPacket data(SMSG_AUTH_TOKEN_RESULT);
+    WorldPacket data(MSG_AUTH_TOKEN);
     data.WriteString(token, STRING_SIZE_4);
     SendPacket(data);
 
