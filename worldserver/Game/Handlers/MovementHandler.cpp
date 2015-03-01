@@ -7,7 +7,7 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     quint8 stepsCount;
 
     packet >> fromX >> fromY >> fromZ >> stepsCount;
-    quint8 steps[stepsCount];
+    QVector<quint8> steps;
 
     qDebug() << "Movement packet | fromX : " << fromX << " fromY : " << fromY << " fromZ : " << fromZ << " StepsCount : " << stepsCount << " Steps :";
 
