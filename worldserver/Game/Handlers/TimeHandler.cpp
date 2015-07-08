@@ -5,7 +5,7 @@ void WorldSession::SendClientCalendarSync()
     WorldPacket data(SMSG_CLIENT_CALENDAR_SYNC);
     // m_synchronizationTime
     data << (quint64) QDateTime::currentDateTime().toTime_t() * 1000;
-    SendPacket(data);
+    //SendPacket(data);
 }
 
 void WorldSession::HandleServerTimeCommand(WorldPacket& /*packet*/)

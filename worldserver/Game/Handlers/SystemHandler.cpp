@@ -4,7 +4,9 @@ void WorldSession::SendSystemConfiguration()
 {
     // TMP Config
     QMap<quint16, QString> config;
-    config[16] = "http://localhost/wakverif.php";
+    config[16] = "http://localhost/auth.soap";
+    config[17] = "http://localhost/account.soap";
+    config[18] = "http://localhost/shop.soap";
 
     WorldPacket data(SMSG_SYSTEM_CONFIGURATION);
     data.StartBlock<int>();
