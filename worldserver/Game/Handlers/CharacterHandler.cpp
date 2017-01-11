@@ -33,7 +33,7 @@ void WorldSession::SendCharactersList()
             data << quint64(result.value("account_id").toULongLong());
 
             // NAME
-            data.WriteString(result.value("name").toString(), true);
+            data.WriteString(result.value("name").toString(), STRING_SIZE_2);
 
             // BREED
             data << quint16(result.value("breed").toUInt());
@@ -129,7 +129,7 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
         sCharacterCreateInfos charCreateInfos(name, breed, gender, skinColor, hairColor, pupilColor,
                                               skinColorFactor, hairColorFactor, cloth, face);
 
-        QScopedPointer<Character> newChar(new Character(this));
+        Character* newChar = new Character(this);
 
         if(newChar->Create(ObjectMgr::Instance()->GenerateGuid(GUIDTYPE_CHARACTER), charCreateInfos))
         {
@@ -145,8 +145,10 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
                 data << (quint8)CHARACTER_CREATION_RESULT_SUCCESS;
                 SendPacket(data);
 
-                // Auto-connect in world => TODO
-                //SendSelectCharacterResult(true);
+                SetCharacter(newChar);
+
+                SendSelectCharacterResult(true);
+                SendCharacterEnterWorld();
                 return;
             }
             else
@@ -186,17 +188,32 @@ void WorldSession::HandleCharSelect(WorldPacket& packet)
     }
 
     SendSelectCharacterResult(true);
+    SendCharacterEnterWorldPackets();
+}
 
-    // Send packet 20000 nation synchro ?
+void WorldSession::SendSelectCharacterResult(bool result)
+{
+    WorldPacket data(SMSG_CHAR_SELECT);
+    data << quint8((result) ? 0 : 1);
+    SendPacket(data);
+}
 
-    SendCharacterStatsEnterWorld();
-    SendCharacterPosition();
+void WorldSession::SendCharacterEnterWorldPackets()
+{
+    // Send packet 3222
+    // Send packet 3144
+    // Send packet 3146
 
-    // Send packet 5300 ? Long UID list (reserved) ?
+    // Send packet 20000 nation synchro
+
+    SendCharacterInformation();
+    SendCharacterEnterWorld();
+
+    // Send packet 5300 : Long UID list (reserved) ?
 
     WorldPacket data(SMSG_SEND_CHAR_POSITION);
-    data << character->GetPositionX();
-    data << character->GetPositionY();
+    data << GetCharacter()->GetPositionX();
+    data << GetCharacter()->GetPositionY();
     SendPacket(data);
 
     SendUpdateObject();
@@ -228,23 +245,16 @@ void WorldSession::HandleCharSelect(WorldPacket& packet)
 
     SendPacket(data2);
 
-    SendEnterWorld();
+    SendCharacterUpdate();
 }
 
-void WorldSession::SendSelectCharacterResult(bool result)
-{
-    WorldPacket data(SMSG_CHAR_SELECT);
-    data << quint8((result) ? 0 : 1);
-    SendPacket(data);
-}
-
-void WorldSession::SendCharacterStatsEnterWorld()
+void WorldSession::SendCharacterInformation()
 {
     Character* character = GetCharacter();
     if (!character)
         return;
 
-    WorldPacket data(SMSG_CHARACTER_STATS_ENTER_WORLD);
+    WorldPacket data(SMSG_CHARACTER_INFORMATION);
 
     // *** Reserved Character Unique ID
         data << quint16(20);
@@ -254,214 +264,189 @@ void WorldSession::SendCharacterStatsEnterWorld()
 
     data.StartBlock<quint32>();
     {
-        data << quint8(6); // Char part Id
+        data << quint8(7); // Char part Id
 
         // ID
-        data << character->GetGuid();
+        character->SerializeGuid(data);
 
         // IDENTITY
-        data << quint8(0); // idType
-        data << GetAccountInfos().id;
+        character->SerializeIdentity(data);
 
         // NAME
-        data.WriteString(character->GetName(), true);
+        character->SerializeName(data);
 
         // BREED
-        data << character->GetBreed();
+        character->SerializeBreed(data);
 
         // HP
-        data << character->GetHealth();
+        character->SerializeHP(data);
 
         // POSITION
-        data << character->GetPositionX();
-        data << character->GetPositionY();
-        data << character->GetPositionZ();
-        data << character->GetInstanceId();
-        data << character->GetDirection();
+        character->SerializePosition(data);
 
         // APPEARANCE
-        data << character->GetGender();
-        data << character->GetSkinColor();
-        data << character->GetHairColor();
-        data << character->GetPupilColor();
-        data << character->GetSkinColorFactor();
-        data << character->GetHairColorFactor();
-        data << character->GetClothIndex();
-        data << character->GetFaceIndex();
-        data << qint16(-1);
+        character->SerializeAppearance(data);
 
         // SHORTCUT_INVENTORIES
-        data << quint16(0);
+        character->SerializeShortcutInventories(data);
 
         // EMOTE_INVENTORY
-        data << quint16(1); // Size
-        data << quint32(20015); // EmoteId
+        character->SerializeEmoteInventory(data);
 
         // LANDMARK_INVENTORY
-        data << quint16(1); // Size
-        data << quint8(30); // LandmarkId
+        character->SerializeLandmarkInventory(data);
 
         // DISCOVERED_ITEMS
-        data << quint16(0); // ZaapsCount
-        data << quint16(0); // dragosCount
-        data << quint16(0); // boatscount
-        data << quint16(0); // cannonCount
-        data << quint16(0); // phoenixCount
-        data << qint32(-1); // selectedPhoenix
+        character->SerializeDiscoveredItems(data);
 
         // SPELL_INVENTORY
-        data << quint16(0); // spellInventoryVersion
-        data << quint32(0); // lockedSpellId
-        data << quint16(0); // Spell size
-        data << quint8(0); // needSpellRestat
+        character->SerializeSpellInventory(data);
 
         // INVENTORIES
-        data << quint16(0); // questInventory size
-        data << quint16(0); // temporaryInventory size
-        data << quint16(0); // cosmeticsInventory size
-        data << quint16(0); // petCosmeticsInventory size
+        character->SerializeInventories(data);
 
         // EQUIPMENT_INVENTORY
-        data << quint16(0); // Count
+        character->SerializeEquipmentInventory(data);
 
         // BAGS
-        data << quint16(0); // Bags count
+        character->SerializeBags(data);
 
         // BREED_SPECIFIC
-        data << quint8(0); // hasOsaSpecific
+        character->SerializeBreedSpecific(data);
 
         // SKILL_INVENTORY
-        data << quint16(0); // SkillInventory size
+        character->SerializeSkillInventory(data);
 
         // CRAFT
-        data << quint16(0); // Craft count
+        character->SerializeCraft(data);
 
         // APTITUDE_INVENTORY
-        data << quint16(0); // Count
-        data << quint16(0); // Count
-
-        data << quint16(21); // Version
+        character->SerializeAptitudeInventory(data);
 
         // RUNNING_EFFECTS
-        data << quint8(0); // hasInFightData
-        data << quint8(0); // hasOutFightData
+        character->SerializeRunningEffects(data);
 
         // DIMENSIONAL_BAG_FOR_LOCAL_CLIENT
-        data << character->GetGuid();
-        data.WriteString(character->GetName(), true);
-        data << character->GetGuildId();
-        data << quint8(0); // Rooms count
-
-        data << quint32(408); // CustomViewModelId
-        data << quint8(0); // HasWallet
-        data << quint8(0); // dimensionalBagLocked
-
-        data << quint16(0); // groupeEntriesSize
-        data << quint16(0); // IndividualEntriesSize
+        character->SerializeDimensionalBagForLocalClient(data);
 
         // CHALLENGES
-        data << quint8(0); // hasCurrentScenarii
-        data << quint8(0); // hasCurrentChallengeInfo
-        data << quint16(0); // pastScenarii
+        character->SerializeChallenges(data);
 
         // XP
-        data << character->GetXP();
+        character->SerializeXP(data);
 
         // XP_CHARACTERISTICS
-        data << character->GetXPFreePoints();
-        data << quint16(0); // xpBonusPoints size
-        data << quint16(0); // m_characteristicBonusPoints size
-        data << character->GetXPGauge();
+        character->SerializeXPCharacteristics(data);
 
         // TITLES
-        data << quint16(0); // availableTitlesCount
+        character->SerializeTitles(data);
 
         // CITIZEN_POINT
-        data << quint16(0); // nationCitizenScoresSize
-        data << quint16(0); // offendedNationsSize
+        character->SerializeCitizenPoint(data);
 
         // PASSEPORT_INFO
-        data << quint8(0); // isPassportActive
+        character->SerializePasseportInfo(data);
 
         // SOCIAL_STATES
-        data << quint8(0); // afkState
-        data << quint8(0); // dndstate
+        character->SerializeSocialStates(data);
 
         // PET
-        data << quint8(0); // HasPet
+        character->SerializePet(data);
 
         // ACHIEVEMENTS
-        data << quint16(0); // Size
+        character->SerializeAchievements(data);
 
         // ACCOUNT_INFORMATION
-        data << quint16(76); // adminRights size
-        for (quint8 i = 0; i <= 75; ++i)
-            data << quint32(0); // adminRight
-
-        data << quint32(0); // subscriptionLevel
-        data << quint32(0); // forcedSubscriptionLevel
-        data << quint32(0); // antiAddictionLevel
-        data << quint64(0); // sessionStartTime
-        data << quint16(0); // additionalRights size
+        character->SerializeAccountInformation(data);
 
         // LOCK_TO_CLIENT
-        data << quint16(0); // Locks size
+        character->SerializeLockToClient(data);
 
         // DIMENSIONAL_BAG_VIEWS_INVENTORY
-        data << quint16(0); // Views Size
+        character->SerializeDimensionalBagViewsInventory(data);
 
         // PERSONAL_EFFECTS
-        data << quint16(0); // guildEffects size
-        data << quint16(0); // havenWorldEffects size
-        data << quint16(0); // antiAddictionEffects size
+        character->SerializePersonalEffects(data);
 
         // ANTI_ADDICTION
-        data << quint8(0); // hasAddictionData
+        character->SerializeAntiAddiction(data);
 
         // WORLD_PROPERTIES
-        data << quint8(0); // hasProperties
+        character->SerializeWorldProperties(data);
 
         // VISIBILITY
-        data << quint8(1); // Visible
+        character->SerializeVisibility(data);
+
+        // OCCUPATION
+        character->SerializeOccupation(data);
+
+        // APTITUDE_BONUS_INVENTORY
+        character->SerializeAptitudeBonusInventory(data);
     }
     data.EndBlock<quint32>();
 
     SendPacket(data);
 }
 
-void WorldSession::SendCharacterPosition()
+void WorldSession::SendCharacterEnterWorld()
 {
     Character* character = GetCharacter();
     if (!character)
         return;
 
-    WorldPacket data(SMSG_SEND_CHARACTER_POSITION);
+    WorldPacket data(SMSG_CHARACTER_ENTER_WORLD);
 
     data.StartBlock<quint16>();
     {
-        data << quint8(22); // CharacterPartId
+        data << quint8(26); // CharacterPartId
 
         // ID
-        data << character->GetGuid();
+        character->SerializeGuid(data);
 
         // IDENTITY
-        data << quint8(0); // idType
-        data << GetAccountInfos().id;
+        character->SerializeIdentity(data);
 
         // POSITION
-        data << character->GetPositionX();
-        data << character->GetPositionY();
-        data << character->GetPositionZ();
-        data << character->GetInstanceId();
-        data << character->GetDirection();
+        character->SerializePosition(data);
     }
     data.EndBlock<quint16>();
 
-    // TODO check packet 4100
-    data << quint16(0); // Protectors size
-    // TODO : bnY.java
-    data << quint16(0); // Size of something else ?
+    // serializedProtectors
     data << quint16(0);
+
+    // nbProtectors
+    data << quint16(0);
+
+    // serializedProtectorInfos
+    data << quint16(0);
+
+    SendPacket(data);
+}
+
+void WorldSession::SendCharacterUpdate()
+{
+    Character* character = GetCharacter();
+    if (!character)
+        return;
+
+    WorldPacket data(SMSG_CHARACTER_UPDATE);
+
+    character->SerializeGuid(data);
+
+    data.StartBlock<quint16>();
+    {
+        // Char part Id
+        data << quint8(19);
+
+        character->SerializeNationId(data);
+
+        character->SerializeNationSynchro(data);
+
+        character->SerializeGuildLocalInfo(data);
+
+        character->SerializeNationPvpMoney(data);
+    }
+    data.EndBlock<quint16>();
 
     SendPacket(data);
 }

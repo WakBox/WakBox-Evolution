@@ -81,9 +81,10 @@ public:
 
     //
     void SendSelectCharacterResult(bool result);
-    void SendEnterWorld();
-    void SendCharacterStatsEnterWorld();
-    void SendCharacterPosition();
+    void SendCharacterEnterWorldPackets();
+    void SendCharacterInformation();
+    void SendCharacterEnterWorld();
+    void SendCharacterUpdate();
     void SendUpdateObject();
 
 public slots:

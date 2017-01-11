@@ -69,6 +69,137 @@ public:
     bool LoadFromDB(quint64 guid);
     bool SaveToDB(bool create = false);
 
+    // Character Serialization
+
+    // ID
+    void SerializeGuid(WorldPacket& data);
+
+    // IDENTITY
+    void SerializeIdentity(WorldPacket& data);
+
+    // NAME
+    void SerializeName(WorldPacket& data);
+
+    // BREED
+    void SerializeBreed(WorldPacket& data);
+
+    // HP
+    void SerializeHP(WorldPacket& data);
+
+    // POSITION
+    void SerializePosition(WorldPacket& data);
+
+    // APPEARANCE
+    void SerializeAppearance(WorldPacket& data);
+
+    // SHORTCUT_INVENTORIES
+    void SerializeShortcutInventories(WorldPacket& data);
+
+    // EMOTE_INVENTORY
+    void SerializeEmoteInventory(WorldPacket& data);
+
+    // LANDMARK_INVENTORY
+    void SerializeLandmarkInventory(WorldPacket& data);
+
+    // DISCOVERED_ITEMS
+    void SerializeDiscoveredItems(WorldPacket& data);
+
+    // SPELL_INVENTORY
+    void SerializeSpellInventory(WorldPacket& data);
+
+    // INVENTORIES
+    void SerializeInventories(WorldPacket& data);
+
+    // EQUIPMENT_INVENTORY
+    void SerializeEquipmentInventory(WorldPacket& data);
+
+    // BAGS
+    void SerializeBags(WorldPacket& data);
+
+    // BREED_SPECIFIC
+    void SerializeBreedSpecific(WorldPacket& data);
+
+    // SKILL_INVENTORY
+    void SerializeSkillInventory(WorldPacket& data);
+
+    // CRAFT
+    void SerializeCraft(WorldPacket& data);
+
+    // APTITUDE_INVENTORY
+    void SerializeAptitudeInventory(WorldPacket& data);
+
+    // RUNNING_EFFECTS
+    void SerializeRunningEffects(WorldPacket& data);
+
+    // DIMENSIONAL_BAG_FOR_LOCAL_CLIENT
+    void SerializeDimensionalBagForLocalClient(WorldPacket& data);
+
+    // CHALLENGES
+    void SerializeChallenges(WorldPacket& data);
+
+    // XP
+    void SerializeXP(WorldPacket& data);
+
+    // XP_CHARACTERISTICS
+    void SerializeXPCharacteristics(WorldPacket& data);
+
+    // TITLES
+    void SerializeTitles(WorldPacket& data);
+
+    // CITIZEN_POINT
+    void SerializeCitizenPoint(WorldPacket& data);
+
+    // PASSEPORT_INFO
+    void SerializePasseportInfo(WorldPacket& data);
+
+    // SOCIAL_STATES
+    void SerializeSocialStates(WorldPacket& data);
+
+    // PET
+    void SerializePet(WorldPacket& data);
+
+    // ACHIEVEMENTS
+    void SerializeAchievements(WorldPacket& data);
+
+    // ACCOUNT_INFORMATION
+    void SerializeAccountInformation(WorldPacket& data);
+
+    // LOCK_TO_CLIENT
+    void SerializeLockToClient(WorldPacket& data);
+
+    // DIMENSIONAL_BAG_VIEWS_INVENTORY
+    void SerializeDimensionalBagViewsInventory(WorldPacket& data);
+
+    // PERSONAL_EFFECTS
+    void SerializePersonalEffects(WorldPacket& data);
+
+    // ANTI_ADDICTION
+    void SerializeAntiAddiction(WorldPacket& data);
+
+    // WORLD_PROPERTIES
+    void SerializeWorldProperties(WorldPacket& data);
+
+    // VISIBILITY
+    void SerializeVisibility(WorldPacket& data);
+
+    // OCCUPATION
+    void SerializeOccupation(WorldPacket& data);
+
+    // APTITUDE_BONUS_INVENTORY
+    void SerializeAptitudeBonusInventory(WorldPacket& data);
+
+    // NATION_ID
+    void SerializeNationId(WorldPacket& data);
+
+    // NATION_SYNCHRO
+    void SerializeNationSynchro(WorldPacket& data);
+
+    // GUILD_LOCAL_INFO
+    void SerializeGuildLocalInfo(WorldPacket& data);
+
+    // NATION_PVP_MONEY
+    void SerializeNationPvpMoney(WorldPacket& data);
+
 private:
     WorldSession* m_session;
 

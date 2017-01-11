@@ -8,39 +8,6 @@ void WorldSession::SendWorldSelectResult(bool result)
     SendPacket(data);
 }
 
-void WorldSession::SendEnterWorld()
-{
-    Character* character = GetCharacter();
-    if (!character)
-        return;
-
-    WorldPacket data(SMSG_ENTER_WORLD);
-    data << quint64(character->GetGuid());
-    data.StartBlock<quint16>();
-    {
-        // Char part Id
-        data << quint8(15);
-
-        // NATION_ID
-        data << quint32(0); // Nation Id
-
-        // NATION_SYNCHRO
-        data << quint64(0); // Ranks
-        data << quint64(0); // Jobs
-        data << quint64(0); // Votedate
-        data << quint8(0); // Government Opionion => TODO : aWj.java
-        data << quint8(0); // IsCandidate (bool)
-
-        // GUILD_LOCAL_INFO
-        data << quint16(0); // Guild info
-        data << quint32(66); // havenWorldId
-        data << float(0.0f); // moderationBonusLearningFactor
-    }
-    data.EndBlock<quint16>();
-
-    SendPacket(data);
-}
-
 void WorldSession::HandleInteractiveElement(WorldPacket &packet)
 {
     quint64 id;
@@ -69,11 +36,11 @@ void WorldSession::SendUpdateObject()
 
     data.StartBlock<quint16>();
     {
-        data << quint8(7);
+        data << quint8(8);
         data << character->GetGuid();
         data << quint8(0);
         data << GetAccountInfos().id;
-        data.WriteString(character->GetName(), true);
+        data.WriteString(character->GetName(), STRING_SIZE_2);
 
         data << character->GetBreed();
         data << character->GetPositionX();

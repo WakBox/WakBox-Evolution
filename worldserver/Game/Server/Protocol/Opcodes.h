@@ -62,8 +62,8 @@ enum Opcodes
     SMSG_LEAVE_CHAR_SELECT                      = 2056,
     SMSG_WHOIS_COMMAND                          = 2061,
     SMSG_CHAT_MESSAGE                           = 3152,
-    SMSG_CHARACTER_STATS_ENTER_WORLD            = 4098,
-    SMSG_SEND_CHARACTER_POSITION                = 4100,
+    SMSG_CHARACTER_INFORMATION                  = 4098,
+    SMSG_CHARACTER_ENTER_WORLD                  = 4100,
     SMSG_UPDATE_OBJECT                          = 4102,
     SMSG_UPDATE_CREATURE_STATE                  = 4112,
     SMSG_CHAR_DIRECTION                         = 4118,
@@ -73,7 +73,7 @@ enum Opcodes
     SMSG_START_FIGHT                            = 4530,
     SMSG_SCENARIO_SCRIPT                        = 11100,
     SMSG_SERVER_TIME_COMMAND                    = 15001,
-    SMSG_ENTER_WORLD                            = 20002
+    SMSG_CHARACTER_UPDATE                       = 20002
 };
 
 enum SessionStatus

@@ -18,8 +18,8 @@ unix {
 }
 
 win32 {
-    LIBS += -L"C:/CryptoCPP/lib" -lcryptopp562
-    INCLUDEPATH += C:/CryptoCPP/include
+    LIBS += -L"C:/CryptoPP/lib" -lcryptopp563
+    INCLUDEPATH += C:/CryptoPP/include
 }
 
 INCLUDEPATH += . ../shared

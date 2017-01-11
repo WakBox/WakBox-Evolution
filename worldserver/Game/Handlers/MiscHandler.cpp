@@ -4,6 +4,8 @@ void WorldSession::HandleClientLanguage(WorldPacket& packet)
 {
     QString clientLanguage = packet.ReadString(2);
     qDebug() << "Client language : " << clientLanguage;
+
+    // Send packet opcode 9 ?
 }
 
 void WorldSession::HandlePingCommand(WorldPacket& packet)
@@ -38,6 +40,6 @@ void WorldSession::HandleWhoisCommand(WorldPacket &packet)
 
     WorldPacket data(SMSG_WHOIS_COMMAND);
     data << quint8(0); // Whois result
-    data.WriteString(charName + "(" + GetAccountInfos().pseudo + ")", true);
+    data.WriteString(charName + "(" + GetAccountInfos().pseudo + ")", STRING_SIZE_2);
     SendPacket(data);
 }

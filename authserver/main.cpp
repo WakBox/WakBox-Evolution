@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         return close();
 
     Log::Write(LOG_TYPE_NORMAL, "Press ctrl + c to quit.");
-    Log::Write(LOG_TYPE_NORMAL, "SumBox::AuthServer started in %s sec.", QString::number(t.elapsed() / IN_MILLISECONDS).toLatin1().data());
+    Log::Write(LOG_TYPE_NORMAL, "WakBox::AuthServer started in %s sec.", QString::number(t.elapsed() / IN_MILLISECONDS).toLatin1().data());
 
     signal(SIGINT, &stop);
     signal(SIGTERM, &stop);

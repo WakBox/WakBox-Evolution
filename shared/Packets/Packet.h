@@ -11,7 +11,7 @@ typedef QMap<quint8, qint64> BlockPosMap;
 class Packet
 {
 public:
-    Packet(quint16 opcode = 0, QByteArray packet = QByteArray()) : m_opcode(opcode), m_buffer(packet), m_stream(&m_buffer, QIODevice::ReadWrite)
+    Packet(quint16 opcode = 0, QByteArray packet = QByteArray()) : m_opcode(opcode), m_buffer(packet), m_stream(&m_buffer, QIODevice::ReadWrite), m_blockIndex(0)
     {
     }
 
@@ -100,26 +100,27 @@ public:
     }
 
     template <typename T>
-    void StartBlock(quint8 index = 0)
+    void StartBlock()
     {
-        m_blockPos.insert(index, m_stream.device()->pos());
+        m_blockPos.insert(m_blockIndex++, m_stream.device()->pos());
         *this << T(0);
     }
 
     template <class T>
-    void EndBlock(quint8 index = 0, qint8 add = 0)
+    void EndBlock(/*qint8 add = 0*/)
     {
         if (m_blockPos.count() == 0)
             return;
 
-        qint64 pos = m_blockPos.take(index);
+        qint64 pos = m_blockPos.take(--m_blockIndex);
         m_stream.device()->seek(pos);
 
-        *this << T(m_stream.device()->size() - pos - sizeof(T) + add);
+        *this << T(m_stream.device()->size() - pos - sizeof(T)/* + add*/);
         m_stream.device()->seek(m_stream.device()->size());
     }
 
-    template <class T>
+    // Not used ??
+    /*template <class T>
     void EndBlockAbsolute(quint8 index = 0, qint8 add = 0)
     {
         if (m_blockPos.count() == 0)
@@ -130,12 +131,13 @@ public:
 
         *this << T(m_stream.device()->size() + add);
         m_stream.device()->seek(m_stream.device()->size());
-    }
+    }*/
 
 protected:
     quint16 m_opcode;
     QByteArray m_buffer;
     QDataStream m_stream;
+    quint8 m_blockIndex;
 
 private:
     BlockPosMap m_blockPos;
