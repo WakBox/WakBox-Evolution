@@ -13,8 +13,12 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-unix {
+unix:!macx {
     LIBS += -L"/usr/lib/libcryptopp" -lcryptopp
+}
+
+macx: {
+    LIBS += -L"/usr/local/lib/" -lcryptopp
 }
 
 win32 {
@@ -22,8 +26,8 @@ win32 {
     INCLUDEPATH += C:/CryptoPP/include
 }
 
-INCLUDEPATH += . ../shared
-DEPENDPATH  += . ../shared
+INCLUDEPATH += . ../dep ../shared
+DEPENDPATH  += . ../dep ../shared
 
 SOURCES += main.cpp \
     AuthServer.cpp \
@@ -32,4 +36,5 @@ SOURCES += main.cpp \
 HEADERS += AuthServer.h \
     AuthSession.h
 
+include(../dep/Dep.pri)
 include(../shared/Shared.pri)
