@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `realms` (
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `port` smallint(5) unsigned NOT NULL DEFAULT '5556',
-  `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1.39.6',
+  `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1.50.2',
   `community` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `player_count` int(10) unsigned NOT NULL DEFAULT '0',
   `player_limit` int(10) unsigned NOT NULL DEFAULT '500',
