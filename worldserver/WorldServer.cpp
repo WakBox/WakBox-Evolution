@@ -23,8 +23,8 @@ WorldServer::~WorldServer()
     Log::Delete();
     Chat::Delete();
 
-    m_server->close();
-    delete m_server;
+    m_server->deleteLater();
+    m_server = NULL;
 }
 
 bool WorldServer::Initialize()

@@ -29,8 +29,8 @@ AuthServer::~AuthServer()
         m_sockets.erase(itr);
     }
 
-    m_server->close();
-    delete m_server;
+    m_server->deleteLater();
+    m_server = NULL;
 }
 
 bool AuthServer::Initialize()

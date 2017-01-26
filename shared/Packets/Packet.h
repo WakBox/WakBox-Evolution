@@ -84,6 +84,28 @@ public:
         m_stream.readRawData(s, len);
     }
 
+    QString ReadBigString(quint8 size = STRING_SIZE_2)
+    {
+        quint8 strLen;
+
+        if (size == STRING_SIZE_4)
+        {
+            quint32 len;
+            *this >> len;
+
+            strLen = (quint8)len;
+        }
+        else
+        {
+            quint16 len;
+            *this >> len;
+
+            strLen = (quint8)len;
+        }
+
+        return ReadString(strLen);
+    }
+
     QString ReadString(quint8 len = 0)
     {
         QByteArray bytes;

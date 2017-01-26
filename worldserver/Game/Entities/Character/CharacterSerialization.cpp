@@ -100,36 +100,31 @@ void Character::SerializeDiscoveredItems(WorldPacket& data)
 
 void Character::SerializeSpellInventory(WorldPacket& data)
 {
-    data << quint16(0); // spellInventoryVersion
-    data << quint32(0); // lockedSpellId
-
     data << quint16(3); // Spell size
 
     // Spell 0
     data << quint8(1); // type
     data << quint64(29107958004580983); // uid
-    data << quint32(3692); // spellId
-    data << quint16(0); // level
-    data << quint64(0); // Xp
+    data << quint32(4780); // spellId
+    data << quint16(1); // level
     data << quint8(0); // skillSize
 
     // Spell 1
     data << quint8(1); // type
     data << quint64(29107958004580985); // uid
-    data << quint32(3690); // spellId
-    data << quint16(0); // level
-    data << quint64(0); // Xp
+    data << quint32(4775); // spellId
+    data << quint16(1); // level
     data << quint8(0); // skillSize
 
     // Spell 2
     data << quint8(1); // type
     data << quint64(29107958004580984); // uid
-    data << quint32(3691); // spellId
-    data << quint16(0); // level
-    data << quint64(0); // Xp
+    data << quint32(4785); // spellId
+    data << quint16(1); // level
     data << quint8(0); // skillSize
 
     data << quint8(0); // needSpellRestat
+    data << quint8(0); // needSpellAutoRestat
 }
 
 void Character::SerializeInventories(WorldPacket& data)
@@ -162,6 +157,11 @@ void Character::SerializeBags(WorldPacket& data)
     data << quint8(0); // position
     data << quint16(30); // maxSize
     data << quint16(0); // item count
+}
+
+void Character::SerializeProtoTemporaryInventory(WorldPacket& data)
+{
+    data << quint16(0); // Size
 }
 
 void Character::SerializeBreedSpecific(WorldPacket& data)
@@ -270,7 +270,8 @@ void Character::SerializeDimensionalBagForLocalClient(WorldPacket& data)
 
     data << quint32(408); // CustomViewModelId
     data << quint8(1); // HasWallet
-    data << quint32(0); // cash
+    data << quint32(0); // cash    
+
     data << quint8(0); // dimensionalBagLocked
 
     data << quint16(1); // groupeEntriesSize
@@ -370,18 +371,19 @@ void Character::SerializeAchievements(WorldPacket& data)
 
 void Character::SerializeAccountInformation(WorldPacket& data)
 {
-    data << quint16(95); // adminRights size
-    for (quint8 i = 0; i < 95; ++i)
+    data << quint16(100); // adminRights size
+    for (quint8 i = 0; i < 100; ++i)
         data << quint32(0); // adminRight
 
-    data << quint32(1); // subscriptionLevel
+    data << quint32(101); // subscriptionLevel
+    data << quint32(0); // heroesSubscriptionLevel
+    data << quint32(0); //m_freeHeroesSubscriptionLevel
     data << quint32(0); // forcedSubscriptionLevel
     data << quint32(0); // antiAddictionLevel
     data << quint64(0); // sessionStartTime (current timestamp ?)
     data << quint16(0); // additionalRights size
 
     data << quint8(0); // additionalSlots
-    data << quint8(0); // vaultUpgrades
 }
 
 void Character::SerializeLockToClient(WorldPacket& data)
@@ -438,6 +440,16 @@ void Character::SerializeVisibility(WorldPacket& data)
 void Character::SerializeOccupation(WorldPacket& data)
 {
     data << quint8(0); // hasOccupation
+}
+
+void Character::SerializeSpellDeck(WorldPacket& data)
+{
+    data << quint16(0);
+}
+
+void Character::SerializeDungeonProgression(WorldPacket& data)
+{
+    data << quint16(0);
 }
 
 void Character::SerializeAptitudeBonusInventory(WorldPacket& data)

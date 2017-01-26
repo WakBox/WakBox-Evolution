@@ -19,7 +19,6 @@ void WorldSession::SendCharactersList()
 
     while (result.next())
     {
-        // Must check packet struct
         data.StartBlock<quint16>();
         {
             // Character Part ID
@@ -37,6 +36,9 @@ void WorldSession::SendCharactersList()
 
             // BREED
             data << quint16(result.value("breed").toUInt());
+
+            // ACTIVE_EQUIPMENT_SHEET
+            data << quint8(0);
 
             // APPEARANCE
             data << quint8(result.value("gender").toUInt());
@@ -58,6 +60,7 @@ void WorldSession::SendCharactersList()
                 data << quint8(0); // isNewChar
                 data << quint8(0); // needsRecustom
                 data << quint16(0); // recustomValue
+                data << quint8(0); // needInitialXp
             }
 
             // XP
@@ -65,6 +68,15 @@ void WorldSession::SendCharactersList()
 
             // CHARACTER_LIST_NATION_ID
             data << quint32(0);
+
+            // GUILD
+            data << quint64(0); // GuildId
+
+            // GUILD_BLAZON
+            data << quint64(0); // GuildBlazonId
+
+            // INSTANCE_ID
+            data << quint16(527); // InstanceId -> todo DB
         }
         data.EndBlock<quint16>();
     }
@@ -108,6 +120,7 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
     quint8 skinColorFactor, hairColorFactor, cloth, face;
     quint16 breed;
     QString name;
+    quint8 unkBool;
 
     packet >> unk;
 
@@ -117,6 +130,8 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
     packet >> breed;
 
     name = packet.ReadString();
+
+    packet >> unkBool;
 
     WorldPacket data(SMSG_CHAR_CREATE);
     QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTER_BY_NAME, QVariantList() << name);
@@ -145,10 +160,11 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
                 data << (quint8)CHARACTER_CREATION_RESULT_SUCCESS;
                 SendPacket(data);
 
-                SetCharacter(newChar);
+                SendCharactersList();
+                /*SetCharacter(newChar);
 
                 SendSelectCharacterResult(true);
-                SendCharacterEnterWorld();
+                SendCharacterEnterWorld();*/
                 return;
             }
             else
@@ -164,7 +180,12 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
 void WorldSession::HandleCharSelect(WorldPacket& packet)
 {
     quint64 guid;
+    QString name;
+
     packet >> guid;
+    name = packet.ReadBigString(STRING_SIZE_4);
+
+    qDebug() << "Character : " << name << " selected.";
 
     // Check if characters isn't already loaded or in loading.
     /*
@@ -200,13 +221,19 @@ void WorldSession::SendSelectCharacterResult(bool result)
 
 void WorldSession::SendCharacterEnterWorldPackets()
 {
-    // Send packet 3222
-    // Send packet 3144
-    // Send packet 3146
+    // Send packet 3222 (HasModerationRequestMessage)
+    // Send packet 3144 (FriendListMessage)
+    // Send packet 3146 (IgnoreListMessage)
+
+    // Send packet 5567 ??
 
     // Send packet 20000 nation synchro
+    // Send 8427, 8418, 20002, 20000
 
     SendCharacterInformation();
+    return;
+
+    // Send 5200
     SendCharacterEnterWorld();
 
     // Send packet 5300 : Long UID list (reserved) ?
@@ -245,6 +272,10 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     SendPacket(data2);
 
+    // Send 4124
+    // Send 6230, loads of them?
+    // Send 4123
+
     SendCharacterUpdate();
 }
 
@@ -264,7 +295,7 @@ void WorldSession::SendCharacterInformation()
 
     data.StartBlock<quint32>();
     {
-        data << quint8(7); // Char part Id
+        data << quint8(8); // Char part Id
 
         // ID
         character->SerializeGuid(data);
@@ -305,11 +336,11 @@ void WorldSession::SendCharacterInformation()
         // INVENTORIES
         character->SerializeInventories(data);
 
-        // EQUIPMENT_INVENTORY
-        character->SerializeEquipmentInventory(data);
-
         // BAGS
         character->SerializeBags(data);
+
+        // PROTO_TEMPORARY_INVENTORY
+        character->SerializeProtoTemporaryInventory(data);
 
         // BREED_SPECIFIC
         character->SerializeBreedSpecific(data);
@@ -319,9 +350,6 @@ void WorldSession::SendCharacterInformation()
 
         // CRAFT
         character->SerializeCraft(data);
-
-        // APTITUDE_INVENTORY
-        character->SerializeAptitudeInventory(data);
 
         // RUNNING_EFFECTS
         character->SerializeRunningEffects(data);
@@ -380,8 +408,23 @@ void WorldSession::SendCharacterInformation()
         // OCCUPATION
         character->SerializeOccupation(data);
 
-        // APTITUDE_BONUS_INVENTORY
-        character->SerializeAptitudeBonusInventory(data);
+        // SPELL_DECK
+        character->SerializeSpellDeck(data);
+
+        // DUNGEON_PROGRESSION
+        character->SerializeDungeonProgression(data);
+    }
+    data.EndBlock<quint32>();
+
+    data.StartBlock<quint32>();
+    {
+
+    }
+    data.EndBlock<quint32>();
+
+    data.StartBlock<quint32>();
+    {
+
     }
     data.EndBlock<quint32>();
 

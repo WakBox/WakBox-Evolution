@@ -116,6 +116,9 @@ public:
     // BAGS
     void SerializeBags(WorldPacket& data);
 
+    // PROTO_TEMPORARY_INVENTORY
+    void SerializeProtoTemporaryInventory(WorldPacket& data);
+
     // BREED_SPECIFIC
     void SerializeBreedSpecific(WorldPacket& data);
 
@@ -184,6 +187,12 @@ public:
 
     // OCCUPATION
     void SerializeOccupation(WorldPacket& data);
+
+    // SPELL_DECK
+    void SerializeSpellDeck(WorldPacket& data);
+
+    // DUNGEON_PROGRESSION
+    void SerializeDungeonProgression(WorldPacket& data);
 
     // APTITUDE_BONUS_INVENTORY
     void SerializeAptitudeBonusInventory(WorldPacket& data);

@@ -210,7 +210,6 @@ void AuthSession::HandleClientAuthentication(WorldPacket& packet)
 
     WorldPacket data(SMSG_CLIENT_AUTH_RESULT);
     data << quint8(LOGIN_RESULT_SUCCESS);
-    data << quint8(0); // m_activateSteamLinkHint (bool)
     data << quint8(1); // hasAccountInformations
     data << int(COMMUNITY_FR); // Community
     data << quint8(0); // hasAdminInformations?
@@ -277,8 +276,10 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
         }
         data2.EndBlock<int>();
 
-        data2 << result.value("player_count").toInt();
-        data2 << result.value("player_limit").toInt();
+        // Not used anymore
+        //data2 << result.value("player_count").toInt();
+        //data2 << result.value("player_limit").toInt();
+
         data2 << (quint8) result.value("locked").toBool();
     }
 

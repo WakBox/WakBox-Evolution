@@ -21,6 +21,8 @@ void WorldSession::HandleClientVersion(WorldPacket& packet)
     packet >> change;
     build =  packet.ReadString();
 
+    qDebug() << "BUILD: " << build;
+
     QString clientVersion = QString(QString::number(version) + "." + QString::number(revision) + "." + QString::number(change));
     SendClientVersionResult(clientVersion, sAuthConfig->GetString("AcceptClientVersion"));
 }
@@ -90,10 +92,16 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
             data << quint64(result.value("account_id").toULongLong());
             data << quint32(1); // m_subscriptionLevel
             data << quint32(0); // antiAddictionLevel
+            data << quint8(0); // m_additionalSlot
             data << quint64(m_accountInfos.subscriptionTime);
 
+            // Hero subscription (hero system?)
+            data << quint32(1); // m_heroSubscription count
+                data << quint32(0); // unkInt
+                data << quint64(0); // unkLong (heroId?)
+
             // Admin rights => TODO
-            for (quint8 i = 1; i <= MAX_ADMIN_RIGHT; ++i)
+            for (quint8 i = 1; i <= MAX_ADMIN_RIGHT + 5; ++i)
                 data << quint32(0);
 
             data.WriteString(m_accountInfos.pseudo);
@@ -110,11 +118,17 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
 
     SendWorldSelectResult(true);
 
+    // Send 1213
     // Send SMSG_FREE_COMPANION_BREED_ID
 
     SendClientCalendarSync();
     SendSystemConfiguration();
     SendAdditionalSlotsUpdate();
+    SendCompanionList();
+
+    // Send 5256
+
+    // Characters list
     SendCharactersList();
 }
 
@@ -135,6 +149,4 @@ void WorldSession::HandleAuthTokenRequest(WorldPacket& packet)
     WorldPacket data(MSG_AUTH_TOKEN);
     data.WriteString(token, STRING_SIZE_4);
     SendPacket(data);
-
-    SendCompanionList();
 }
