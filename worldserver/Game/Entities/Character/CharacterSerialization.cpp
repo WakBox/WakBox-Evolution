@@ -59,7 +59,7 @@ void Character::SerializeAppearance(WorldPacket& data)
 
 void Character::SerializeShortcutInventories(WorldPacket& data)
 {
-    data << quint16(8);
+    data << quint16(6);
 
     for (quint8 i = 0; i < 4; ++i)
     {
@@ -67,7 +67,7 @@ void Character::SerializeShortcutInventories(WorldPacket& data)
         data << quint16(0); // size
     }
 
-    for (quint8 i = 0; i < 4; ++i)
+    for (quint8 i = 0; i < 2; ++i)
     {
         data << quint8(1); // type
         data << quint16(0); // size
@@ -88,8 +88,9 @@ void Character::SerializeLandmarkInventory(WorldPacket& data)
 
 void Character::SerializeDiscoveredItems(WorldPacket& data)
 {
-    data << quint16(1); // ZaapsCount
+    data << quint16(2); // ZaapsCount
     data << quint32(19249);
+    data << quint32(26730);
 
     data << quint16(0); // dragosCount
     data << quint16(0); // boatscount
@@ -133,6 +134,9 @@ void Character::SerializeInventories(WorldPacket& data)
     data << quint16(0); // temporaryInventory size
     data << quint16(0); // cosmeticsInventory size
     data << quint16(0); // petCosmeticsInventory size
+
+    // UNK - FIX ME
+    data << quint64(0);
 }
 
 void Character::Character::SerializeEquipmentInventory(WorldPacket& data)
@@ -384,16 +388,19 @@ void Character::SerializeAccountInformation(WorldPacket& data)
     data << quint16(0); // additionalRights size
 
     data << quint8(0); // additionalSlots
+
+    data << quint8(0); // accountSecurityType
+    data << quint16(0); // accountData
 }
 
 void Character::SerializeLockToClient(WorldPacket& data)
 {
-    data << quint16(1); // Locks size
-    data << quint32(98); // lockId
-    data << quint64(0); // lockDate
-    data << quint64(1421755200000); // unlockDate
-    data << quint32(0); // currentLockValue
-    data << quint64(0); // currentLockValueLastChange
+    data << quint16(0); // Locks size
+    //data << quint32(98); // lockId
+    //data << quint64(0); // lockDate
+    //data << quint64(1421755200000); // unlockDate
+    //data << quint32(0); // currentLockValue
+    //data << quint64(0); // currentLockValueLastChange
 }
 
 void Character::SerializeDimensionalBagViewsInventory(WorldPacket& data)
