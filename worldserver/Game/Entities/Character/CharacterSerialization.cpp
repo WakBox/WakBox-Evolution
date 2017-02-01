@@ -352,25 +352,43 @@ void Character::SerializePet(WorldPacket& data)
 
 void Character::SerializeAchievements(WorldPacket& data)
 {
-    data << quint16(0);
-    /*
     data.StartBlock<quint16>();
     {
         data << quint32(3); // version
-        data << quint8(0); // history size
-        data << quint32(0); // nbVariables
+        data << quint8(1); // history size
         {
+            data << quint32(2926); // achievementId
+            data << quint64(1485348382000); // unlockTime
+        }
+
+        data << quint32(0); // nbVariables
+        /*{
             data << quint32(313);
             data << quint64(1);
 
             data << quint32(220);
             data << quint64(1);
+        }*/
+
+        data << quint32(2); // nbAchievements
+        {
+            data << quint32(2926); // achievementId
+            data << quint8(1); // active
+            data << quint8(1); // complete
+            data << quint64(1485348382000); // lastCompleted
+            data << quint64(0); // startTime
+
+            data << quint32(2879); // achievementId
+            data << quint8(1); // active
+            data << quint8(0); // complete
+            data << quint64(0); // lastCompleted
+            data << quint64(0); // startTime
         }
-        data << quint32(0); // nbAchievements
+
         data << quint32(0); // nbObjectives
         data << quint8(0); // numFollowed size
     }
-    data.EndBlock<quint16>();*/
+    data.EndBlock<quint16>();
 }
 
 void Character::SerializeAccountInformation(WorldPacket& data)
@@ -384,7 +402,7 @@ void Character::SerializeAccountInformation(WorldPacket& data)
     data << quint32(0); //m_freeHeroesSubscriptionLevel
     data << quint32(0); // forcedSubscriptionLevel
     data << quint32(0); // antiAddictionLevel
-    data << quint64(0); // sessionStartTime (current timestamp ?)
+    data << quint64(QDateTime::currentMSecsSinceEpoch()); // sessionStartTime (current timestamp ?)
     data << quint16(0); // additionalRights size
 
     data << quint8(0); // additionalSlots
@@ -418,8 +436,8 @@ void Character::SerializeDimensionalBagViewsInventory(WorldPacket& data)
 void Character::SerializePersonalEffects(WorldPacket& data)
 {
     QList<quint32> guildEffects;
-    guildEffects << 93962 << 93968 << 93598 << 93960 << 93966 << 93589
-                 << 93608 << 93970 << 93963 << 93969;
+    guildEffects << 93968 << 93967 << 93966 << 93965 << 93964 << 93963
+                 << 93962 << 93960 << 93608;
 
     data << quint16(guildEffects.size()); // guildEffects size
     for (quint8 i = 0; i < guildEffects.size(); ++i)
@@ -451,7 +469,8 @@ void Character::SerializeOccupation(WorldPacket& data)
 
 void Character::SerializeSpellDeck(WorldPacket& data)
 {
-    data << quint16(0);
+    data << quint16(0); // spellDeckSize
+    data << quint16(0); // size?
 }
 
 void Character::SerializeDungeonProgression(WorldPacket& data)
