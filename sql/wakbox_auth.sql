@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `realms` (
 --
 
 INSERT INTO `realms` (`realm_id`, `name`, `address`, `port`, `version`, `community`, `player_count`, `player_limit`, `security_access_level`, `locked`) VALUES
-(1, 'WakBox', '127.0.0.1', 5556, '1.39.6', 0, 0, 500, 0, 0);
+(1, 'WakBox', '127.0.0.1', 5556, '1.50.2', 0, 0, 500, 0, 0);
 
 --
 -- Table structure for table `realm_characters`
