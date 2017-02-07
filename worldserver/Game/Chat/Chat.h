@@ -4,6 +4,7 @@
 #include <QtCore>
 
 #include "Utils/Singleton.h"
+#include "Databases/Database.h"
 #include "Logs/Log.h"
 
 class Chat;

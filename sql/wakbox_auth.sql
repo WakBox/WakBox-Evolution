@@ -27,21 +27,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `accounts` (
-  `account_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `account_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `pseudo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `hash_password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `session_token` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `gm_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `session_token` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `gm_level` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `join_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_login` timestamp NULL DEFAULT NULL,
   `last_ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
-  `online` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `banned` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `subscription_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `online` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `banned` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `subscription_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 

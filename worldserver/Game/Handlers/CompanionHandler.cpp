@@ -1,31 +1,21 @@
 #include "Server/WorldSession.h"
+#include "Utils/Util.h"
 
 void WorldSession::SendCompanionList()
 {
     WorldPacket data(SMSG_COMPANION_LIST);
-    data << (quint8) 0;
+
+    data << (quint8) 1;
+    data << quint64(1562225);
+    data << quint16(3075);
+    data << quint64(GetAccountInfos().id);
+    data << quint64(0);
+    data << quint32(0);
+    data << quint8(0);
+    data << quint32(0);
+    data << quint32(0);
+    data << quint32(10050002);
+    data << quint16(0);
+
     SendPacket(data);
-
-    /*
-    var size = packet.ReadByte("companionListSize");
-    for (var i = 0; i < size; ++i)
-    {
-        packet.ReadLong("companion_id");
-        packet.ReadShort("breedId");
-        packet.ReadLong("ownerId");
-        packet.ReadLong("xp");
-
-        var strSize = packet.ReadInt("size");
-        packet.ReadString(strSize, "name");
-
-        packet.ReadByte("isUnlocked");
-        packet.ReadInt("currentHp");
-        packet.ReadInt("maxHp");
-
-        packet.ReadInt("serializationVersion");
-
-        packet.ReadShort("Size of ?");
-        // TODO!
-    }
-    */
 }

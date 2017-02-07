@@ -15,6 +15,7 @@ void WorldSession::SendCharactersList()
     QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTERS_BY_ACCOUNT_ID, QVariantList() << GetAccountInfos().id);
 
     WorldPacket data(SMSG_CHAR_LIST);
+
     data << (quint8) result.size();
 
     while (result.next())

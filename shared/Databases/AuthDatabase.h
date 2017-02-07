@@ -22,6 +22,8 @@ enum AuthDatabaseQueries
     SELECT_REALMS,
 
     UPDATE_SESSION_TOKEN,
+
+    INSERT_ACCOUNT
 };
 
 #endif

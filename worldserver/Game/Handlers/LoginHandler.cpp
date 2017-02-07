@@ -1,5 +1,6 @@
 #include "Cryptography/CryptographyMgr.h"
 #include "Server/WorldSession.h"
+#include "Utils/Util.h"
 
 void WorldSession::HandleClientVersion(WorldPacket& packet)
 {
@@ -90,7 +91,7 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
             data << quint8(0);      // block id
 
             data << quint64(result.value("account_id").toULongLong());
-            data << quint32(1); // m_subscriptionLevel
+            data << quint32(101); // m_subscriptionLevel
             data << quint32(0); // antiAddictionLevel
             data << quint8(0); // m_additionalSlot
             data << quint64(m_accountInfos.subscriptionTime);
@@ -118,8 +119,10 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
 
     SendWorldSelectResult(true);
 
-    // Send 1213
-    // Send SMSG_FREE_COMPANION_BREED_ID
+    // Send SMSG_FREE_COMPANION_BREED_ID - Opcode 2078
+    WorldPacket data2(SMSG_FREE_COMPANION_BREED_ID);
+    data2 << quint16(3075);
+    SendPacket(data2);
 
     SendClientCalendarSync();
     SendSystemConfiguration();

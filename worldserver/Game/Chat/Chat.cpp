@@ -1,10 +1,11 @@
 #include "Chat.h"
+#include "Utils/Util.h"
 
 template<> Chat*  Singleton<Chat>::m_instance = 0;
 
 static ChatCommand commandTable[] =
 {
-    { "caccount",   SECURITY_ADMINISTRATOR, true, &Chat::HandleAccountCreateCommand, "Create a new account. Syntax : .caccount \"username\" \"password\"" },
+    { "caccount",   SECURITY_ADMINISTRATOR, true, &Chat::HandleAccountCreateCommand, "Create a new account. Syntax : .caccount \"username\" \"pseudo\" \"password\"" },
     { "hello",      SECURITY_ADMINISTRATOR, true, &Chat::HandleHelloCommand,         "Hello world (test command)." },
     { NULL,         0,                      false, NULL,                             NULL }
 };
@@ -52,14 +53,26 @@ bool Chat::HandleAccountCreateCommand(QString& args)
         return false;
 
     QString username = list.at(1);
-    QString password = list.at(2);
+    QString pseudo = list.at(2);
+    QString password = list.at(3);
+
     username.remove("\"");
+    pseudo.remove("\"");
     password.remove("\"");
 
-    if (username.isEmpty() || password.isEmpty())
+    if (username.isEmpty() || pseudo.isEmpty() || password.isEmpty())
         return false;
 
-    // TODO : Add account in DB
+    password = Utils::HashPassword(username, password);
+
+    // TODO check if username already exists
+    // Email support too...
+
+    QSqlQuery result = sAuthDatabase->Query(INSERT_ACCOUNT, QVariantList() << username << pseudo << password);
+    if (result.lastError().number() > QSqlError::NoError)
+        return false;
+
+    Log::Write(LOG_TYPE_NORMAL, "The account \"%s\" has been created with success.", username.toLatin1().data());
     return true;
 }
 
