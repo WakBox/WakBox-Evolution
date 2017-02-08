@@ -125,11 +125,12 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     SendPacket(data2);
 
     SendClientCalendarSync();
-    SendSystemConfiguration();
+    //SendSystemConfiguration();
     SendAdditionalSlotsUpdate();
-    SendCompanionList();
 
     // Send 5256
+    SendCompanionList();
+    // Send 5255
 
     // Characters list
     SendCharactersList();
