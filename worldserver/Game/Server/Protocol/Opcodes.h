@@ -71,6 +71,8 @@ enum Opcodes
     SMSG_UPDATE_POSITION                        = 4127,
     SMSG_PROPERTIES_UPDATE                      = 4130,
     SMSG_START_FIGHT                            = 4530,
+    SMSG_EQUIPMENT_UNK                          = 5255,
+    SMSG_EQUIPMENT_UNK2                         = 5256,
     SMSG_SCENARIO_SCRIPT                        = 11100,
     SMSG_SERVER_TIME_COMMAND                    = 15001,
     SMSG_CHARACTER_UPDATE                       = 20002

@@ -38,6 +38,15 @@ bool World::Initialize()
 void World::AddSession(WorldSession *session)
 {
     m_sessions.push_back(session);
+
+    QStringList ip = session->GetIp().split(".");
+
+    WorldPacket data(SMSG_CLIENT_IP);
+
+    for (quint8 i = 0; i < ip.size(); ++i)
+        data << (quint8) ip.at(i).toUInt();
+
+    session->SendPacket(data);
 }
 
 void World::RemoveSession(WorldSession* session)

@@ -4,15 +4,6 @@
 
 void WorldSession::HandleClientVersion(WorldPacket& packet)
 {
-    QStringList ip = GetIp().split(".");
-
-    WorldPacket data(SMSG_CLIENT_IP);
-
-    for (quint8 i = 0; i < ip.size(); ++i)
-        data << (quint8) ip.at(i).toUInt();
-
-    SendPacket(data);
-
     quint8 version, change;
     quint16 revision;
     QString build;
@@ -125,15 +116,15 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     SendPacket(data2);
 
     SendClientCalendarSync();
-    //SendSystemConfiguration();
+    SendSystemConfiguration();
     SendAdditionalSlotsUpdate();
+
+    SendCompanionList();
 
     // Send 5256 - Unserialize EquipmentInventory??
     WorldPacket data3(5256);
     data3.WriteRawBytes(Utils::FromHexString("00 00 00 69 0A 17 08 B4 80 80 A8 C7 DE D7 30 10 94 73 18 01 A2 03 06 0A 04 50 00 58 00 0A 0E 08 87 81 80 A8 C7 DE D7 30 10 97 73 18 01 0A 0E 08 86 84 80 A0 C7 DE D7 30 10 99 73 18 01 0A 0E 08 C6 82 80 A0 C7 DE D7 30 10 95 73 18 01 0A 0E 08 CD 81 80 B0 C7 DE D7 30 10 98 73 18 01 0A 0E 08 C8 82 80 A0 C7 DE D7 30 10 96 73 18 01"));
     SendPacket(data3);
-
-    SendCompanionList();
 
     WorldPacket data4(5255);
     data4.WriteRawBytes(Utils::FromHexString("00 00 00 1C 0A 1A 0A 12 98 03 00 A2 03 00 A8 03 FF FF FF FF FF FF FF FF FF 01 10 D1 A3 9D 82 10"));
