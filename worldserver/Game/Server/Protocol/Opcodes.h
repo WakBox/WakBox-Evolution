@@ -61,7 +61,13 @@ enum Opcodes
     SMSG_CHAR_CREATE                            = 2054,
     SMSG_LEAVE_CHAR_SELECT                      = 2056,
     SMSG_WHOIS_COMMAND                          = 2061,
+
+    SMSG_FRIEND_LIST                            = 3144,
+    SMSG_IGNORE_LIST                            = 3146,
+
     SMSG_CHAT_MESSAGE                           = 3152,
+    SMSG_HAS_MODERATION_REQUEST                 = 3222,
+
     SMSG_CHARACTER_INFORMATION                  = 4098,
     SMSG_CHARACTER_ENTER_WORLD                  = 4100,
     SMSG_UPDATE_OBJECT                          = 4102,

@@ -79,6 +79,13 @@ public:
     void SendCharactersList();
     void SendCompanionList();
 
+    // Chat handlers
+    void SendModerationRequest();
+
+    // Social handlers
+    void SendFriendList();
+    void SendIgnoreList();
+
     //
     void SendSelectCharacterResult(bool result);
     void SendCharacterEnterWorldPackets();

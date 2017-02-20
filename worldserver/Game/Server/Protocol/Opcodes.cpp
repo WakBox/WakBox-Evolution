@@ -58,7 +58,13 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(SMSG_CHAR_CREATE,                            STATUS_NEVER,       &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_LEAVE_CHAR_SELECT,                      &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_WHOIS_COMMAND,                          &WorldSession::HandleServerSide);
+
+    ADD_OPCODE_HANDLER(SMSG_FRIEND_LIST,                            STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_IGNORE_LIST,                            STATUS_NEVER,       &WorldSession::HandleServerSide);
+
     //    ADD_OPCODE_HANDLER(SMSG_CHAT_MESSAGE,                           &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_HAS_MODERATION_REQUEST,                 STATUS_NEVER,       &WorldSession::HandleServerSide);
+
     ADD_OPCODE_HANDLER(SMSG_CHARACTER_INFORMATION,                  STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CHARACTER_ENTER_WORLD,                  STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_UPDATE_OBJECT,                          STATUS_NEVER,       &WorldSession::HandleServerSide);

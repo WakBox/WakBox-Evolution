@@ -222,9 +222,10 @@ void WorldSession::SendSelectCharacterResult(bool result)
 
 void WorldSession::SendCharacterEnterWorldPackets()
 {
-    // Send packet 3222 (HasModerationRequestMessage)
-    // Send packet 3144 (FriendListMessage)
-    // Send packet 3146 (IgnoreListMessage)
+    SendModerationRequest();
+
+    SendFriendList();
+    SendIgnoreList();
 
     // Send packet 5567 ??
 

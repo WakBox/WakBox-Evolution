@@ -36,3 +36,10 @@ void WorldSession::HandleRecruitMessage(WorldPacket& /*packet*/)
 {
 
 }
+
+void WorldSession::SendModerationRequest()
+{
+    WorldPacket data(SMSG_HAS_MODERATION_REQUEST);
+    data << quint8(0);
+    SendPacket(data);
+}
