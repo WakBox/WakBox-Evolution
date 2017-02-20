@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `realms` (
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `port` smallint(5) unsigned NOT NULL DEFAULT '5556',
-  `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1.51.0',
+  `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1.51.2',
   `community` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `player_count` int(10) unsigned NOT NULL DEFAULT '0',
   `player_limit` int(10) unsigned NOT NULL DEFAULT '500',
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `realms` (
 --
 
 INSERT INTO `realms` (`realm_id`, `name`, `address`, `port`, `version`, `community`, `player_count`, `player_limit`, `security_access_level`, `locked`) VALUES
-(1, 'WakBox', '127.0.0.1', 5556, '1.51.0', 0, 0, 500, 0, 0);
+(1, 'WakBox', '127.0.0.1', 5556, '1.51.2', 0, 0, 500, 0, 0);
 
 --
 -- Table structure for table `realm_characters`
