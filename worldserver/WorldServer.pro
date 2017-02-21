@@ -16,14 +16,17 @@ TEMPLATE = app
 
 unix:!macx {
     LIBS += -L"/usr/lib/libcryptopp" -lcryptopp
+    LIBS += -L"/usr/lib/libprotobuf" -lprotobuf
 }
 
 macx: {
     LIBS += -L"/usr/local/lib/" -lcryptopp
+    LIBS += -L"/usr/local/lib/" -lprotobuf
 }
 
 win32 {
     LIBS += -L"C:/CryptoPP/lib" -lcryptopp563
+    LIBS += -L"C:/Protobuf/lib" -lprotobuf
     INCLUDEPATH += C:/CryptoPP/include
 }
 
@@ -38,4 +41,5 @@ HEADERS += WorldServer.h
 include(../dep/Dep.pri)
 include(../shared/Shared.pri)
 include(Game/Game.pri)
+include(Proto/Proto.pri)
 include(Scripts/Scripts.pri)
