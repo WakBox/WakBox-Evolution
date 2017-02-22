@@ -1,6 +1,8 @@
 #include "Cryptography/CryptographyMgr.h"
 #include "Server/WorldSession.h"
 #include "Utils/Util.h"
+#include "Proto/item.pb.h"
+#include "Proto/equipment.pb.h"
 
 void WorldSession::HandleClientVersion(WorldPacket& packet)
 {
@@ -121,13 +123,83 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
 
     SendCompanionList();
 
-    // Send 5256 - Unserialize EquipmentInventory??
+    // Send ProtoMergedItems from item.proto
+    WakfuProto::ProtoMergedItems protoMergedItems;
+
+    WakfuProto::ProtoItem* item1 = protoMergedItems.add_items();
+    WakfuProto::ProtoGems* gems1 = new WakfuProto::ProtoGems();
+
+    item1->set_uniqueid(27407476768899124);
+    item1->set_refid(14740);
+    item1->set_qty(1);
+
+    WakfuProto::ProtoGems_ProtoGem* gem1 = gems1->add_gems();
+    gem1->set_position(0);
+    gem1->set_refid(0);
+
+    item1->set_allocated_gems(gems1);
+
+    WakfuProto::ProtoItem* item2 = protoMergedItems.add_items();
+    item2->set_uniqueid(27407476768899207);
+    item2->set_refid(14743);
+    item2->set_qty(1);
+
+    WakfuProto::ProtoItem* item3 = protoMergedItems.add_items();
+    item3->set_uniqueid(27407476752122374);
+    item3->set_refid(14745);
+    item3->set_qty(1);
+
+    WakfuProto::ProtoItem* item4 = protoMergedItems.add_items();
+    item4->set_uniqueid(27407476752122182);
+    item4->set_refid(14741);
+    item4->set_qty(1);
+
+    WakfuProto::ProtoItem* item5 = protoMergedItems.add_items();
+    item5->set_uniqueid(27407476785676493);
+    item5->set_refid(14744);
+    item5->set_qty(1);
+
+    WakfuProto::ProtoItem* item6 = protoMergedItems.add_items();
+    item6->set_uniqueid(27407476752122184);
+    item6->set_refid(14742);
+    item6->set_qty(1);
+
     WorldPacket data3(5256);
-    data3.WriteRawBytes(Utils::FromHexString("00 00 00 69 0A 17 08 B4 80 80 A8 C7 DE D7 30 10 94 73 18 01 A2 03 06 0A 04 50 00 58 00 0A 0E 08 87 81 80 A8 C7 DE D7 30 10 97 73 18 01 0A 0E 08 86 84 80 A0 C7 DE D7 30 10 99 73 18 01 0A 0E 08 C6 82 80 A0 C7 DE D7 30 10 95 73 18 01 0A 0E 08 CD 81 80 B0 C7 DE D7 30 10 98 73 18 01 0A 0E 08 C8 82 80 A0 C7 DE D7 30 10 96 73 18 01"));
+    QByteArray protoItemsBin;
+    protoItemsBin.resize(protoMergedItems.ByteSize());
+    protoMergedItems.SerializeToArray(protoItemsBin.data(), protoItemsBin.size());
+
+    data3.StartBlock<quint32>();
+    {
+        data3.WriteRawBytes(protoItemsBin);
+    }
+    data3.EndBlock<quint32>();
+
     SendPacket(data3);
 
+    // Send ProtoEquipmentAccount from equipment.proto
+    WakfuProto::ProtoEquipmentAccount protoEquipmentAccount;
+    WakfuProto::ProtoEquipmentSet* protoEquipmentSet = protoEquipmentAccount.add_sets();
+    WakfuProto::ProtoEquipmentSheet* equipmentSheets = protoEquipmentSet->add_sheets();
+
+    std::string emptyString = "";
+    equipmentSheets->set_index(0);
+    equipmentSheets->set_name(emptyString);
+    equipmentSheets->set_level(-1);
+
+    protoEquipmentSet->set_characterid(4299641297);
+
     WorldPacket data4(5255);
-    data4.WriteRawBytes(Utils::FromHexString("00 00 00 1C 0A 1A 0A 12 98 03 00 A2 03 00 A8 03 FF FF FF FF FF FF FF FF FF 01 10 D1 A3 9D 82 10"));
+    QByteArray protoEquipmentSetBin;
+    protoEquipmentSetBin.resize(protoEquipmentAccount.ByteSize());
+    protoEquipmentAccount.SerializeToArray(protoEquipmentSetBin.data(), protoEquipmentSetBin.size());
+
+    data4.StartBlock<quint32>();
+    {
+        data4.WriteRawBytes(protoEquipmentSetBin);
+    }
+    data4.EndBlock<quint32>();
+
     SendPacket(data4);
 
     // Characters list

@@ -424,7 +424,8 @@ void WorldSession::SendCharacterInformation()
 
     data.WriteRawBytes(Utils::FromHexString("00 4F 08 00 12 17 08 00 12 00 18 FF FF FF FF FF FF FF FF FF 01 20 00 28 00 30 00 38 01 1A 32 08 FF FF FF FF FF FF FF FF FF 01 12 00 18 00 20 FF FF FF FF FF FF FF FF FF 01 28 FF FF FF FF FF FF FF FF FF 01 30 FF FF FF FF FF FF FF FF FF 01 38 00 00 00 00 11 12 0F 08 00 12 00 18 FF FF FF FF FF FF FF FF FF 01"));
 
-
+    // Send buildSheet.proto
+    // Send aptitude.proto
     /*data.StartBlock<quint32>();
     {
 
