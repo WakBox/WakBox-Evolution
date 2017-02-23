@@ -2,6 +2,7 @@
 #include "Entities/ObjectMgr.h"
 #include "Miscellaneous/SharedDefines.h"
 #include "Utils/Util.h"
+#include "Proto/dimensionalBag.pb.h"
 #include "Proto/dungeon_progression.pb.h"
 #include "Proto/buildSheet.pb.h"
 #include "Proto/aptitude.pb.h"
@@ -362,6 +363,38 @@ void WorldSession::SendCharacterInformation()
 
         // DIMENSIONAL_BAG_FOR_LOCAL_CLIENT
         character->SerializeDimensionalBagForLocalClient(data);
+
+        // Send dimensionalBag.proto
+
+        WakfuProto::ProtoDimensionalBagCraftFee protoBagCraftFee;
+
+        WakfuProto::ProtoDimensionalBagCategoryFee* cat1 = protoBagCraftFee.add_categoryfee();
+        cat1->set_categoryindex(0);
+        cat1->set_equipmentcraftfee(0);
+        cat1->set_componentcraftfee(0);
+
+        WakfuProto::ProtoDimensionalBagCategoryFee* cat2 = protoBagCraftFee.add_categoryfee();
+        cat2->set_categoryindex(1);
+        cat2->set_equipmentcraftfee(0);
+        cat2->set_componentcraftfee(0);
+
+        WakfuProto::ProtoDimensionalBagCategoryFee* cat3 = protoBagCraftFee.add_categoryfee();
+        cat3->set_categoryindex(2);
+        cat3->set_equipmentcraftfee(0);
+        cat3->set_componentcraftfee(0);
+
+        protoBagCraftFee.set_isfreeforfriends(0);
+        protoBagCraftFee.set_isfreeforguild(0);
+
+        data.StartBlock<quint16>();
+        {
+            QByteArray protoBagCraftFeeBin;
+            protoBagCraftFeeBin.resize(protoBagCraftFee.ByteSize());
+            protoBagCraftFee.SerializeToArray(protoBagCraftFeeBin.data(), protoBagCraftFeeBin.size());
+
+            data.WriteRawBytes(protoBagCraftFeeBin);
+        }
+        data.EndBlock<quint16>();
 
         // CHALLENGES
         character->SerializeChallenges(data);
