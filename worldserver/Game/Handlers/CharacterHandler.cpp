@@ -2,6 +2,8 @@
 #include "Entities/ObjectMgr.h"
 #include "Miscellaneous/SharedDefines.h"
 #include "Utils/Util.h"
+#include "Proto/buildSheet.pb.h"
+#include "Proto/aptitude.pb.h"
 
 void WorldSession::SendAdditionalSlotsUpdate()
 {
@@ -419,19 +421,61 @@ void WorldSession::SendCharacterInformation()
     }
     data.EndBlock<quint32>();
 
-    data.WriteRawBytes(Utils::FromHexString("00 00 00 4F 08 00 12 17 08 00 12 00 18 FF FF FF FF FF FF FF FF FF 01 20 00 28 00 30 00 38 01 1A 32 08 FF FF FF FF FF FF FF FF FF 01 12 00 18 00 20 FF FF FF FF FF FF FF FF FF 01 28 FF FF FF FF FF FF FF FF FF 01 30 FF FF FF FF FF FF FF FF FF 01 38 00 00 00 00 11 12 0F 08 00 12 00 18 FF FF FF FF FF FF FF FF FF 01"));
-
-    /*data.StartBlock<quint32>();
+    data.StartBlock<quint32>();
     {
         // Send buildSheet.proto
+
+        WakfuProto::ProtoBuildSheetSet buildSheetSet;
+        buildSheetSet.set_activesheetindex(0);
+
+        WakfuProto::ProtoBuildSheet* sheet1 = buildSheetSet.add_buildsheets();
+        std::string emptyString = "";
+
+        sheet1->set_index(0);
+        sheet1->set_name(emptyString);
+        sheet1->set_level(-1);
+        sheet1->set_spelldeckindex(0);
+        sheet1->set_aptitudesheetindex(0);
+        sheet1->set_equipmentsheetindex(0);
+        sheet1->set_iconindex(1);
+
+        WakfuProto::ProtoBuildSheet* autoSheet = new WakfuProto::ProtoBuildSheet();
+        autoSheet->set_index(-1);
+        autoSheet->set_name(emptyString);
+        autoSheet->set_level(0);
+        autoSheet->set_spelldeckindex(-1);
+        autoSheet->set_aptitudesheetindex(-1);
+        autoSheet->set_equipmentsheetindex(-1);
+        autoSheet->set_iconindex(0);
+        buildSheetSet.set_allocated_automaticsheet(autoSheet);
+
+        QByteArray protoBuildSheetBin;
+        protoBuildSheetBin.resize(buildSheetSet.ByteSize());
+        buildSheetSet.SerializeToArray(protoBuildSheetBin.data(), protoBuildSheetBin.size());
+
+        data.WriteRawBytes(protoBuildSheetBin);
     }
     data.EndBlock<quint32>();
 
     data.StartBlock<quint32>();
     {
-         // Send aptitude.proto
+        // Send aptitude.proto
+
+        WakfuProto::SheetSet sheetSet;
+        WakfuProto::Sheet* sheet = sheetSet.add_sheets();
+        std::string emptyString = "";
+
+        sheet->set_index(0);
+        sheet->set_name(emptyString);
+        sheet->set_level(-1);
+
+        QByteArray protoSheetSetBin;
+        protoSheetSetBin.resize(sheetSet.ByteSize());
+        sheetSet.SerializeToArray(protoSheetSetBin.data(), protoSheetSetBin.size());
+
+        data.WriteRawBytes(protoSheetSetBin);
     }
-    data.EndBlock<quint32>();*/
+    data.EndBlock<quint32>();
 
     SendPacket(data);
 }

@@ -240,7 +240,21 @@ void Character::SerializeRunningEffects(WorldPacket& data)
 {
     data << quint8(0); // hasInFightData
     data << quint8(1); // hasOutFightData
-        data << quint16(0); // size
+    {
+        data << quint16(2); // size
+
+        data << quint64(343583202); // uid
+        data << quint16(4464); // stateBaseId
+        data << quint16(1); // level
+        data << quint32(0); // remainingDurationInMs
+        data << quint64(0); // startDate
+
+        data << quint64(343583201); // uid
+        data << quint16(4459); // stateBaseId
+        data << quint16(1); // level
+        data << quint32(0); // remainingDurationInMs
+        data << quint64(0); // startDate
+    }
 }
 
 void Character::SerializeDimensionalBagForLocalClient(WorldPacket& data)
@@ -469,8 +483,33 @@ void Character::SerializeOccupation(WorldPacket& data)
 
 void Character::SerializeSpellDeck(WorldPacket& data)
 {
-    data << quint16(0); // spellDeckSize
-    data << quint16(0); // size?
+    data << quint16(2); // spellDeckSize
+
+    data << qint32(-1); // index
+    data << quint16(12); // activeSpells
+    for (quint8 i = 0; i < 12; ++i)
+        data << quint32(0);
+
+    data << quint16(6); // passiveSpells
+    for (quint8 i = 0; i < 6; ++i)
+        data << quint32(0);
+
+    data.WriteString("", STRING_SIZE_2);
+    data << qint32(-1); // level
+
+    data << quint32(0); // index
+    data << quint16(12); // activeSpells
+    for (quint8 i = 0; i < 12; ++i)
+        data << quint32(0);
+
+    data << quint16(6); // passiveSpells
+    for (quint8 i = 0; i < 6; ++i)
+        data << quint32(0);
+
+    data.WriteString("", STRING_SIZE_2);
+    data << qint32(-1); // level
+
+    data << quint32(1); // size?
 }
 
 void Character::SerializeDungeonProgression(WorldPacket& data)
