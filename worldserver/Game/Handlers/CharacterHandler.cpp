@@ -2,6 +2,7 @@
 #include "Entities/ObjectMgr.h"
 #include "Miscellaneous/SharedDefines.h"
 #include "Utils/Util.h"
+#include "Proto/dungeon_progression.pb.h"
 #include "Proto/buildSheet.pb.h"
 #include "Proto/aptitude.pb.h"
 
@@ -417,7 +418,44 @@ void WorldSession::SendCharacterInformation()
         character->SerializeSpellDeck(data);
 
         // DUNGEON_PROGRESSION
-        character->SerializeDungeonProgression(data);
+        //character->SerializeDungeonProgression(data);
+
+        // Send dungeon_progression.proto
+        WakfuProto::ProtoDungeonProgression protoDungeonProgress;
+
+        WakfuProto::ProtoDungeonEntry* entry1 = protoDungeonProgress.add_map();
+        entry1->set_index(22);
+        entry1->set_difficulty(11);
+
+        WakfuProto::ProtoDungeonEntry* entry2 = protoDungeonProgress.add_map();
+        entry2->set_index(39);
+        entry2->set_difficulty(11);
+
+        WakfuProto::ProtoDungeonEntry* entry3 = protoDungeonProgress.add_map();
+        entry3->set_index(104);
+        entry3->set_difficulty(11);
+
+        WakfuProto::ProtoDungeonEntry* entry4 = protoDungeonProgress.add_map();
+        entry4->set_index(106);
+        entry4->set_difficulty(11);
+
+        WakfuProto::ProtoDungeonEntry* entry5 = protoDungeonProgress.add_map();
+        entry5->set_index(109);
+        entry5->set_difficulty(11);
+
+        WakfuProto::ProtoDungeonEntry* entry6 = protoDungeonProgress.add_map();
+        entry6->set_index(110);
+        entry6->set_difficulty(20);
+
+        data.StartBlock<quint16>();
+        {
+            QByteArray protoDungeonProgressBin;
+            protoDungeonProgressBin.resize(protoDungeonProgress.ByteSize());
+            protoDungeonProgress.SerializeToArray(protoDungeonProgressBin.data(), protoDungeonProgressBin.size());
+
+            data.WriteRawBytes(protoDungeonProgressBin);
+        }
+        data.EndBlock<quint16>();
     }
     data.EndBlock<quint32>();
 
