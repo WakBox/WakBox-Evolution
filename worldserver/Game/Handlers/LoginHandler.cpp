@@ -95,7 +95,7 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
                 data << quint64(0); // unkLong (heroId?)
 
             // Admin rights => TODO
-            for (quint8 i = 1; i <= MAX_ADMIN_RIGHT + 5; ++i)
+            for (quint8 i = 1; i <= MAX_ADMIN_RIGHT + 6; ++i)
                 data << quint32(0);
 
             data.WriteString(m_accountInfos.pseudo);
