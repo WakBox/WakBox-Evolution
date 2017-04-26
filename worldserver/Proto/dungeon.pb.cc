@@ -44,11 +44,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoDungeon, isdifficultyavailable_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoDungeon, canincreasedifficulty_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoDungeon, isfightinprogress_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoDungeon, iscompetitivecancelled_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoDungeon, allowedids_),
   0,
   1,
   2,
   3,
   4,
+  5,
+  ~0u,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoPartyInstanceInfo, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ProtoPartyInstanceInfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -66,9 +70,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
 };
 
 static const ::google::protobuf::internal::MigrationSchema schemas[] = {
-  { 0, 9, sizeof(ProtoDungeon)},
-  { 14, 19, sizeof(ProtoPartyInstanceInfo)},
-  { 20, 26, sizeof(ProtoPartyInstanceInfoEntry)},
+  { 0, 11, sizeof(ProtoDungeon)},
+  { 18, 23, sizeof(ProtoPartyInstanceInfo)},
+  { 24, 30, sizeof(ProtoPartyInstanceInfoEntry)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -127,18 +131,20 @@ void InitDefaults() {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] = {
-      "\n\rdungeon.proto\022\nWakfuProto\"\222\001\n\014ProtoDun"
+      "\n\rdungeon.proto\022\nWakfuProto\"\306\001\n\014ProtoDun"
       "geon\022\020\n\010maxLevel\030\001 \002(\005\022\027\n\017difficultyLeve"
       "l\030\002 \002(\005\022\035\n\025isDifficultyAvailable\030\003 \002(\010\022\035"
       "\n\025canIncreaseDifficulty\030\004 \002(\010\022\031\n\021isfight"
-      "InProgress\030\005 \002(\010\"P\n\026ProtoPartyInstanceIn"
-      "fo\0226\n\005entry\030\001 \003(\0132\'.WakfuProto.ProtoPart"
-      "yInstanceInfoEntry\"[\n\033ProtoPartyInstance"
-      "InfoEntry\022\r\n\005index\030\001 \002(\005\022-\n\013dungeonInfo\030"
-      "\002 \002(\0132\030.WakfuProto.ProtoDungeon"
+      "InProgress\030\005 \002(\010\022\036\n\026isCompetitiveCancell"
+      "ed\030\006 \002(\010\022\022\n\nallowedIds\030\007 \003(\003\"P\n\026ProtoPar"
+      "tyInstanceInfo\0226\n\005entry\030\001 \003(\0132\'.WakfuPro"
+      "to.ProtoPartyInstanceInfoEntry\"[\n\033ProtoP"
+      "artyInstanceInfoEntry\022\r\n\005index\030\001 \002(\005\022-\n\013"
+      "dungeonInfo\030\002 \002(\0132\030.WakfuProto.ProtoDung"
+      "eon"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 351);
+      descriptor, 403);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dungeon.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -166,6 +172,8 @@ const int ProtoDungeon::kDifficultyLevelFieldNumber;
 const int ProtoDungeon::kIsDifficultyAvailableFieldNumber;
 const int ProtoDungeon::kCanIncreaseDifficultyFieldNumber;
 const int ProtoDungeon::kIsfightInProgressFieldNumber;
+const int ProtoDungeon::kIsCompetitiveCancelledFieldNumber;
+const int ProtoDungeon::kAllowedIdsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ProtoDungeon::ProtoDungeon()
@@ -180,18 +188,19 @@ ProtoDungeon::ProtoDungeon(const ProtoDungeon& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
-      _cached_size_(0) {
+      _cached_size_(0),
+      allowedids_(from.allowedids_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&maxlevel_, &from.maxlevel_,
-    reinterpret_cast<char*>(&isfightinprogress_) -
-    reinterpret_cast<char*>(&maxlevel_) + sizeof(isfightinprogress_));
+    reinterpret_cast<char*>(&iscompetitivecancelled_) -
+    reinterpret_cast<char*>(&maxlevel_) + sizeof(iscompetitivecancelled_));
   // @@protoc_insertion_point(copy_constructor:WakfuProto.ProtoDungeon)
 }
 
 void ProtoDungeon::SharedCtor() {
   _cached_size_ = 0;
-  ::memset(&maxlevel_, 0, reinterpret_cast<char*>(&isfightinprogress_) -
-    reinterpret_cast<char*>(&maxlevel_) + sizeof(isfightinprogress_));
+  ::memset(&maxlevel_, 0, reinterpret_cast<char*>(&iscompetitivecancelled_) -
+    reinterpret_cast<char*>(&maxlevel_) + sizeof(iscompetitivecancelled_));
 }
 
 ProtoDungeon::~ProtoDungeon() {
@@ -227,9 +236,10 @@ ProtoDungeon* ProtoDungeon::New(::google::protobuf::Arena* arena) const {
 
 void ProtoDungeon::Clear() {
 // @@protoc_insertion_point(message_clear_start:WakfuProto.ProtoDungeon)
-  if (_has_bits_[0 / 32] & 31u) {
-    ::memset(&maxlevel_, 0, reinterpret_cast<char*>(&isfightinprogress_) -
-      reinterpret_cast<char*>(&maxlevel_) + sizeof(isfightinprogress_));
+  allowedids_.Clear();
+  if (_has_bits_[0 / 32] & 63u) {
+    ::memset(&maxlevel_, 0, reinterpret_cast<char*>(&iscompetitivecancelled_) -
+      reinterpret_cast<char*>(&maxlevel_) + sizeof(iscompetitivecancelled_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -310,6 +320,35 @@ bool ProtoDungeon::MergePartialFromCodedStream(
         break;
       }
 
+      // required bool isCompetitiveCancelled = 6;
+      case 6: {
+        if (tag == 48u) {
+          set_has_iscompetitivecancelled();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &iscompetitivecancelled_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated int64 allowedIds = 7;
+      case 7: {
+        if (tag == 56u) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 1, 56u, input, this->mutable_allowedids())));
+        } else if (tag == 58u) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, this->mutable_allowedids())));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0 ||
@@ -360,6 +399,17 @@ void ProtoDungeon::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->isfightinprogress(), output);
   }
 
+  // required bool isCompetitiveCancelled = 6;
+  if (has_iscompetitivecancelled()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(6, this->iscompetitivecancelled(), output);
+  }
+
+  // repeated int64 allowedIds = 7;
+  for (int i = 0; i < this->allowedids_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(
+      7, this->allowedids(i), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -394,6 +444,17 @@ void ProtoDungeon::SerializeWithCachedSizes(
   // required bool isfightInProgress = 5;
   if (has_isfightinprogress()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->isfightinprogress(), target);
+  }
+
+  // required bool isCompetitiveCancelled = 6;
+  if (has_iscompetitivecancelled()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(6, this->iscompetitivecancelled(), target);
+  }
+
+  // repeated int64 allowedIds = 7;
+  for (int i = 0; i < this->allowedids_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt64ToArray(7, this->allowedids(i), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -437,6 +498,11 @@ size_t ProtoDungeon::RequiredFieldsByteSizeFallback() const {
     total_size += 1 + 1;
   }
 
+  if (has_iscompetitivecancelled()) {
+    // required bool isCompetitiveCancelled = 6;
+    total_size += 1 + 1;
+  }
+
   return total_size;
 }
 size_t ProtoDungeon::ByteSizeLong() const {
@@ -448,7 +514,7 @@ size_t ProtoDungeon::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
-  if (((_has_bits_[0] & 0x0000001f) ^ 0x0000001f) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x0000003f) ^ 0x0000003f) == 0) {  // All required fields are present.
     // required int32 maxLevel = 1;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -468,9 +534,21 @@ size_t ProtoDungeon::ByteSizeLong() const {
     // required bool isfightInProgress = 5;
     total_size += 1 + 1;
 
+    // required bool isCompetitiveCancelled = 6;
+    total_size += 1 + 1;
+
   } else {
     total_size += RequiredFieldsByteSizeFallback();
   }
+  // repeated int64 allowedIds = 7;
+  {
+    size_t data_size = ::google::protobuf::internal::WireFormatLite::
+      Int64Size(this->allowedids_);
+    total_size += 1 *
+                  ::google::protobuf::internal::FromIntSize(this->allowedids_size());
+    total_size += data_size;
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -497,7 +575,8 @@ void ProtoDungeon::MergeFrom(const ProtoDungeon& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.ProtoDungeon)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from._has_bits_[0 / 32] & 31u) {
+  allowedids_.MergeFrom(from.allowedids_);
+  if (from._has_bits_[0 / 32] & 63u) {
     if (from.has_maxlevel()) {
       set_maxlevel(from.maxlevel());
     }
@@ -512,6 +591,9 @@ void ProtoDungeon::MergeFrom(const ProtoDungeon& from) {
     }
     if (from.has_isfightinprogress()) {
       set_isfightinprogress(from.isfightinprogress());
+    }
+    if (from.has_iscompetitivecancelled()) {
+      set_iscompetitivecancelled(from.iscompetitivecancelled());
     }
   }
 }
@@ -531,7 +613,7 @@ void ProtoDungeon::CopyFrom(const ProtoDungeon& from) {
 }
 
 bool ProtoDungeon::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
   return true;
 }
 
@@ -540,11 +622,13 @@ void ProtoDungeon::Swap(ProtoDungeon* other) {
   InternalSwap(other);
 }
 void ProtoDungeon::InternalSwap(ProtoDungeon* other) {
+  allowedids_.UnsafeArenaSwap(&other->allowedids_);
   std::swap(maxlevel_, other->maxlevel_);
   std::swap(difficultylevel_, other->difficultylevel_);
   std::swap(isdifficultyavailable_, other->isdifficultyavailable_);
   std::swap(canincreasedifficulty_, other->canincreasedifficulty_);
   std::swap(isfightinprogress_, other->isfightinprogress_);
+  std::swap(iscompetitivecancelled_, other->iscompetitivecancelled_);
   std::swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -676,6 +760,60 @@ void ProtoDungeon::set_isfightinprogress(bool value) {
   set_has_isfightinprogress();
   isfightinprogress_ = value;
   // @@protoc_insertion_point(field_set:WakfuProto.ProtoDungeon.isfightInProgress)
+}
+
+// required bool isCompetitiveCancelled = 6;
+bool ProtoDungeon::has_iscompetitivecancelled() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void ProtoDungeon::set_has_iscompetitivecancelled() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void ProtoDungeon::clear_has_iscompetitivecancelled() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void ProtoDungeon::clear_iscompetitivecancelled() {
+  iscompetitivecancelled_ = false;
+  clear_has_iscompetitivecancelled();
+}
+bool ProtoDungeon::iscompetitivecancelled() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.ProtoDungeon.isCompetitiveCancelled)
+  return iscompetitivecancelled_;
+}
+void ProtoDungeon::set_iscompetitivecancelled(bool value) {
+  set_has_iscompetitivecancelled();
+  iscompetitivecancelled_ = value;
+  // @@protoc_insertion_point(field_set:WakfuProto.ProtoDungeon.isCompetitiveCancelled)
+}
+
+// repeated int64 allowedIds = 7;
+int ProtoDungeon::allowedids_size() const {
+  return allowedids_.size();
+}
+void ProtoDungeon::clear_allowedids() {
+  allowedids_.Clear();
+}
+::google::protobuf::int64 ProtoDungeon::allowedids(int index) const {
+  // @@protoc_insertion_point(field_get:WakfuProto.ProtoDungeon.allowedIds)
+  return allowedids_.Get(index);
+}
+void ProtoDungeon::set_allowedids(int index, ::google::protobuf::int64 value) {
+  allowedids_.Set(index, value);
+  // @@protoc_insertion_point(field_set:WakfuProto.ProtoDungeon.allowedIds)
+}
+void ProtoDungeon::add_allowedids(::google::protobuf::int64 value) {
+  allowedids_.Add(value);
+  // @@protoc_insertion_point(field_add:WakfuProto.ProtoDungeon.allowedIds)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+ProtoDungeon::allowedids() const {
+  // @@protoc_insertion_point(field_list:WakfuProto.ProtoDungeon.allowedIds)
+  return allowedids_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+ProtoDungeon::mutable_allowedids() {
+  // @@protoc_insertion_point(field_mutable_list:WakfuProto.ProtoDungeon.allowedIds)
+  return &allowedids_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

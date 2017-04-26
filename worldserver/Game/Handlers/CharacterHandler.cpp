@@ -6,6 +6,7 @@
 #include "Proto/dungeon_progression.pb.h"
 #include "Proto/buildSheet.pb.h"
 #include "Proto/aptitude.pb.h"
+#include "Proto/dungeon.pb.h"
 
 void WorldSession::SendAdditionalSlotsUpdate()
 {
@@ -456,9 +457,6 @@ void WorldSession::SendCharacterInformation()
         // SPELL_DECK
         character->SerializeSpellDeck(data);
 
-        // DUNGEON_PROGRESSION
-        //character->SerializeDungeonProgression(data);
-
         // Send dungeon_progression.proto
         WakfuProto::ProtoDungeonProgression protoDungeonProgress;
 
@@ -564,13 +562,10 @@ void WorldSession::SendCharacterEnterWorld()
         return;
 
     WorldPacket data(SMSG_CHARACTER_ENTER_WORLD);
-    data.WriteRawBytes(Utils::FromHexString("00 2C 1A 00 00 00 01 00 47 51 D1 00 00 00 00 00 04 66 2B 40 00 00 00 12 FF FF FF FD FF E1 04 2F 07 01 00 00 00 00 00 00 00 00 00 00 00 00 00 02 00 00 00 02 00 00 00 0C 08 00 10 0B 18 01 20 01 28 00 30 00"));
-    SendPacket(data);
-    return;
 
     data.StartBlock<quint16>();
     {
-        data << quint8(26); // CharacterPartId
+        data << quint8(26);
 
         // ID
         character->SerializeGuid(data);
@@ -597,21 +592,24 @@ void WorldSession::SendCharacterEnterWorld()
     }
     data.EndBlock<quint16>();
 
-    // Dungeon Statis ProtoBuf?
-    data << quint16(10); // Size
+    // Send dungeon.proto
+    data.StartBlock<quint16>();
+    {
+        WakfuProto::ProtoDungeon protoDungeon;
+        protoDungeon.set_maxlevel(0);
+        protoDungeon.set_difficultylevel(11);
+        protoDungeon.set_isdifficultyavailable(true);
+        protoDungeon.set_canincreasedifficulty(true);
+        protoDungeon.set_isfightinprogress(false);
+        protoDungeon.set_iscompetitivecancelled(false);
 
-    // unk data
-    data << quint8(10);
-    data << quint8(8);
-    data << quint8(0);
-    data << quint8(16);
-    data << quint8(11);
-    data << quint8(24);
-    data << quint8(1);
-    data << quint8(32);
-    data << quint8(1);
-    data << quint8(40);
-    data << quint8(0);
+        QByteArray protoDungeonBin;
+        protoDungeonBin.resize(protoDungeon.ByteSize());
+        protoDungeon.SerializeToArray(protoDungeonBin.data(), protoDungeonBin.size());
+
+        data.WriteRawBytes(protoDungeonBin);
+    }
+    data.EndBlock<quint16>();
 
     SendPacket(data);
 }
