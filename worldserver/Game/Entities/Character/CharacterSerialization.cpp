@@ -21,6 +21,16 @@ void Character::SerializeBreed(WorldPacket& data)
     data << GetBreed();
 }
 
+void Character::SerializeGuildBlazon(WorldPacket& data)
+{
+    data << quint64(0); // guildBlazon
+}
+
+void Character::SerializeGuildId(WorldPacket& data)
+{
+    data << quint64(0); // guildId
+}
+
 void Character::SerializeHP(WorldPacket& data)
 {
     data << GetHealth();

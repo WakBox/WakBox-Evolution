@@ -83,6 +83,12 @@ public:
     // BREED
     void SerializeBreed(WorldPacket& data);
 
+    // GUILD_BLAZON
+    void SerializeGuildBlazon(WorldPacket& data);
+
+    // GUILD_ID
+    void SerializeGuildId(WorldPacket& data);
+
     // HP
     void SerializeHP(WorldPacket& data);
 

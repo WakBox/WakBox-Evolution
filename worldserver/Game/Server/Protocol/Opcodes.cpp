@@ -26,7 +26,7 @@ void OpcodeTable::Load()
     //    ADD_OPCODE_HANDLER(CMSG_PRIVATE_MESSAGE,                        &WorldSession::HandlePrivateMessage);
     //    ADD_OPCODE_HANDLER(CMSG_TRADE_MESSAGE,                          &WorldSession::HandleTradeMessage);
     //    ADD_OPCODE_HANDLER(CMSG_RECRUIT_MESSAGE,                        &WorldSession::HandleRecruitMessage);
-    //    ADD_OPCODE_HANDLER(CMSG_CHAR_MOVEMENT,                          &WorldSession::HandleCharMovement);
+    ADD_OPCODE_HANDLER(CMSG_CHAR_MOVEMENT,                          STATUS_AUTHED,      &WorldSession::HandleCharMovement);
     //    ADD_OPCODE_HANDLER(CMSG_CHAR_DIRECTION,                         &WorldSession::HandleCharDirection);
     //    ADD_OPCODE_HANDLER(CMSG_CHAR_EMOTE,                             &WorldSession::HandleCharEmote);
     //    ADD_OPCODE_HANDLER(CMSG_START_FIGHT,                            &WorldSession::HandleStartFight);

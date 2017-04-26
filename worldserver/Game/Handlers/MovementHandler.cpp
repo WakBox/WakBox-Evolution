@@ -2,6 +2,9 @@
 
 void WorldSession::HandleCharMovement(WorldPacket& packet)
 {
+    return;
+
+    // TODO
     qint32 fromX, fromY;
     qint16 fromZ;
     quint8 stepsCount;

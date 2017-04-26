@@ -316,6 +316,12 @@ void WorldSession::SendCharacterInformation()
         // BREED
         character->SerializeBreed(data);
 
+        //GUILD_BLAZON
+        character->SerializeGuildBlazon(data);
+
+        //GUILD_ID
+        character->SerializeGuildId(data);
+
         // HP
         character->SerializeHP(data);
 
@@ -558,7 +564,7 @@ void WorldSession::SendCharacterEnterWorld()
         return;
 
     WorldPacket data(SMSG_CHARACTER_ENTER_WORLD);
-    data.WriteRawBytes(Utils::FromHexString("00 2C 1A 00 00 00 01 00 47 51 D1 00 00 00 00 00 04 66 2B 40 00 00 00 00 00 00 00 01 00 00 04 2F 07 01 00 00 00 00 00 00 00 00 00 00 00 00 00 02 00 00 00 02 00 00 00 0A 08 00 10 0B 18 01 20 01 28 00"));
+    data.WriteRawBytes(Utils::FromHexString("00 2C 1A 00 00 00 01 00 47 51 D1 00 00 00 00 00 04 66 2B 40 00 00 00 12 FF FF FF FD FF E1 04 2F 07 01 00 00 00 00 00 00 00 00 00 00 00 00 00 02 00 00 00 02 00 00 00 0C 08 00 10 0B 18 01 20 01 28 00 30 00"));
     SendPacket(data);
     return;
 
