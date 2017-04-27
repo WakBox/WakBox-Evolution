@@ -2,6 +2,7 @@
 #include "Entities/ObjectMgr.h"
 #include "Miscellaneous/SharedDefines.h"
 #include "Utils/Util.h"
+#include "Proto/equipment.pb.h"
 #include "Proto/dimensionalBag.pb.h"
 #include "Proto/dungeon_progression.pb.h"
 #include "Proto/buildSheet.pb.h"
@@ -18,6 +19,7 @@ void WorldSession::SendAdditionalSlotsUpdate()
 void WorldSession::SendCharactersList()
 {
     QSqlQuery result = sCharDatabase->Query(SELECT_CHARACTERS_BY_ACCOUNT_ID, QVariantList() << GetAccountInfos().id);
+    WakfuProto::ProtoEquipmentAccount protoEquipmentAccount;
 
     WorldPacket data(SMSG_CHAR_LIST);
 
@@ -25,6 +27,17 @@ void WorldSession::SendCharactersList()
 
     while (result.next())
     {
+        // ProtoEquipmentAccount
+        WakfuProto::ProtoEquipmentSet* protoEquipmentSet = protoEquipmentAccount.add_sets();
+        WakfuProto::ProtoEquipmentSheet* equipmentSheets = protoEquipmentSet->add_sheets();
+
+        std::string emptyString = "";
+        equipmentSheets->set_index(0);
+        equipmentSheets->set_name(emptyString);
+        equipmentSheets->set_level(-1);
+
+        protoEquipmentSet->set_characterid(result.value("guid").toULongLong());
+
         data.StartBlock<quint16>();
         {
             // Character Part ID
@@ -86,6 +99,19 @@ void WorldSession::SendCharactersList()
         }
         data.EndBlock<quint16>();
     }
+
+    WorldPacket data4(5255);
+    QByteArray protoEquipmentSetBin;
+    protoEquipmentSetBin.resize(protoEquipmentAccount.ByteSize());
+    protoEquipmentAccount.SerializeToArray(protoEquipmentSetBin.data(), protoEquipmentSetBin.size());
+
+    data4.StartBlock<quint32>();
+    {
+        data4.WriteRawBytes(protoEquipmentSetBin);
+    }
+    data4.EndBlock<quint32>();
+
+    SendPacket(data4);
 
     SendPacket(data);
 }
@@ -166,16 +192,16 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
                 data << (quint8)CHARACTER_CREATION_RESULT_SUCCESS;
                 SendPacket(data);
 
-                SendCharactersList();
-                /*SetCharacter(newChar);
+                SetCharacter(newChar);
 
                 SendSelectCharacterResult(true);
-                SendCharacterEnterWorld();*/
+                SendCharacterEnterWorld();
                 return;
             }
             else
                 data << (quint8)CHARACTER_CREATION_RESULT_FAILED;
         }
+        else { /*error code?*/ }
     }
     else
         data << (quint8)CHARACTER_CREATION_RESULT_NAME_EXISTS;

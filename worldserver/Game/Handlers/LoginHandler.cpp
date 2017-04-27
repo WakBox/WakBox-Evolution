@@ -2,7 +2,6 @@
 #include "Server/WorldSession.h"
 #include "Utils/Util.h"
 #include "Proto/item.pb.h"
-#include "Proto/equipment.pb.h"
 
 void WorldSession::HandleClientVersion(WorldPacket& packet)
 {
@@ -126,7 +125,7 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     // Send ProtoMergedItems from item.proto
     WakfuProto::ProtoMergedItems protoMergedItems;
 
-    WakfuProto::ProtoItem* item1 = protoMergedItems.add_items();
+    /*WakfuProto::ProtoItem* item1 = protoMergedItems.add_items();
     WakfuProto::ProtoGems* gems1 = new WakfuProto::ProtoGems();
 
     item1->set_uniqueid(27407476768899124);
@@ -162,7 +161,7 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     WakfuProto::ProtoItem* item6 = protoMergedItems.add_items();
     item6->set_uniqueid(27407476752122184);
     item6->set_refid(14742);
-    item6->set_qty(1);
+    item6->set_qty(1);*/
 
     WorldPacket data3(5256);
     QByteArray protoItemsBin;
@@ -176,31 +175,6 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
     data3.EndBlock<quint32>();
 
     SendPacket(data3);
-
-    // Send ProtoEquipmentAccount from equipment.proto
-    WakfuProto::ProtoEquipmentAccount protoEquipmentAccount;
-    WakfuProto::ProtoEquipmentSet* protoEquipmentSet = protoEquipmentAccount.add_sets();
-    WakfuProto::ProtoEquipmentSheet* equipmentSheets = protoEquipmentSet->add_sheets();
-
-    std::string emptyString = "";
-    equipmentSheets->set_index(0);
-    equipmentSheets->set_name(emptyString);
-    equipmentSheets->set_level(-1);
-
-    protoEquipmentSet->set_characterid(4299641297);
-
-    WorldPacket data4(5255);
-    QByteArray protoEquipmentSetBin;
-    protoEquipmentSetBin.resize(protoEquipmentAccount.ByteSize());
-    protoEquipmentAccount.SerializeToArray(protoEquipmentSetBin.data(), protoEquipmentSetBin.size());
-
-    data4.StartBlock<quint32>();
-    {
-        data4.WriteRawBytes(protoEquipmentSetBin);
-    }
-    data4.EndBlock<quint32>();
-
-    SendPacket(data4);
 
     // Characters list
     SendCharactersList();

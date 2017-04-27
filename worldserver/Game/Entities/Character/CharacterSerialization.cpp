@@ -417,8 +417,8 @@ void Character::SerializeAchievements(WorldPacket& data)
 
 void Character::SerializeAccountInformation(WorldPacket& data)
 {
-    data << quint16(100); // adminRights size
-    for (quint8 i = 0; i < 100; ++i)
+    data << quint16(101); // adminRights size
+    for (quint8 i = 0; i < 101; ++i)
         data << quint32(0); // adminRight
 
     data << quint32(101); // subscriptionLevel
