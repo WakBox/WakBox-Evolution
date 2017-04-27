@@ -18,7 +18,7 @@ void OpcodeTable::Load()
     //    ADD_OPCODE_HANDLER(CMSG_INTERACTIVE_ELEMENT,                    &WorldSession::HandleInteractiveElement);
     //    ADD_OPCODE_HANDLER(CMSG_GROUP_INVITE,                           &WorldSession::HandleGroupInvite);
     ADD_OPCODE_HANDLER(CMSG_CHAR_SELECT,                            STATUS_AUTHED,      &WorldSession::HandleCharSelect);
-    //    ADD_OPCODE_HANDLER(CMSG_CHAR_DELETE,                            &WorldSession::HandleCharDelete);
+    ADD_OPCODE_HANDLER(CMSG_CHAR_DELETE,                            STATUS_AUTHED,      &WorldSession::HandleCharDelete);
     //    ADD_OPCODE_HANDLER(CMSG_LEAVE_CHAR_SELECT,                      &WorldSession::HandleLeaveCharSelect);
     //    ADD_OPCODE_HANDLER(CMSG_WHOIS_COMMAND,                          &WorldSession::HandleWhoisCommand);
     ADD_OPCODE_HANDLER(CMSG_CHAR_CREATE,                            STATUS_AUTHED,      &WorldSession::HandleCharCreate);
