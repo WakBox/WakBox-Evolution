@@ -4,6 +4,7 @@
 #include "Logs/Log.h"
 #include "Configuration/ConfigMgr.h"
 #include "Cryptography/CryptographyMgr.h"
+#include "Proto/account.pb.h"
 
 AuthHandlerMap  AuthTable::authHandlers;
 
@@ -213,6 +214,18 @@ void AuthSession::HandleClientAuthentication(WorldPacket& packet)
     data << quint8(1); // hasAccountInformations
     data << int(COMMUNITY_FR); // Community
     data << quint8(0); // hasAdminInformations?
+
+    std::unique_ptr<WakfuProto::Status> protoAccountStatus(new WakfuProto::Status);
+    (*protoAccountStatus->mutable_status())["CGU"] = "5";
+    (*protoAccountStatus->mutable_status())["TIMEZONE"] = "12500";
+    (*protoAccountStatus->mutable_status())["WEAK_PASS"] = "1484654857";
+
+    QByteArray protoAccountStatusBin;
+    protoAccountStatusBin.resize((*protoAccountStatus).ByteSize());
+    (*protoAccountStatus).SerializeToArray(protoAccountStatusBin.data(), protoAccountStatusBin.size());
+
+    data.WriteRawBytes(protoAccountStatusBin);
+
     SendPacket(data);
 }
 

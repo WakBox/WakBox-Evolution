@@ -253,12 +253,12 @@ void WorldSession::SendSelectCharacterResult(bool result)
 
 void WorldSession::SendCharacterEnterWorldPackets()
 {
+    // Send 5567
+
     SendModerationRequest();
 
     SendFriendList();
     SendIgnoreList();
-
-    // Send packet 5567 ??
 
     // Send packet 20000 nation synchro
     // Send 8427, 8418, 20002, 20000

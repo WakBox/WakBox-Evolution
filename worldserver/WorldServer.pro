@@ -41,5 +41,4 @@ HEADERS += WorldServer.h
 include(../dep/Dep.pri)
 include(../shared/Shared.pri)
 include(Game/Game.pri)
-include(Proto/Proto.pri)
 include(Scripts/Scripts.pri)
