@@ -16,6 +16,8 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+
+namespace WakfuProto {
 class TeamInfoDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<TeamInfo> {
 } _TeamInfo_default_instance_;
 class CompositionInfoDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<CompositionInfo> {
@@ -130,7 +132,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         CompositionInfo_InfoByCharacterIdEntry_descriptor,
         ::google::protobuf::internal::MapEntry<
             ::google::protobuf::int64,
-            ::CompositionInfoData,
+            ::WakfuProto::CompositionInfoData,
             ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -140,7 +142,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         RankingInfo_TeamsEntry_descriptor,
         ::google::protobuf::internal::MapEntry<
             ::google::protobuf::int32,
-            ::TeamInfo,
+            ::WakfuProto::TeamInfo,
             ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -168,8 +170,8 @@ void TableStruct::InitDefaultsImpl() {
   _CompositionInfo_default_instance_.DefaultConstruct();
   _CompositionInfoData_default_instance_.DefaultConstruct();
   _RankingInfo_default_instance_.DefaultConstruct();
-  _TeamInfo_default_instance_.get_mutable()->compositioninfo_ = const_cast< ::CompositionInfo*>(
-      ::CompositionInfo::internal_default_instance());
+  _TeamInfo_default_instance_.get_mutable()->compositioninfo_ = const_cast< ::WakfuProto::CompositionInfo*>(
+      ::WakfuProto::CompositionInfo::internal_default_instance());
 }
 
 void InitDefaults() {
@@ -179,31 +181,31 @@ void InitDefaults() {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] = {
-      "\n\024dungeon_ladder.proto\"\331\001\n\010TeamInfo\022\021\n\td"
-      "ungeonId\030\001 \002(\005\022\037\n\nladderType\030\002 \001(\0162\013.Lad"
-      "derType\022\016\n\006teamId\030\003 \001(\003\022\023\n\013stasisLevel\030\004"
-      " \001(\005\022\030\n\020registrationDate\030\005 \001(\003\022\030\n\020dungeo"
-      "nTurnCount\030\006 \001(\005\022\025\n\rbossTurnCount\030\007 \001(\005\022"
-      ")\n\017compositionInfo\030\010 \001(\0132\020.CompositionIn"
-      "fo\"\245\001\n\017CompositionInfo\022B\n\021infoByCharacte"
-      "rId\030\001 \003(\0132\'.CompositionInfo.InfoByCharac"
-      "terIdEntry\032N\n\026InfoByCharacterIdEntry\022\013\n\003"
-      "key\030\001 \001(\003\022#\n\005value\030\002 \001(\0132\024.CompositionIn"
-      "foData:\0028\001\"\177\n\023CompositionInfoData\022\017\n\007bre"
-      "edId\030\001 \002(\005\022\024\n\014isBestRecord\030\002 \001(\010\022\014\n\004name"
-      "\030\003 \001(\t\022\013\n\003sex\030\004 \001(\005\022\023\n\013guildBlazon\030\005 \001(\003"
-      "\022\021\n\tguildName\030\006 \001(\t\"\270\001\n\013RankingInfo\022\022\n\ns"
-      "tartIndex\030\001 \002(\005\022\027\n\017totalIndexCount\030\002 \002(\005"
-      "\022\033\n\023firstTeamFirstIndex\030\003 \001(\005\022&\n\005teams\030\004"
-      " \003(\0132\027.RankingInfo.TeamsEntry\0327\n\nTeamsEn"
-      "try\022\013\n\003key\030\001 \001(\005\022\030\n\005value\030\002 \001(\0132\t.TeamIn"
-      "fo:\0028\001*=\n\nLadderType\022\021\n\rCURRENT_MONTH\020\001\022"
-      "\016\n\nLAST_MONTH\020\002\022\014\n\010ALL_TIME\020\003BA\n(com.ank"
-      "ama.wakfu.protocol.dungeon.ladderB\025Proto"
-      "bufDungeonLadder"
+      "\n\024dungeon_ladder.proto\022\nWakfuProto\"\357\001\n\010T"
+      "eamInfo\022\021\n\tdungeonId\030\001 \002(\005\022*\n\nladderType"
+      "\030\002 \001(\0162\026.WakfuProto.LadderType\022\016\n\006teamId"
+      "\030\003 \001(\003\022\023\n\013stasisLevel\030\004 \001(\005\022\030\n\020registrat"
+      "ionDate\030\005 \001(\003\022\030\n\020dungeonTurnCount\030\006 \001(\005\022"
+      "\025\n\rbossTurnCount\030\007 \001(\005\0224\n\017compositionInf"
+      "o\030\010 \001(\0132\033.WakfuProto.CompositionInfo\"\273\001\n"
+      "\017CompositionInfo\022M\n\021infoByCharacterId\030\001 "
+      "\003(\01322.WakfuProto.CompositionInfo.InfoByC"
+      "haracterIdEntry\032Y\n\026InfoByCharacterIdEntr"
+      "y\022\013\n\003key\030\001 \001(\003\022.\n\005value\030\002 \001(\0132\037.WakfuPro"
+      "to.CompositionInfoData:\0028\001\"\177\n\023Compositio"
+      "nInfoData\022\017\n\007breedId\030\001 \002(\005\022\024\n\014isBestReco"
+      "rd\030\002 \001(\010\022\014\n\004name\030\003 \001(\t\022\013\n\003sex\030\004 \001(\005\022\023\n\013g"
+      "uildBlazon\030\005 \001(\003\022\021\n\tguildName\030\006 \001(\t\"\316\001\n\013"
+      "RankingInfo\022\022\n\nstartIndex\030\001 \002(\005\022\027\n\017total"
+      "IndexCount\030\002 \002(\005\022\033\n\023firstTeamFirstIndex\030"
+      "\003 \001(\005\0221\n\005teams\030\004 \003(\0132\".WakfuProto.Rankin"
+      "gInfo.TeamsEntry\032B\n\nTeamsEntry\022\013\n\003key\030\001 "
+      "\001(\005\022#\n\005value\030\002 \001(\0132\024.WakfuProto.TeamInfo"
+      ":\0028\001*=\n\nLadderType\022\021\n\rCURRENT_MONTH\020\001\022\016\n"
+      "\nLAST_MONTH\020\002\022\014\n\010ALL_TIME\020\003"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 856);
+      descriptor, 867);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dungeon_ladder.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -257,7 +259,7 @@ TeamInfo::TeamInfo()
     protobuf_dungeon_5fladder_2eproto::InitDefaults();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:TeamInfo)
+  // @@protoc_insertion_point(constructor:WakfuProto.TeamInfo)
 }
 TeamInfo::TeamInfo(const TeamInfo& from)
   : ::google::protobuf::Message(),
@@ -266,14 +268,14 @@ TeamInfo::TeamInfo(const TeamInfo& from)
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.has_compositioninfo()) {
-    compositioninfo_ = new ::CompositionInfo(*from.compositioninfo_);
+    compositioninfo_ = new ::WakfuProto::CompositionInfo(*from.compositioninfo_);
   } else {
     compositioninfo_ = NULL;
   }
   ::memcpy(&dungeonid_, &from.dungeonid_,
     reinterpret_cast<char*>(&laddertype_) -
     reinterpret_cast<char*>(&dungeonid_) + sizeof(laddertype_));
-  // @@protoc_insertion_point(copy_constructor:TeamInfo)
+  // @@protoc_insertion_point(copy_constructor:WakfuProto.TeamInfo)
 }
 
 void TeamInfo::SharedCtor() {
@@ -284,7 +286,7 @@ void TeamInfo::SharedCtor() {
 }
 
 TeamInfo::~TeamInfo() {
-  // @@protoc_insertion_point(destructor:TeamInfo)
+  // @@protoc_insertion_point(destructor:WakfuProto.TeamInfo)
   SharedDtor();
 }
 
@@ -318,10 +320,10 @@ TeamInfo* TeamInfo::New(::google::protobuf::Arena* arena) const {
 }
 
 void TeamInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:TeamInfo)
+// @@protoc_insertion_point(message_clear_start:WakfuProto.TeamInfo)
   if (has_compositioninfo()) {
     GOOGLE_DCHECK(compositioninfo_ != NULL);
-    compositioninfo_->::CompositionInfo::Clear();
+    compositioninfo_->::WakfuProto::CompositionInfo::Clear();
   }
   if (_has_bits_[0 / 32] & 254u) {
     ::memset(&dungeonid_, 0, reinterpret_cast<char*>(&bossturncount_) -
@@ -336,7 +338,7 @@ bool TeamInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:TeamInfo)
+  // @@protoc_insertion_point(parse_start:WakfuProto.TeamInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -355,15 +357,15 @@ bool TeamInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .LadderType ladderType = 2;
+      // optional .WakfuProto.LadderType ladderType = 2;
       case 2: {
         if (tag == 16u) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::LadderType_IsValid(value)) {
-            set_laddertype(static_cast< ::LadderType >(value));
+          if (::WakfuProto::LadderType_IsValid(value)) {
+            set_laddertype(static_cast< ::WakfuProto::LadderType >(value));
           } else {
             mutable_unknown_fields()->AddVarint(2, value);
           }
@@ -438,7 +440,7 @@ bool TeamInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .CompositionInfo compositionInfo = 8;
+      // optional .WakfuProto.CompositionInfo compositionInfo = 8;
       case 8: {
         if (tag == 66u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -463,23 +465,23 @@ bool TeamInfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:TeamInfo)
+  // @@protoc_insertion_point(parse_success:WakfuProto.TeamInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:TeamInfo)
+  // @@protoc_insertion_point(parse_failure:WakfuProto.TeamInfo)
   return false;
 #undef DO_
 }
 
 void TeamInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:TeamInfo)
+  // @@protoc_insertion_point(serialize_start:WakfuProto.TeamInfo)
   // required int32 dungeonId = 1;
   if (has_dungeonid()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->dungeonid(), output);
   }
 
-  // optional .LadderType ladderType = 2;
+  // optional .WakfuProto.LadderType ladderType = 2;
   if (has_laddertype()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->laddertype(), output);
@@ -510,7 +512,7 @@ void TeamInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->bossturncount(), output);
   }
 
-  // optional .CompositionInfo compositionInfo = 8;
+  // optional .WakfuProto.CompositionInfo compositionInfo = 8;
   if (has_compositioninfo()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       8, *this->compositioninfo_, output);
@@ -520,19 +522,19 @@ void TeamInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:TeamInfo)
+  // @@protoc_insertion_point(serialize_end:WakfuProto.TeamInfo)
 }
 
 ::google::protobuf::uint8* TeamInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic;  // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:TeamInfo)
+  // @@protoc_insertion_point(serialize_to_array_start:WakfuProto.TeamInfo)
   // required int32 dungeonId = 1;
   if (has_dungeonid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->dungeonid(), target);
   }
 
-  // optional .LadderType ladderType = 2;
+  // optional .WakfuProto.LadderType ladderType = 2;
   if (has_laddertype()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->laddertype(), target);
@@ -563,7 +565,7 @@ void TeamInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->bossturncount(), target);
   }
 
-  // optional .CompositionInfo compositionInfo = 8;
+  // optional .WakfuProto.CompositionInfo compositionInfo = 8;
   if (has_compositioninfo()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
@@ -574,12 +576,12 @@ void TeamInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:TeamInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:WakfuProto.TeamInfo)
   return target;
 }
 
 size_t TeamInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:TeamInfo)
+// @@protoc_insertion_point(message_byte_size_start:WakfuProto.TeamInfo)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -593,7 +595,7 @@ size_t TeamInfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->dungeonid());
   }
-  // optional .CompositionInfo compositionInfo = 8;
+  // optional .WakfuProto.CompositionInfo compositionInfo = 8;
   if (has_compositioninfo()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -636,7 +638,7 @@ size_t TeamInfo::ByteSizeLong() const {
           this->bossturncount());
     }
 
-    // optional .LadderType ladderType = 2;
+    // optional .WakfuProto.LadderType ladderType = 2;
     if (has_laddertype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->laddertype());
@@ -651,27 +653,27 @@ size_t TeamInfo::ByteSizeLong() const {
 }
 
 void TeamInfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:TeamInfo)
+// @@protoc_insertion_point(generalized_merge_from_start:WakfuProto.TeamInfo)
   GOOGLE_DCHECK_NE(&from, this);
   const TeamInfo* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const TeamInfo>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:TeamInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:WakfuProto.TeamInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:TeamInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:WakfuProto.TeamInfo)
     MergeFrom(*source);
   }
 }
 
 void TeamInfo::MergeFrom(const TeamInfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:TeamInfo)
+// @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.TeamInfo)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from._has_bits_[0 / 32] & 255u) {
     if (from.has_compositioninfo()) {
-      mutable_compositioninfo()->::CompositionInfo::MergeFrom(from.compositioninfo());
+      mutable_compositioninfo()->::WakfuProto::CompositionInfo::MergeFrom(from.compositioninfo());
     }
     if (from.has_dungeonid()) {
       set_dungeonid(from.dungeonid());
@@ -698,14 +700,14 @@ void TeamInfo::MergeFrom(const TeamInfo& from) {
 }
 
 void TeamInfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:TeamInfo)
+// @@protoc_insertion_point(generalized_copy_from_start:WakfuProto.TeamInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void TeamInfo::CopyFrom(const TeamInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:TeamInfo)
+// @@protoc_insertion_point(class_specific_copy_from_start:WakfuProto.TeamInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -760,16 +762,16 @@ void TeamInfo::clear_dungeonid() {
   clear_has_dungeonid();
 }
 ::google::protobuf::int32 TeamInfo::dungeonid() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.dungeonId)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.dungeonId)
   return dungeonid_;
 }
 void TeamInfo::set_dungeonid(::google::protobuf::int32 value) {
   set_has_dungeonid();
   dungeonid_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.dungeonId)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.dungeonId)
 }
 
-// optional .LadderType ladderType = 2;
+// optional .WakfuProto.LadderType ladderType = 2;
 bool TeamInfo::has_laddertype() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -783,15 +785,15 @@ void TeamInfo::clear_laddertype() {
   laddertype_ = 1;
   clear_has_laddertype();
 }
-::LadderType TeamInfo::laddertype() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.ladderType)
-  return static_cast< ::LadderType >(laddertype_);
+::WakfuProto::LadderType TeamInfo::laddertype() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.ladderType)
+  return static_cast< ::WakfuProto::LadderType >(laddertype_);
 }
-void TeamInfo::set_laddertype(::LadderType value) {
-  assert(::LadderType_IsValid(value));
+void TeamInfo::set_laddertype(::WakfuProto::LadderType value) {
+  assert(::WakfuProto::LadderType_IsValid(value));
   set_has_laddertype();
   laddertype_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.ladderType)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.ladderType)
 }
 
 // optional int64 teamId = 3;
@@ -809,13 +811,13 @@ void TeamInfo::clear_teamid() {
   clear_has_teamid();
 }
 ::google::protobuf::int64 TeamInfo::teamid() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.teamId)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.teamId)
   return teamid_;
 }
 void TeamInfo::set_teamid(::google::protobuf::int64 value) {
   set_has_teamid();
   teamid_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.teamId)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.teamId)
 }
 
 // optional int32 stasisLevel = 4;
@@ -833,13 +835,13 @@ void TeamInfo::clear_stasislevel() {
   clear_has_stasislevel();
 }
 ::google::protobuf::int32 TeamInfo::stasislevel() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.stasisLevel)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.stasisLevel)
   return stasislevel_;
 }
 void TeamInfo::set_stasislevel(::google::protobuf::int32 value) {
   set_has_stasislevel();
   stasislevel_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.stasisLevel)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.stasisLevel)
 }
 
 // optional int64 registrationDate = 5;
@@ -857,13 +859,13 @@ void TeamInfo::clear_registrationdate() {
   clear_has_registrationdate();
 }
 ::google::protobuf::int64 TeamInfo::registrationdate() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.registrationDate)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.registrationDate)
   return registrationdate_;
 }
 void TeamInfo::set_registrationdate(::google::protobuf::int64 value) {
   set_has_registrationdate();
   registrationdate_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.registrationDate)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.registrationDate)
 }
 
 // optional int32 dungeonTurnCount = 6;
@@ -881,13 +883,13 @@ void TeamInfo::clear_dungeonturncount() {
   clear_has_dungeonturncount();
 }
 ::google::protobuf::int32 TeamInfo::dungeonturncount() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.dungeonTurnCount)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.dungeonTurnCount)
   return dungeonturncount_;
 }
 void TeamInfo::set_dungeonturncount(::google::protobuf::int32 value) {
   set_has_dungeonturncount();
   dungeonturncount_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.dungeonTurnCount)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.dungeonTurnCount)
 }
 
 // optional int32 bossTurnCount = 7;
@@ -905,16 +907,16 @@ void TeamInfo::clear_bossturncount() {
   clear_has_bossturncount();
 }
 ::google::protobuf::int32 TeamInfo::bossturncount() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.bossTurnCount)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.bossTurnCount)
   return bossturncount_;
 }
 void TeamInfo::set_bossturncount(::google::protobuf::int32 value) {
   set_has_bossturncount();
   bossturncount_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.bossTurnCount)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.bossTurnCount)
 }
 
-// optional .CompositionInfo compositionInfo = 8;
+// optional .WakfuProto.CompositionInfo compositionInfo = 8;
 bool TeamInfo::has_compositioninfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -925,30 +927,30 @@ void TeamInfo::clear_has_compositioninfo() {
   _has_bits_[0] &= ~0x00000001u;
 }
 void TeamInfo::clear_compositioninfo() {
-  if (compositioninfo_ != NULL) compositioninfo_->::CompositionInfo::Clear();
+  if (compositioninfo_ != NULL) compositioninfo_->::WakfuProto::CompositionInfo::Clear();
   clear_has_compositioninfo();
 }
-const ::CompositionInfo& TeamInfo::compositioninfo() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.compositionInfo)
+const ::WakfuProto::CompositionInfo& TeamInfo::compositioninfo() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.compositionInfo)
   return compositioninfo_ != NULL ? *compositioninfo_
-                         : *::CompositionInfo::internal_default_instance();
+                         : *::WakfuProto::CompositionInfo::internal_default_instance();
 }
-::CompositionInfo* TeamInfo::mutable_compositioninfo() {
+::WakfuProto::CompositionInfo* TeamInfo::mutable_compositioninfo() {
   set_has_compositioninfo();
   if (compositioninfo_ == NULL) {
-    compositioninfo_ = new ::CompositionInfo;
+    compositioninfo_ = new ::WakfuProto::CompositionInfo;
   }
-  // @@protoc_insertion_point(field_mutable:TeamInfo.compositionInfo)
+  // @@protoc_insertion_point(field_mutable:WakfuProto.TeamInfo.compositionInfo)
   return compositioninfo_;
 }
-::CompositionInfo* TeamInfo::release_compositioninfo() {
-  // @@protoc_insertion_point(field_release:TeamInfo.compositionInfo)
+::WakfuProto::CompositionInfo* TeamInfo::release_compositioninfo() {
+  // @@protoc_insertion_point(field_release:WakfuProto.TeamInfo.compositionInfo)
   clear_has_compositioninfo();
-  ::CompositionInfo* temp = compositioninfo_;
+  ::WakfuProto::CompositionInfo* temp = compositioninfo_;
   compositioninfo_ = NULL;
   return temp;
 }
-void TeamInfo::set_allocated_compositioninfo(::CompositionInfo* compositioninfo) {
+void TeamInfo::set_allocated_compositioninfo(::WakfuProto::CompositionInfo* compositioninfo) {
   delete compositioninfo_;
   compositioninfo_ = compositioninfo;
   if (compositioninfo) {
@@ -956,7 +958,7 @@ void TeamInfo::set_allocated_compositioninfo(::CompositionInfo* compositioninfo)
   } else {
     clear_has_compositioninfo();
   }
-  // @@protoc_insertion_point(field_set_allocated:TeamInfo.compositionInfo)
+  // @@protoc_insertion_point(field_set_allocated:WakfuProto.TeamInfo.compositionInfo)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -978,7 +980,7 @@ CompositionInfo::CompositionInfo()
     protobuf_dungeon_5fladder_2eproto::InitDefaults();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CompositionInfo)
+  // @@protoc_insertion_point(constructor:WakfuProto.CompositionInfo)
 }
 CompositionInfo::CompositionInfo(const CompositionInfo& from)
   : ::google::protobuf::Message(),
@@ -992,7 +994,7 @@ CompositionInfo::CompositionInfo(const CompositionInfo& from)
   infobycharacterid_.SetEntryDescriptor(
       &CompositionInfo_InfoByCharacterIdEntry_descriptor);
   infobycharacterid_.MergeFrom(from.infobycharacterid_);
-  // @@protoc_insertion_point(copy_constructor:CompositionInfo)
+  // @@protoc_insertion_point(copy_constructor:WakfuProto.CompositionInfo)
 }
 
 void CompositionInfo::SharedCtor() {
@@ -1005,7 +1007,7 @@ void CompositionInfo::SharedCtor() {
 }
 
 CompositionInfo::~CompositionInfo() {
-  // @@protoc_insertion_point(destructor:CompositionInfo)
+  // @@protoc_insertion_point(destructor:WakfuProto.CompositionInfo)
   SharedDtor();
 }
 
@@ -1036,7 +1038,7 @@ CompositionInfo* CompositionInfo::New(::google::protobuf::Arena* arena) const {
 }
 
 void CompositionInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:CompositionInfo)
+// @@protoc_insertion_point(message_clear_start:WakfuProto.CompositionInfo)
   infobycharacterid_.Clear();
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -1046,22 +1048,22 @@ bool CompositionInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CompositionInfo)
+  // @@protoc_insertion_point(parse_start:WakfuProto.CompositionInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<int64, .CompositionInfoData> infoByCharacterId = 1;
+      // map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
       case 1: {
         if (tag == 10u) {
           DO_(input->IncrementRecursionDepth());
           CompositionInfo_InfoByCharacterIdEntry::Parser< ::google::protobuf::internal::MapField<
-              ::google::protobuf::int64, ::CompositionInfoData,
+              ::google::protobuf::int64, ::WakfuProto::CompositionInfoData,
               ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
               ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
               0 >,
-            ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData > > parser(&infobycharacterid_);
+            ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData > > parser(&infobycharacterid_);
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, &parser));
         } else {
@@ -1085,20 +1087,20 @@ bool CompositionInfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CompositionInfo)
+  // @@protoc_insertion_point(parse_success:WakfuProto.CompositionInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CompositionInfo)
+  // @@protoc_insertion_point(parse_failure:WakfuProto.CompositionInfo)
   return false;
 #undef DO_
 }
 
 void CompositionInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CompositionInfo)
-  // map<int64, .CompositionInfoData> infoByCharacterId = 1;
+  // @@protoc_insertion_point(serialize_start:WakfuProto.CompositionInfo)
+  // map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
   if (!this->infobycharacterid().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::int64, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -1107,9 +1109,9 @@ void CompositionInfo::SerializeWithCachedSizes(
         this->infobycharacterid().size() > 1) {
       ::google::protobuf::scoped_array<SortItem> items(
           new SortItem[this->infobycharacterid().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_iterator
           it = this->infobycharacterid().begin();
           it != this->infobycharacterid().end(); ++it, ++n) {
         items[n] = SortItem(&*it);
@@ -1124,7 +1126,7 @@ void CompositionInfo::SerializeWithCachedSizes(
       }
     } else {
       ::google::protobuf::scoped_ptr<CompositionInfo_InfoByCharacterIdEntry> entry;
-      for (::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_iterator
           it = this->infobycharacterid().begin();
           it != this->infobycharacterid().end(); ++it) {
         entry.reset(infobycharacterid_.NewEntryWrapper(
@@ -1139,16 +1141,16 @@ void CompositionInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:CompositionInfo)
+  // @@protoc_insertion_point(serialize_end:WakfuProto.CompositionInfo)
 }
 
 ::google::protobuf::uint8* CompositionInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic;  // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CompositionInfo)
-  // map<int64, .CompositionInfoData> infoByCharacterId = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:WakfuProto.CompositionInfo)
+  // map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
   if (!this->infobycharacterid().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::int64, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -1157,9 +1159,9 @@ void CompositionInfo::SerializeWithCachedSizes(
         this->infobycharacterid().size() > 1) {
       ::google::protobuf::scoped_array<SortItem> items(
           new SortItem[this->infobycharacterid().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_iterator
           it = this->infobycharacterid().begin();
           it != this->infobycharacterid().end(); ++it, ++n) {
         items[n] = SortItem(&*it);
@@ -1176,7 +1178,7 @@ void CompositionInfo::SerializeWithCachedSizes(
       }
     } else {
       ::google::protobuf::scoped_ptr<CompositionInfo_InfoByCharacterIdEntry> entry;
-      for (::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_iterator
           it = this->infobycharacterid().begin();
           it != this->infobycharacterid().end(); ++it) {
         entry.reset(infobycharacterid_.NewEntryWrapper(
@@ -1193,12 +1195,12 @@ void CompositionInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:CompositionInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:WakfuProto.CompositionInfo)
   return target;
 }
 
 size_t CompositionInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CompositionInfo)
+// @@protoc_insertion_point(message_byte_size_start:WakfuProto.CompositionInfo)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1206,12 +1208,12 @@ size_t CompositionInfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
-  // map<int64, .CompositionInfoData> infoByCharacterId = 1;
+  // map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->infobycharacterid_size());
   {
     ::google::protobuf::scoped_ptr<CompositionInfo_InfoByCharacterIdEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >::const_iterator
         it = this->infobycharacterid().begin();
         it != this->infobycharacterid().end(); ++it) {
       entry.reset(infobycharacterid_.NewEntryWrapper(it->first, it->second));
@@ -1228,36 +1230,36 @@ size_t CompositionInfo::ByteSizeLong() const {
 }
 
 void CompositionInfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CompositionInfo)
+// @@protoc_insertion_point(generalized_merge_from_start:WakfuProto.CompositionInfo)
   GOOGLE_DCHECK_NE(&from, this);
   const CompositionInfo* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const CompositionInfo>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CompositionInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:WakfuProto.CompositionInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CompositionInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:WakfuProto.CompositionInfo)
     MergeFrom(*source);
   }
 }
 
 void CompositionInfo::MergeFrom(const CompositionInfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CompositionInfo)
+// @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.CompositionInfo)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   infobycharacterid_.MergeFrom(from.infobycharacterid_);
 }
 
 void CompositionInfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CompositionInfo)
+// @@protoc_insertion_point(generalized_copy_from_start:WakfuProto.CompositionInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void CompositionInfo::CopyFrom(const CompositionInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CompositionInfo)
+// @@protoc_insertion_point(class_specific_copy_from_start:WakfuProto.CompositionInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1287,21 +1289,21 @@ void CompositionInfo::InternalSwap(CompositionInfo* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // CompositionInfo
 
-// map<int64, .CompositionInfoData> infoByCharacterId = 1;
+// map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
 int CompositionInfo::infobycharacterid_size() const {
   return infobycharacterid_.size();
 }
 void CompositionInfo::clear_infobycharacterid() {
   infobycharacterid_.Clear();
 }
- const ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >&
+ const ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >&
 CompositionInfo::infobycharacterid() const {
-  // @@protoc_insertion_point(field_map:CompositionInfo.infoByCharacterId)
+  // @@protoc_insertion_point(field_map:WakfuProto.CompositionInfo.infoByCharacterId)
   return infobycharacterid_.GetMap();
 }
- ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >*
+ ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >*
 CompositionInfo::mutable_infobycharacterid() {
-  // @@protoc_insertion_point(field_mutable_map:CompositionInfo.infoByCharacterId)
+  // @@protoc_insertion_point(field_mutable_map:WakfuProto.CompositionInfo.infoByCharacterId)
   return infobycharacterid_.MutableMap();
 }
 
@@ -1324,7 +1326,7 @@ CompositionInfoData::CompositionInfoData()
     protobuf_dungeon_5fladder_2eproto::InitDefaults();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CompositionInfoData)
+  // @@protoc_insertion_point(constructor:WakfuProto.CompositionInfoData)
 }
 CompositionInfoData::CompositionInfoData(const CompositionInfoData& from)
   : ::google::protobuf::Message(),
@@ -1343,7 +1345,7 @@ CompositionInfoData::CompositionInfoData(const CompositionInfoData& from)
   ::memcpy(&breedid_, &from.breedid_,
     reinterpret_cast<char*>(&sex_) -
     reinterpret_cast<char*>(&breedid_) + sizeof(sex_));
-  // @@protoc_insertion_point(copy_constructor:CompositionInfoData)
+  // @@protoc_insertion_point(copy_constructor:WakfuProto.CompositionInfoData)
 }
 
 void CompositionInfoData::SharedCtor() {
@@ -1355,7 +1357,7 @@ void CompositionInfoData::SharedCtor() {
 }
 
 CompositionInfoData::~CompositionInfoData() {
-  // @@protoc_insertion_point(destructor:CompositionInfoData)
+  // @@protoc_insertion_point(destructor:WakfuProto.CompositionInfoData)
   SharedDtor();
 }
 
@@ -1388,7 +1390,7 @@ CompositionInfoData* CompositionInfoData::New(::google::protobuf::Arena* arena) 
 }
 
 void CompositionInfoData::Clear() {
-// @@protoc_insertion_point(message_clear_start:CompositionInfoData)
+// @@protoc_insertion_point(message_clear_start:WakfuProto.CompositionInfoData)
   if (_has_bits_[0 / 32] & 3u) {
     if (has_name()) {
       GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
@@ -1411,7 +1413,7 @@ bool CompositionInfoData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CompositionInfoData)
+  // @@protoc_insertion_point(parse_start:WakfuProto.CompositionInfoData)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -1451,7 +1453,7 @@ bool CompositionInfoData::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "CompositionInfoData.name");
+            "WakfuProto.CompositionInfoData.name");
         } else {
           goto handle_unusual;
         }
@@ -1492,7 +1494,7 @@ bool CompositionInfoData::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->guildname().data(), this->guildname().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "CompositionInfoData.guildName");
+            "WakfuProto.CompositionInfoData.guildName");
         } else {
           goto handle_unusual;
         }
@@ -1513,17 +1515,17 @@ bool CompositionInfoData::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CompositionInfoData)
+  // @@protoc_insertion_point(parse_success:WakfuProto.CompositionInfoData)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CompositionInfoData)
+  // @@protoc_insertion_point(parse_failure:WakfuProto.CompositionInfoData)
   return false;
 #undef DO_
 }
 
 void CompositionInfoData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CompositionInfoData)
+  // @@protoc_insertion_point(serialize_start:WakfuProto.CompositionInfoData)
   // required int32 breedId = 1;
   if (has_breedid()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->breedid(), output);
@@ -1539,7 +1541,7 @@ void CompositionInfoData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "CompositionInfoData.name");
+      "WakfuProto.CompositionInfoData.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       3, this->name(), output);
   }
@@ -1559,7 +1561,7 @@ void CompositionInfoData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->guildname().data(), this->guildname().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "CompositionInfoData.guildName");
+      "WakfuProto.CompositionInfoData.guildName");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       6, this->guildname(), output);
   }
@@ -1568,13 +1570,13 @@ void CompositionInfoData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:CompositionInfoData)
+  // @@protoc_insertion_point(serialize_end:WakfuProto.CompositionInfoData)
 }
 
 ::google::protobuf::uint8* CompositionInfoData::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic;  // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CompositionInfoData)
+  // @@protoc_insertion_point(serialize_to_array_start:WakfuProto.CompositionInfoData)
   // required int32 breedId = 1;
   if (has_breedid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->breedid(), target);
@@ -1590,7 +1592,7 @@ void CompositionInfoData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "CompositionInfoData.name");
+      "WakfuProto.CompositionInfoData.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->name(), target);
@@ -1611,7 +1613,7 @@ void CompositionInfoData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->guildname().data(), this->guildname().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "CompositionInfoData.guildName");
+      "WakfuProto.CompositionInfoData.guildName");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         6, this->guildname(), target);
@@ -1621,12 +1623,12 @@ void CompositionInfoData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:CompositionInfoData)
+  // @@protoc_insertion_point(serialize_to_array_end:WakfuProto.CompositionInfoData)
   return target;
 }
 
 size_t CompositionInfoData::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CompositionInfoData)
+// @@protoc_insertion_point(message_byte_size_start:WakfuProto.CompositionInfoData)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1685,22 +1687,22 @@ size_t CompositionInfoData::ByteSizeLong() const {
 }
 
 void CompositionInfoData::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CompositionInfoData)
+// @@protoc_insertion_point(generalized_merge_from_start:WakfuProto.CompositionInfoData)
   GOOGLE_DCHECK_NE(&from, this);
   const CompositionInfoData* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const CompositionInfoData>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CompositionInfoData)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:WakfuProto.CompositionInfoData)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CompositionInfoData)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:WakfuProto.CompositionInfoData)
     MergeFrom(*source);
   }
 }
 
 void CompositionInfoData::MergeFrom(const CompositionInfoData& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CompositionInfoData)
+// @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.CompositionInfoData)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from._has_bits_[0 / 32] & 63u) {
@@ -1728,14 +1730,14 @@ void CompositionInfoData::MergeFrom(const CompositionInfoData& from) {
 }
 
 void CompositionInfoData::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CompositionInfoData)
+// @@protoc_insertion_point(generalized_copy_from_start:WakfuProto.CompositionInfoData)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void CompositionInfoData::CopyFrom(const CompositionInfoData& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CompositionInfoData)
+// @@protoc_insertion_point(class_specific_copy_from_start:WakfuProto.CompositionInfoData)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1785,13 +1787,13 @@ void CompositionInfoData::clear_breedid() {
   clear_has_breedid();
 }
 ::google::protobuf::int32 CompositionInfoData::breedid() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.breedId)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.breedId)
   return breedid_;
 }
 void CompositionInfoData::set_breedid(::google::protobuf::int32 value) {
   set_has_breedid();
   breedid_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.breedId)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.breedId)
 }
 
 // optional bool isBestRecord = 2;
@@ -1809,13 +1811,13 @@ void CompositionInfoData::clear_isbestrecord() {
   clear_has_isbestrecord();
 }
 bool CompositionInfoData::isbestrecord() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.isBestRecord)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.isBestRecord)
   return isbestrecord_;
 }
 void CompositionInfoData::set_isbestrecord(bool value) {
   set_has_isbestrecord();
   isbestrecord_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.isBestRecord)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.isBestRecord)
 }
 
 // optional string name = 3;
@@ -1833,40 +1835,40 @@ void CompositionInfoData::clear_name() {
   clear_has_name();
 }
 const ::std::string& CompositionInfoData::name() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.name)
   return name_.GetNoArena();
 }
 void CompositionInfoData::set_name(const ::std::string& value) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.name)
 }
 #if LANG_CXX11
 void CompositionInfoData::set_name(::std::string&& value) {
   set_has_name();
   name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_rvalue:WakfuProto.CompositionInfoData.name)
 }
 #endif
 void CompositionInfoData::set_name(const char* value) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_char:WakfuProto.CompositionInfoData.name)
 }
 void CompositionInfoData::set_name(const char* value, size_t size) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_pointer:WakfuProto.CompositionInfoData.name)
 }
 ::std::string* CompositionInfoData::mutable_name() {
   set_has_name();
-  // @@protoc_insertion_point(field_mutable:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_mutable:WakfuProto.CompositionInfoData.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 ::std::string* CompositionInfoData::release_name() {
-  // @@protoc_insertion_point(field_release:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_release:WakfuProto.CompositionInfoData.name)
   clear_has_name();
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1877,7 +1879,7 @@ void CompositionInfoData::set_allocated_name(::std::string* name) {
     clear_has_name();
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_allocated:WakfuProto.CompositionInfoData.name)
 }
 
 // optional int32 sex = 4;
@@ -1895,13 +1897,13 @@ void CompositionInfoData::clear_sex() {
   clear_has_sex();
 }
 ::google::protobuf::int32 CompositionInfoData::sex() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.sex)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.sex)
   return sex_;
 }
 void CompositionInfoData::set_sex(::google::protobuf::int32 value) {
   set_has_sex();
   sex_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.sex)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.sex)
 }
 
 // optional int64 guildBlazon = 5;
@@ -1919,13 +1921,13 @@ void CompositionInfoData::clear_guildblazon() {
   clear_has_guildblazon();
 }
 ::google::protobuf::int64 CompositionInfoData::guildblazon() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.guildBlazon)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.guildBlazon)
   return guildblazon_;
 }
 void CompositionInfoData::set_guildblazon(::google::protobuf::int64 value) {
   set_has_guildblazon();
   guildblazon_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.guildBlazon)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.guildBlazon)
 }
 
 // optional string guildName = 6;
@@ -1943,40 +1945,40 @@ void CompositionInfoData::clear_guildname() {
   clear_has_guildname();
 }
 const ::std::string& CompositionInfoData::guildname() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.guildName)
   return guildname_.GetNoArena();
 }
 void CompositionInfoData::set_guildname(const ::std::string& value) {
   set_has_guildname();
   guildname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.guildName)
 }
 #if LANG_CXX11
 void CompositionInfoData::set_guildname(::std::string&& value) {
   set_has_guildname();
   guildname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_rvalue:WakfuProto.CompositionInfoData.guildName)
 }
 #endif
 void CompositionInfoData::set_guildname(const char* value) {
   set_has_guildname();
   guildname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_char:WakfuProto.CompositionInfoData.guildName)
 }
 void CompositionInfoData::set_guildname(const char* value, size_t size) {
   set_has_guildname();
   guildname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_pointer:WakfuProto.CompositionInfoData.guildName)
 }
 ::std::string* CompositionInfoData::mutable_guildname() {
   set_has_guildname();
-  // @@protoc_insertion_point(field_mutable:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_mutable:WakfuProto.CompositionInfoData.guildName)
   return guildname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 ::std::string* CompositionInfoData::release_guildname() {
-  // @@protoc_insertion_point(field_release:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_release:WakfuProto.CompositionInfoData.guildName)
   clear_has_guildname();
   return guildname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1987,7 +1989,7 @@ void CompositionInfoData::set_allocated_guildname(::std::string* guildname) {
     clear_has_guildname();
   }
   guildname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), guildname);
-  // @@protoc_insertion_point(field_set_allocated:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_allocated:WakfuProto.CompositionInfoData.guildName)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2012,7 +2014,7 @@ RankingInfo::RankingInfo()
     protobuf_dungeon_5fladder_2eproto::InitDefaults();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:RankingInfo)
+  // @@protoc_insertion_point(constructor:WakfuProto.RankingInfo)
 }
 RankingInfo::RankingInfo(const RankingInfo& from)
   : ::google::protobuf::Message(),
@@ -2029,7 +2031,7 @@ RankingInfo::RankingInfo(const RankingInfo& from)
   ::memcpy(&startindex_, &from.startindex_,
     reinterpret_cast<char*>(&firstteamfirstindex_) -
     reinterpret_cast<char*>(&startindex_) + sizeof(firstteamfirstindex_));
-  // @@protoc_insertion_point(copy_constructor:RankingInfo)
+  // @@protoc_insertion_point(copy_constructor:WakfuProto.RankingInfo)
 }
 
 void RankingInfo::SharedCtor() {
@@ -2044,7 +2046,7 @@ void RankingInfo::SharedCtor() {
 }
 
 RankingInfo::~RankingInfo() {
-  // @@protoc_insertion_point(destructor:RankingInfo)
+  // @@protoc_insertion_point(destructor:WakfuProto.RankingInfo)
   SharedDtor();
 }
 
@@ -2075,7 +2077,7 @@ RankingInfo* RankingInfo::New(::google::protobuf::Arena* arena) const {
 }
 
 void RankingInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:RankingInfo)
+// @@protoc_insertion_point(message_clear_start:WakfuProto.RankingInfo)
   teams_.Clear();
   if (_has_bits_[0 / 32] & 7u) {
     ::memset(&startindex_, 0, reinterpret_cast<char*>(&firstteamfirstindex_) -
@@ -2089,7 +2091,7 @@ bool RankingInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:RankingInfo)
+  // @@protoc_insertion_point(parse_start:WakfuProto.RankingInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -2134,16 +2136,16 @@ bool RankingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // map<int32, .TeamInfo> teams = 4;
+      // map<int32, .WakfuProto.TeamInfo> teams = 4;
       case 4: {
         if (tag == 34u) {
           DO_(input->IncrementRecursionDepth());
           RankingInfo_TeamsEntry::Parser< ::google::protobuf::internal::MapField<
-              ::google::protobuf::int32, ::TeamInfo,
+              ::google::protobuf::int32, ::WakfuProto::TeamInfo,
               ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
               ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
               0 >,
-            ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo > > parser(&teams_);
+            ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo > > parser(&teams_);
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, &parser));
         } else {
@@ -2167,17 +2169,17 @@ bool RankingInfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:RankingInfo)
+  // @@protoc_insertion_point(parse_success:WakfuProto.RankingInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:RankingInfo)
+  // @@protoc_insertion_point(parse_failure:WakfuProto.RankingInfo)
   return false;
 #undef DO_
 }
 
 void RankingInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:RankingInfo)
+  // @@protoc_insertion_point(serialize_start:WakfuProto.RankingInfo)
   // required int32 startIndex = 1;
   if (has_startindex()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->startindex(), output);
@@ -2193,9 +2195,9 @@ void RankingInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->firstteamfirstindex(), output);
   }
 
-  // map<int32, .TeamInfo> teams = 4;
+  // map<int32, .WakfuProto.TeamInfo> teams = 4;
   if (!this->teams().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::int32, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -2204,9 +2206,9 @@ void RankingInfo::SerializeWithCachedSizes(
         this->teams().size() > 1) {
       ::google::protobuf::scoped_array<SortItem> items(
           new SortItem[this->teams().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_iterator
           it = this->teams().begin();
           it != this->teams().end(); ++it, ++n) {
         items[n] = SortItem(&*it);
@@ -2221,7 +2223,7 @@ void RankingInfo::SerializeWithCachedSizes(
       }
     } else {
       ::google::protobuf::scoped_ptr<RankingInfo_TeamsEntry> entry;
-      for (::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_iterator
           it = this->teams().begin();
           it != this->teams().end(); ++it) {
         entry.reset(teams_.NewEntryWrapper(
@@ -2236,13 +2238,13 @@ void RankingInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:RankingInfo)
+  // @@protoc_insertion_point(serialize_end:WakfuProto.RankingInfo)
 }
 
 ::google::protobuf::uint8* RankingInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic;  // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:RankingInfo)
+  // @@protoc_insertion_point(serialize_to_array_start:WakfuProto.RankingInfo)
   // required int32 startIndex = 1;
   if (has_startindex()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->startindex(), target);
@@ -2258,9 +2260,9 @@ void RankingInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->firstteamfirstindex(), target);
   }
 
-  // map<int32, .TeamInfo> teams = 4;
+  // map<int32, .WakfuProto.TeamInfo> teams = 4;
   if (!this->teams().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::int32, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -2269,9 +2271,9 @@ void RankingInfo::SerializeWithCachedSizes(
         this->teams().size() > 1) {
       ::google::protobuf::scoped_array<SortItem> items(
           new SortItem[this->teams().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_iterator
           it = this->teams().begin();
           it != this->teams().end(); ++it, ++n) {
         items[n] = SortItem(&*it);
@@ -2288,7 +2290,7 @@ void RankingInfo::SerializeWithCachedSizes(
       }
     } else {
       ::google::protobuf::scoped_ptr<RankingInfo_TeamsEntry> entry;
-      for (::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_iterator
           it = this->teams().begin();
           it != this->teams().end(); ++it) {
         entry.reset(teams_.NewEntryWrapper(
@@ -2305,12 +2307,12 @@ void RankingInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:RankingInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:WakfuProto.RankingInfo)
   return target;
 }
 
 size_t RankingInfo::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:RankingInfo)
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:WakfuProto.RankingInfo)
   size_t total_size = 0;
 
   if (has_startindex()) {
@@ -2330,7 +2332,7 @@ size_t RankingInfo::RequiredFieldsByteSizeFallback() const {
   return total_size;
 }
 size_t RankingInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:RankingInfo)
+// @@protoc_insertion_point(message_byte_size_start:WakfuProto.RankingInfo)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2352,12 +2354,12 @@ size_t RankingInfo::ByteSizeLong() const {
   } else {
     total_size += RequiredFieldsByteSizeFallback();
   }
-  // map<int32, .TeamInfo> teams = 4;
+  // map<int32, .WakfuProto.TeamInfo> teams = 4;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->teams_size());
   {
     ::google::protobuf::scoped_ptr<RankingInfo_TeamsEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >::const_iterator
         it = this->teams().begin();
         it != this->teams().end(); ++it) {
       entry.reset(teams_.NewEntryWrapper(it->first, it->second));
@@ -2381,22 +2383,22 @@ size_t RankingInfo::ByteSizeLong() const {
 }
 
 void RankingInfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:RankingInfo)
+// @@protoc_insertion_point(generalized_merge_from_start:WakfuProto.RankingInfo)
   GOOGLE_DCHECK_NE(&from, this);
   const RankingInfo* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const RankingInfo>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:RankingInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:WakfuProto.RankingInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:RankingInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:WakfuProto.RankingInfo)
     MergeFrom(*source);
   }
 }
 
 void RankingInfo::MergeFrom(const RankingInfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:RankingInfo)
+// @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.RankingInfo)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   teams_.MergeFrom(from.teams_);
@@ -2414,14 +2416,14 @@ void RankingInfo::MergeFrom(const RankingInfo& from) {
 }
 
 void RankingInfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:RankingInfo)
+// @@protoc_insertion_point(generalized_copy_from_start:WakfuProto.RankingInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void RankingInfo::CopyFrom(const RankingInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:RankingInfo)
+// @@protoc_insertion_point(class_specific_copy_from_start:WakfuProto.RankingInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2470,13 +2472,13 @@ void RankingInfo::clear_startindex() {
   clear_has_startindex();
 }
 ::google::protobuf::int32 RankingInfo::startindex() const {
-  // @@protoc_insertion_point(field_get:RankingInfo.startIndex)
+  // @@protoc_insertion_point(field_get:WakfuProto.RankingInfo.startIndex)
   return startindex_;
 }
 void RankingInfo::set_startindex(::google::protobuf::int32 value) {
   set_has_startindex();
   startindex_ = value;
-  // @@protoc_insertion_point(field_set:RankingInfo.startIndex)
+  // @@protoc_insertion_point(field_set:WakfuProto.RankingInfo.startIndex)
 }
 
 // required int32 totalIndexCount = 2;
@@ -2494,13 +2496,13 @@ void RankingInfo::clear_totalindexcount() {
   clear_has_totalindexcount();
 }
 ::google::protobuf::int32 RankingInfo::totalindexcount() const {
-  // @@protoc_insertion_point(field_get:RankingInfo.totalIndexCount)
+  // @@protoc_insertion_point(field_get:WakfuProto.RankingInfo.totalIndexCount)
   return totalindexcount_;
 }
 void RankingInfo::set_totalindexcount(::google::protobuf::int32 value) {
   set_has_totalindexcount();
   totalindexcount_ = value;
-  // @@protoc_insertion_point(field_set:RankingInfo.totalIndexCount)
+  // @@protoc_insertion_point(field_set:WakfuProto.RankingInfo.totalIndexCount)
 }
 
 // optional int32 firstTeamFirstIndex = 3;
@@ -2518,35 +2520,37 @@ void RankingInfo::clear_firstteamfirstindex() {
   clear_has_firstteamfirstindex();
 }
 ::google::protobuf::int32 RankingInfo::firstteamfirstindex() const {
-  // @@protoc_insertion_point(field_get:RankingInfo.firstTeamFirstIndex)
+  // @@protoc_insertion_point(field_get:WakfuProto.RankingInfo.firstTeamFirstIndex)
   return firstteamfirstindex_;
 }
 void RankingInfo::set_firstteamfirstindex(::google::protobuf::int32 value) {
   set_has_firstteamfirstindex();
   firstteamfirstindex_ = value;
-  // @@protoc_insertion_point(field_set:RankingInfo.firstTeamFirstIndex)
+  // @@protoc_insertion_point(field_set:WakfuProto.RankingInfo.firstTeamFirstIndex)
 }
 
-// map<int32, .TeamInfo> teams = 4;
+// map<int32, .WakfuProto.TeamInfo> teams = 4;
 int RankingInfo::teams_size() const {
   return teams_.size();
 }
 void RankingInfo::clear_teams() {
   teams_.Clear();
 }
- const ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >&
+ const ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >&
 RankingInfo::teams() const {
-  // @@protoc_insertion_point(field_map:RankingInfo.teams)
+  // @@protoc_insertion_point(field_map:WakfuProto.RankingInfo.teams)
   return teams_.GetMap();
 }
- ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >*
+ ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >*
 RankingInfo::mutable_teams() {
-  // @@protoc_insertion_point(field_mutable_map:RankingInfo.teams)
+  // @@protoc_insertion_point(field_mutable_map:WakfuProto.RankingInfo.teams)
   return teams_.MutableMap();
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace WakfuProto
 
 // @@protoc_insertion_point(global_scope)

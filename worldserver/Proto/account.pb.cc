@@ -20,13 +20,17 @@
 namespace WakfuProto {
 class StatusDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Status> {
 } _Status_default_instance_;
+class AccountConnectionMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<AccountConnectionMessage> {
+} _AccountConnectionMessage_default_instance_;
+class AccountDisconnectionMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<AccountDisconnectionMessage> {
+} _AccountDisconnectionMessage_default_instance_;
 
 namespace protobuf_account_2eproto {
 
 
 namespace {
 
-::google::protobuf::Metadata file_level_metadata[2];
+::google::protobuf::Metadata file_level_metadata[4];
 
 }  // namespace
 
@@ -37,14 +41,30 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   ~0u,  // no _oneof_case_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Status, status_),
   ~0u,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AccountConnectionMessage, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AccountConnectionMessage, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AccountConnectionMessage, accountid_),
+  0,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AccountDisconnectionMessage, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AccountDisconnectionMessage, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AccountDisconnectionMessage, accountid_),
+  0,
 };
 
 static const ::google::protobuf::internal::MigrationSchema schemas[] = {
   { 0, 5, sizeof(Status)},
+  { 6, 11, sizeof(AccountConnectionMessage)},
+  { 12, 17, sizeof(AccountDisconnectionMessage)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&_Status_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&_AccountConnectionMessage_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&_AccountDisconnectionMessage_default_instance_),
 };
 
 namespace {
@@ -65,7 +85,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 2);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 4);
   const ::google::protobuf::Descriptor* Status_StatusEntry_descriptor = protobuf_account_2eproto::file_level_metadata[0].descriptor;
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
         Status_StatusEntry_descriptor,
@@ -83,6 +103,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void TableStruct::Shutdown() {
   _Status_default_instance_.Shutdown();
   delete file_level_metadata[1].reflection;
+  _AccountConnectionMessage_default_instance_.Shutdown();
+  delete file_level_metadata[2].reflection;
+  _AccountDisconnectionMessage_default_instance_.Shutdown();
+  delete file_level_metadata[3].reflection;
 }
 
 void TableStruct::InitDefaultsImpl() {
@@ -90,6 +114,8 @@ void TableStruct::InitDefaultsImpl() {
 
   ::google::protobuf::internal::InitProtobufDefaults();
   _Status_default_instance_.DefaultConstruct();
+  _AccountConnectionMessage_default_instance_.DefaultConstruct();
+  _AccountDisconnectionMessage_default_instance_.DefaultConstruct();
 }
 
 void InitDefaults() {
@@ -102,10 +128,12 @@ void AddDescriptorsImpl() {
       "\n\raccount.proto\022\nWakfuProto\"g\n\006Status\022.\n"
       "\006status\030\001 \003(\0132\036.WakfuProto.Status.Status"
       "Entry\032-\n\013StatusEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
-      "ue\030\002 \001(\t:\0028\001"
+      "ue\030\002 \001(\t:\0028\001\"-\n\030AccountConnectionMessage"
+      "\022\021\n\taccountId\030\002 \002(\003\"0\n\033AccountDisconnect"
+      "ionMessage\022\021\n\taccountId\030\002 \002(\003"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 132);
+      descriptor, 229);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "account.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -502,6 +530,514 @@ Status::status() const {
 Status::mutable_status() {
   // @@protoc_insertion_point(field_mutable_map:WakfuProto.Status.status)
   return status_.MutableMap();
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int AccountConnectionMessage::kAccountIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+AccountConnectionMessage::AccountConnectionMessage()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_account_2eproto::InitDefaults();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:WakfuProto.AccountConnectionMessage)
+}
+AccountConnectionMessage::AccountConnectionMessage(const AccountConnectionMessage& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  accountid_ = from.accountid_;
+  // @@protoc_insertion_point(copy_constructor:WakfuProto.AccountConnectionMessage)
+}
+
+void AccountConnectionMessage::SharedCtor() {
+  _cached_size_ = 0;
+  accountid_ = GOOGLE_LONGLONG(0);
+}
+
+AccountConnectionMessage::~AccountConnectionMessage() {
+  // @@protoc_insertion_point(destructor:WakfuProto.AccountConnectionMessage)
+  SharedDtor();
+}
+
+void AccountConnectionMessage::SharedDtor() {
+}
+
+void AccountConnectionMessage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* AccountConnectionMessage::descriptor() {
+  protobuf_account_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_account_2eproto::file_level_metadata[2].descriptor;
+}
+
+const AccountConnectionMessage& AccountConnectionMessage::default_instance() {
+  protobuf_account_2eproto::InitDefaults();
+  return *internal_default_instance();
+}
+
+AccountConnectionMessage* AccountConnectionMessage::New(::google::protobuf::Arena* arena) const {
+  AccountConnectionMessage* n = new AccountConnectionMessage;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void AccountConnectionMessage::Clear() {
+// @@protoc_insertion_point(message_clear_start:WakfuProto.AccountConnectionMessage)
+  accountid_ = GOOGLE_LONGLONG(0);
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool AccountConnectionMessage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:WakfuProto.AccountConnectionMessage)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 accountId = 2;
+      case 2: {
+        if (tag == 16u) {
+          set_has_accountid();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &accountid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:WakfuProto.AccountConnectionMessage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:WakfuProto.AccountConnectionMessage)
+  return false;
+#undef DO_
+}
+
+void AccountConnectionMessage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:WakfuProto.AccountConnectionMessage)
+  // required int64 accountId = 2;
+  if (has_accountid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->accountid(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:WakfuProto.AccountConnectionMessage)
+}
+
+::google::protobuf::uint8* AccountConnectionMessage::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic;  // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:WakfuProto.AccountConnectionMessage)
+  // required int64 accountId = 2;
+  if (has_accountid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->accountid(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:WakfuProto.AccountConnectionMessage)
+  return target;
+}
+
+size_t AccountConnectionMessage::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:WakfuProto.AccountConnectionMessage)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  // required int64 accountId = 2;
+  if (has_accountid()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->accountid());
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void AccountConnectionMessage::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:WakfuProto.AccountConnectionMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AccountConnectionMessage* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const AccountConnectionMessage>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:WakfuProto.AccountConnectionMessage)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:WakfuProto.AccountConnectionMessage)
+    MergeFrom(*source);
+  }
+}
+
+void AccountConnectionMessage::MergeFrom(const AccountConnectionMessage& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.AccountConnectionMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_accountid()) {
+    set_accountid(from.accountid());
+  }
+}
+
+void AccountConnectionMessage::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:WakfuProto.AccountConnectionMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void AccountConnectionMessage::CopyFrom(const AccountConnectionMessage& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:WakfuProto.AccountConnectionMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AccountConnectionMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void AccountConnectionMessage::Swap(AccountConnectionMessage* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void AccountConnectionMessage::InternalSwap(AccountConnectionMessage* other) {
+  std::swap(accountid_, other->accountid_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata AccountConnectionMessage::GetMetadata() const {
+  protobuf_account_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_account_2eproto::file_level_metadata[2];
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// AccountConnectionMessage
+
+// required int64 accountId = 2;
+bool AccountConnectionMessage::has_accountid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void AccountConnectionMessage::set_has_accountid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void AccountConnectionMessage::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void AccountConnectionMessage::clear_accountid() {
+  accountid_ = GOOGLE_LONGLONG(0);
+  clear_has_accountid();
+}
+::google::protobuf::int64 AccountConnectionMessage::accountid() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.AccountConnectionMessage.accountId)
+  return accountid_;
+}
+void AccountConnectionMessage::set_accountid(::google::protobuf::int64 value) {
+  set_has_accountid();
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:WakfuProto.AccountConnectionMessage.accountId)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int AccountDisconnectionMessage::kAccountIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+AccountDisconnectionMessage::AccountDisconnectionMessage()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_account_2eproto::InitDefaults();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:WakfuProto.AccountDisconnectionMessage)
+}
+AccountDisconnectionMessage::AccountDisconnectionMessage(const AccountDisconnectionMessage& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  accountid_ = from.accountid_;
+  // @@protoc_insertion_point(copy_constructor:WakfuProto.AccountDisconnectionMessage)
+}
+
+void AccountDisconnectionMessage::SharedCtor() {
+  _cached_size_ = 0;
+  accountid_ = GOOGLE_LONGLONG(0);
+}
+
+AccountDisconnectionMessage::~AccountDisconnectionMessage() {
+  // @@protoc_insertion_point(destructor:WakfuProto.AccountDisconnectionMessage)
+  SharedDtor();
+}
+
+void AccountDisconnectionMessage::SharedDtor() {
+}
+
+void AccountDisconnectionMessage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* AccountDisconnectionMessage::descriptor() {
+  protobuf_account_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_account_2eproto::file_level_metadata[3].descriptor;
+}
+
+const AccountDisconnectionMessage& AccountDisconnectionMessage::default_instance() {
+  protobuf_account_2eproto::InitDefaults();
+  return *internal_default_instance();
+}
+
+AccountDisconnectionMessage* AccountDisconnectionMessage::New(::google::protobuf::Arena* arena) const {
+  AccountDisconnectionMessage* n = new AccountDisconnectionMessage;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void AccountDisconnectionMessage::Clear() {
+// @@protoc_insertion_point(message_clear_start:WakfuProto.AccountDisconnectionMessage)
+  accountid_ = GOOGLE_LONGLONG(0);
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool AccountDisconnectionMessage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:WakfuProto.AccountDisconnectionMessage)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 accountId = 2;
+      case 2: {
+        if (tag == 16u) {
+          set_has_accountid();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &accountid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:WakfuProto.AccountDisconnectionMessage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:WakfuProto.AccountDisconnectionMessage)
+  return false;
+#undef DO_
+}
+
+void AccountDisconnectionMessage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:WakfuProto.AccountDisconnectionMessage)
+  // required int64 accountId = 2;
+  if (has_accountid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->accountid(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:WakfuProto.AccountDisconnectionMessage)
+}
+
+::google::protobuf::uint8* AccountDisconnectionMessage::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic;  // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:WakfuProto.AccountDisconnectionMessage)
+  // required int64 accountId = 2;
+  if (has_accountid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->accountid(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:WakfuProto.AccountDisconnectionMessage)
+  return target;
+}
+
+size_t AccountDisconnectionMessage::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:WakfuProto.AccountDisconnectionMessage)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  // required int64 accountId = 2;
+  if (has_accountid()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->accountid());
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void AccountDisconnectionMessage::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:WakfuProto.AccountDisconnectionMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AccountDisconnectionMessage* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const AccountDisconnectionMessage>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:WakfuProto.AccountDisconnectionMessage)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:WakfuProto.AccountDisconnectionMessage)
+    MergeFrom(*source);
+  }
+}
+
+void AccountDisconnectionMessage::MergeFrom(const AccountDisconnectionMessage& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:WakfuProto.AccountDisconnectionMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_accountid()) {
+    set_accountid(from.accountid());
+  }
+}
+
+void AccountDisconnectionMessage::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:WakfuProto.AccountDisconnectionMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void AccountDisconnectionMessage::CopyFrom(const AccountDisconnectionMessage& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:WakfuProto.AccountDisconnectionMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AccountDisconnectionMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void AccountDisconnectionMessage::Swap(AccountDisconnectionMessage* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void AccountDisconnectionMessage::InternalSwap(AccountDisconnectionMessage* other) {
+  std::swap(accountid_, other->accountid_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata AccountDisconnectionMessage::GetMetadata() const {
+  protobuf_account_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_account_2eproto::file_level_metadata[3];
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// AccountDisconnectionMessage
+
+// required int64 accountId = 2;
+bool AccountDisconnectionMessage::has_accountid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void AccountDisconnectionMessage::set_has_accountid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void AccountDisconnectionMessage::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void AccountDisconnectionMessage::clear_accountid() {
+  accountid_ = GOOGLE_LONGLONG(0);
+  clear_has_accountid();
+}
+::google::protobuf::int64 AccountDisconnectionMessage::accountid() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.AccountDisconnectionMessage.accountId)
+  return accountid_;
+}
+void AccountDisconnectionMessage::set_accountid(::google::protobuf::int64 value) {
+  set_has_accountid();
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:WakfuProto.AccountDisconnectionMessage.accountId)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

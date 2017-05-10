@@ -32,6 +32,12 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 namespace WakfuProto {
+class AccountConnectionMessage;
+class AccountConnectionMessageDefaultTypeInternal;
+extern AccountConnectionMessageDefaultTypeInternal _AccountConnectionMessage_default_instance_;
+class AccountDisconnectionMessage;
+class AccountDisconnectionMessageDefaultTypeInternal;
+extern AccountDisconnectionMessageDefaultTypeInternal _AccountDisconnectionMessage_default_instance_;
 class Status;
 class StatusDefaultTypeInternal;
 extern StatusDefaultTypeInternal _Status_default_instance_;
@@ -159,6 +165,196 @@ class Status : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
       0 > status_;
   friend struct  protobuf_account_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class AccountConnectionMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:WakfuProto.AccountConnectionMessage) */ {
+ public:
+  AccountConnectionMessage();
+  virtual ~AccountConnectionMessage();
+
+  AccountConnectionMessage(const AccountConnectionMessage& from);
+
+  inline AccountConnectionMessage& operator=(const AccountConnectionMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AccountConnectionMessage& default_instance();
+
+  static inline const AccountConnectionMessage* internal_default_instance() {
+    return reinterpret_cast<const AccountConnectionMessage*>(
+               &_AccountConnectionMessage_default_instance_);
+  }
+
+  void Swap(AccountConnectionMessage* other);
+
+  // implements Message ----------------------------------------------
+
+  inline AccountConnectionMessage* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  AccountConnectionMessage* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AccountConnectionMessage& from);
+  void MergeFrom(const AccountConnectionMessage& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
+    return InternalSerializeWithCachedSizesToArray(
+        ::google::protobuf::io::CodedOutputStream::IsDefaultSerializationDeterministic(), output);
+  }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AccountConnectionMessage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 accountId = 2;
+  bool has_accountid() const;
+  void clear_accountid();
+  static const int kAccountIdFieldNumber = 2;
+  ::google::protobuf::int64 accountid() const;
+  void set_accountid(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:WakfuProto.AccountConnectionMessage)
+ private:
+  void set_has_accountid();
+  void clear_has_accountid();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::int64 accountid_;
+  friend struct  protobuf_account_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class AccountDisconnectionMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:WakfuProto.AccountDisconnectionMessage) */ {
+ public:
+  AccountDisconnectionMessage();
+  virtual ~AccountDisconnectionMessage();
+
+  AccountDisconnectionMessage(const AccountDisconnectionMessage& from);
+
+  inline AccountDisconnectionMessage& operator=(const AccountDisconnectionMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AccountDisconnectionMessage& default_instance();
+
+  static inline const AccountDisconnectionMessage* internal_default_instance() {
+    return reinterpret_cast<const AccountDisconnectionMessage*>(
+               &_AccountDisconnectionMessage_default_instance_);
+  }
+
+  void Swap(AccountDisconnectionMessage* other);
+
+  // implements Message ----------------------------------------------
+
+  inline AccountDisconnectionMessage* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  AccountDisconnectionMessage* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AccountDisconnectionMessage& from);
+  void MergeFrom(const AccountDisconnectionMessage& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
+    return InternalSerializeWithCachedSizesToArray(
+        ::google::protobuf::io::CodedOutputStream::IsDefaultSerializationDeterministic(), output);
+  }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AccountDisconnectionMessage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 accountId = 2;
+  bool has_accountid() const;
+  void clear_accountid();
+  static const int kAccountIdFieldNumber = 2;
+  ::google::protobuf::int64 accountid() const;
+  void set_accountid(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:WakfuProto.AccountDisconnectionMessage)
+ private:
+  void set_has_accountid();
+  void clear_has_accountid();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::int64 accountid_;
+  friend struct  protobuf_account_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -187,7 +383,67 @@ Status::mutable_status() {
   return status_.MutableMap();
 }
 
+// -------------------------------------------------------------------
+
+// AccountConnectionMessage
+
+// required int64 accountId = 2;
+inline bool AccountConnectionMessage::has_accountid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void AccountConnectionMessage::set_has_accountid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void AccountConnectionMessage::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void AccountConnectionMessage::clear_accountid() {
+  accountid_ = GOOGLE_LONGLONG(0);
+  clear_has_accountid();
+}
+inline ::google::protobuf::int64 AccountConnectionMessage::accountid() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.AccountConnectionMessage.accountId)
+  return accountid_;
+}
+inline void AccountConnectionMessage::set_accountid(::google::protobuf::int64 value) {
+  set_has_accountid();
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:WakfuProto.AccountConnectionMessage.accountId)
+}
+
+// -------------------------------------------------------------------
+
+// AccountDisconnectionMessage
+
+// required int64 accountId = 2;
+inline bool AccountDisconnectionMessage::has_accountid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void AccountDisconnectionMessage::set_has_accountid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void AccountDisconnectionMessage::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void AccountDisconnectionMessage::clear_accountid() {
+  accountid_ = GOOGLE_LONGLONG(0);
+  clear_has_accountid();
+}
+inline ::google::protobuf::int64 AccountDisconnectionMessage::accountid() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.AccountDisconnectionMessage.accountId)
+  return accountid_;
+}
+inline void AccountDisconnectionMessage::set_accountid(::google::protobuf::int64 value) {
+  set_has_accountid();
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:WakfuProto.AccountDisconnectionMessage.accountId)
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

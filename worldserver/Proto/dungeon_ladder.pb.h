@@ -32,6 +32,7 @@
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
+namespace WakfuProto {
 class CompositionInfo;
 class CompositionInfoDefaultTypeInternal;
 extern CompositionInfoDefaultTypeInternal _CompositionInfo_default_instance_;
@@ -44,6 +45,9 @@ extern RankingInfoDefaultTypeInternal _RankingInfo_default_instance_;
 class TeamInfo;
 class TeamInfoDefaultTypeInternal;
 extern TeamInfoDefaultTypeInternal _TeamInfo_default_instance_;
+}  // namespace WakfuProto
+
+namespace WakfuProto {
 
 namespace protobuf_dungeon_5fladder_2eproto {
 // Internal implementation detail -- do not call these.
@@ -78,7 +82,7 @@ inline bool LadderType_Parse(
 }
 // ===================================================================
 
-class TeamInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:TeamInfo) */ {
+class TeamInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:WakfuProto.TeamInfo) */ {
  public:
   TeamInfo();
   virtual ~TeamInfo();
@@ -153,14 +157,14 @@ class TeamInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // accessors -------------------------------------------------------
 
-  // optional .CompositionInfo compositionInfo = 8;
+  // optional .WakfuProto.CompositionInfo compositionInfo = 8;
   bool has_compositioninfo() const;
   void clear_compositioninfo();
   static const int kCompositionInfoFieldNumber = 8;
-  const ::CompositionInfo& compositioninfo() const;
-  ::CompositionInfo* mutable_compositioninfo();
-  ::CompositionInfo* release_compositioninfo();
-  void set_allocated_compositioninfo(::CompositionInfo* compositioninfo);
+  const ::WakfuProto::CompositionInfo& compositioninfo() const;
+  ::WakfuProto::CompositionInfo* mutable_compositioninfo();
+  ::WakfuProto::CompositionInfo* release_compositioninfo();
+  void set_allocated_compositioninfo(::WakfuProto::CompositionInfo* compositioninfo);
 
   // required int32 dungeonId = 1;
   bool has_dungeonid() const;
@@ -204,14 +208,14 @@ class TeamInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::int32 bossturncount() const;
   void set_bossturncount(::google::protobuf::int32 value);
 
-  // optional .LadderType ladderType = 2;
+  // optional .WakfuProto.LadderType ladderType = 2;
   bool has_laddertype() const;
   void clear_laddertype();
   static const int kLadderTypeFieldNumber = 2;
-  ::LadderType laddertype() const;
-  void set_laddertype(::LadderType value);
+  ::WakfuProto::LadderType laddertype() const;
+  void set_laddertype(::WakfuProto::LadderType value);
 
-  // @@protoc_insertion_point(class_scope:TeamInfo)
+  // @@protoc_insertion_point(class_scope:WakfuProto.TeamInfo)
  private:
   void set_has_dungeonid();
   void clear_has_dungeonid();
@@ -233,7 +237,7 @@ class TeamInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
-  ::CompositionInfo* compositioninfo_;
+  ::WakfuProto::CompositionInfo* compositioninfo_;
   ::google::protobuf::int32 dungeonid_;
   ::google::protobuf::int32 stasislevel_;
   ::google::protobuf::int64 teamid_;
@@ -248,7 +252,7 @@ class TeamInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
 // -------------------------------------------------------------------
 
-class CompositionInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CompositionInfo) */ {
+class CompositionInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:WakfuProto.CompositionInfo) */ {
  public:
   CompositionInfo();
   virtual ~CompositionInfo();
@@ -324,29 +328,29 @@ class CompositionInfo : public ::google::protobuf::Message /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // map<int64, .CompositionInfoData> infoByCharacterId = 1;
+  // map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
   int infobycharacterid_size() const;
   void clear_infobycharacterid();
   static const int kInfoByCharacterIdFieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >&
+  const ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >&
       infobycharacterid() const;
-  ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >*
+  ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >*
       mutable_infobycharacterid();
 
-  // @@protoc_insertion_point(class_scope:CompositionInfo)
+  // @@protoc_insertion_point(class_scope:WakfuProto.CompositionInfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::int64, ::CompositionInfoData,
+      ::google::protobuf::int64, ::WakfuProto::CompositionInfoData,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       CompositionInfo_InfoByCharacterIdEntry;
   ::google::protobuf::internal::MapField<
-      ::google::protobuf::int64, ::CompositionInfoData,
+      ::google::protobuf::int64, ::WakfuProto::CompositionInfoData,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > infobycharacterid_;
@@ -354,7 +358,7 @@ class CompositionInfo : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
-class CompositionInfoData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CompositionInfoData) */ {
+class CompositionInfoData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:WakfuProto.CompositionInfoData) */ {
  public:
   CompositionInfoData();
   virtual ~CompositionInfoData();
@@ -487,7 +491,7 @@ class CompositionInfoData : public ::google::protobuf::Message /* @@protoc_inser
   ::google::protobuf::int32 sex() const;
   void set_sex(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:CompositionInfoData)
+  // @@protoc_insertion_point(class_scope:WakfuProto.CompositionInfoData)
  private:
   void set_has_breedid();
   void clear_has_breedid();
@@ -518,7 +522,7 @@ class CompositionInfoData : public ::google::protobuf::Message /* @@protoc_inser
 
 // -------------------------------------------------------------------
 
-class RankingInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:RankingInfo) */ {
+class RankingInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:WakfuProto.RankingInfo) */ {
  public:
   RankingInfo();
   virtual ~RankingInfo();
@@ -594,13 +598,13 @@ class RankingInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // map<int32, .TeamInfo> teams = 4;
+  // map<int32, .WakfuProto.TeamInfo> teams = 4;
   int teams_size() const;
   void clear_teams();
   static const int kTeamsFieldNumber = 4;
-  const ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >&
+  const ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >&
       teams() const;
-  ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >*
+  ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >*
       mutable_teams();
 
   // required int32 startIndex = 1;
@@ -624,7 +628,7 @@ class RankingInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int32 firstteamfirstindex() const;
   void set_firstteamfirstindex(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:RankingInfo)
+  // @@protoc_insertion_point(class_scope:WakfuProto.RankingInfo)
  private:
   void set_has_startindex();
   void clear_has_startindex();
@@ -640,13 +644,13 @@ class RankingInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::int32, ::TeamInfo,
+      ::google::protobuf::int32, ::WakfuProto::TeamInfo,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       RankingInfo_TeamsEntry;
   ::google::protobuf::internal::MapField<
-      ::google::protobuf::int32, ::TeamInfo,
+      ::google::protobuf::int32, ::WakfuProto::TeamInfo,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > teams_;
@@ -678,16 +682,16 @@ inline void TeamInfo::clear_dungeonid() {
   clear_has_dungeonid();
 }
 inline ::google::protobuf::int32 TeamInfo::dungeonid() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.dungeonId)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.dungeonId)
   return dungeonid_;
 }
 inline void TeamInfo::set_dungeonid(::google::protobuf::int32 value) {
   set_has_dungeonid();
   dungeonid_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.dungeonId)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.dungeonId)
 }
 
-// optional .LadderType ladderType = 2;
+// optional .WakfuProto.LadderType ladderType = 2;
 inline bool TeamInfo::has_laddertype() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -701,15 +705,15 @@ inline void TeamInfo::clear_laddertype() {
   laddertype_ = 1;
   clear_has_laddertype();
 }
-inline ::LadderType TeamInfo::laddertype() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.ladderType)
-  return static_cast< ::LadderType >(laddertype_);
+inline ::WakfuProto::LadderType TeamInfo::laddertype() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.ladderType)
+  return static_cast< ::WakfuProto::LadderType >(laddertype_);
 }
-inline void TeamInfo::set_laddertype(::LadderType value) {
-  assert(::LadderType_IsValid(value));
+inline void TeamInfo::set_laddertype(::WakfuProto::LadderType value) {
+  assert(::WakfuProto::LadderType_IsValid(value));
   set_has_laddertype();
   laddertype_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.ladderType)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.ladderType)
 }
 
 // optional int64 teamId = 3;
@@ -727,13 +731,13 @@ inline void TeamInfo::clear_teamid() {
   clear_has_teamid();
 }
 inline ::google::protobuf::int64 TeamInfo::teamid() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.teamId)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.teamId)
   return teamid_;
 }
 inline void TeamInfo::set_teamid(::google::protobuf::int64 value) {
   set_has_teamid();
   teamid_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.teamId)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.teamId)
 }
 
 // optional int32 stasisLevel = 4;
@@ -751,13 +755,13 @@ inline void TeamInfo::clear_stasislevel() {
   clear_has_stasislevel();
 }
 inline ::google::protobuf::int32 TeamInfo::stasislevel() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.stasisLevel)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.stasisLevel)
   return stasislevel_;
 }
 inline void TeamInfo::set_stasislevel(::google::protobuf::int32 value) {
   set_has_stasislevel();
   stasislevel_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.stasisLevel)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.stasisLevel)
 }
 
 // optional int64 registrationDate = 5;
@@ -775,13 +779,13 @@ inline void TeamInfo::clear_registrationdate() {
   clear_has_registrationdate();
 }
 inline ::google::protobuf::int64 TeamInfo::registrationdate() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.registrationDate)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.registrationDate)
   return registrationdate_;
 }
 inline void TeamInfo::set_registrationdate(::google::protobuf::int64 value) {
   set_has_registrationdate();
   registrationdate_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.registrationDate)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.registrationDate)
 }
 
 // optional int32 dungeonTurnCount = 6;
@@ -799,13 +803,13 @@ inline void TeamInfo::clear_dungeonturncount() {
   clear_has_dungeonturncount();
 }
 inline ::google::protobuf::int32 TeamInfo::dungeonturncount() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.dungeonTurnCount)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.dungeonTurnCount)
   return dungeonturncount_;
 }
 inline void TeamInfo::set_dungeonturncount(::google::protobuf::int32 value) {
   set_has_dungeonturncount();
   dungeonturncount_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.dungeonTurnCount)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.dungeonTurnCount)
 }
 
 // optional int32 bossTurnCount = 7;
@@ -823,16 +827,16 @@ inline void TeamInfo::clear_bossturncount() {
   clear_has_bossturncount();
 }
 inline ::google::protobuf::int32 TeamInfo::bossturncount() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.bossTurnCount)
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.bossTurnCount)
   return bossturncount_;
 }
 inline void TeamInfo::set_bossturncount(::google::protobuf::int32 value) {
   set_has_bossturncount();
   bossturncount_ = value;
-  // @@protoc_insertion_point(field_set:TeamInfo.bossTurnCount)
+  // @@protoc_insertion_point(field_set:WakfuProto.TeamInfo.bossTurnCount)
 }
 
-// optional .CompositionInfo compositionInfo = 8;
+// optional .WakfuProto.CompositionInfo compositionInfo = 8;
 inline bool TeamInfo::has_compositioninfo() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -843,30 +847,30 @@ inline void TeamInfo::clear_has_compositioninfo() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void TeamInfo::clear_compositioninfo() {
-  if (compositioninfo_ != NULL) compositioninfo_->::CompositionInfo::Clear();
+  if (compositioninfo_ != NULL) compositioninfo_->::WakfuProto::CompositionInfo::Clear();
   clear_has_compositioninfo();
 }
-inline const ::CompositionInfo& TeamInfo::compositioninfo() const {
-  // @@protoc_insertion_point(field_get:TeamInfo.compositionInfo)
+inline const ::WakfuProto::CompositionInfo& TeamInfo::compositioninfo() const {
+  // @@protoc_insertion_point(field_get:WakfuProto.TeamInfo.compositionInfo)
   return compositioninfo_ != NULL ? *compositioninfo_
-                         : *::CompositionInfo::internal_default_instance();
+                         : *::WakfuProto::CompositionInfo::internal_default_instance();
 }
-inline ::CompositionInfo* TeamInfo::mutable_compositioninfo() {
+inline ::WakfuProto::CompositionInfo* TeamInfo::mutable_compositioninfo() {
   set_has_compositioninfo();
   if (compositioninfo_ == NULL) {
-    compositioninfo_ = new ::CompositionInfo;
+    compositioninfo_ = new ::WakfuProto::CompositionInfo;
   }
-  // @@protoc_insertion_point(field_mutable:TeamInfo.compositionInfo)
+  // @@protoc_insertion_point(field_mutable:WakfuProto.TeamInfo.compositionInfo)
   return compositioninfo_;
 }
-inline ::CompositionInfo* TeamInfo::release_compositioninfo() {
-  // @@protoc_insertion_point(field_release:TeamInfo.compositionInfo)
+inline ::WakfuProto::CompositionInfo* TeamInfo::release_compositioninfo() {
+  // @@protoc_insertion_point(field_release:WakfuProto.TeamInfo.compositionInfo)
   clear_has_compositioninfo();
-  ::CompositionInfo* temp = compositioninfo_;
+  ::WakfuProto::CompositionInfo* temp = compositioninfo_;
   compositioninfo_ = NULL;
   return temp;
 }
-inline void TeamInfo::set_allocated_compositioninfo(::CompositionInfo* compositioninfo) {
+inline void TeamInfo::set_allocated_compositioninfo(::WakfuProto::CompositionInfo* compositioninfo) {
   delete compositioninfo_;
   compositioninfo_ = compositioninfo;
   if (compositioninfo) {
@@ -874,7 +878,7 @@ inline void TeamInfo::set_allocated_compositioninfo(::CompositionInfo* compositi
   } else {
     clear_has_compositioninfo();
   }
-  // @@protoc_insertion_point(field_set_allocated:TeamInfo.compositionInfo)
+  // @@protoc_insertion_point(field_set_allocated:WakfuProto.TeamInfo.compositionInfo)
 }
 
 // -------------------------------------------------------------------
@@ -883,21 +887,21 @@ inline void TeamInfo::set_allocated_compositioninfo(::CompositionInfo* compositi
 
 // CompositionInfo
 
-// map<int64, .CompositionInfoData> infoByCharacterId = 1;
+// map<int64, .WakfuProto.CompositionInfoData> infoByCharacterId = 1;
 inline int CompositionInfo::infobycharacterid_size() const {
   return infobycharacterid_.size();
 }
 inline void CompositionInfo::clear_infobycharacterid() {
   infobycharacterid_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >&
+inline const ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >&
 CompositionInfo::infobycharacterid() const {
-  // @@protoc_insertion_point(field_map:CompositionInfo.infoByCharacterId)
+  // @@protoc_insertion_point(field_map:WakfuProto.CompositionInfo.infoByCharacterId)
   return infobycharacterid_.GetMap();
 }
-inline ::google::protobuf::Map< ::google::protobuf::int64, ::CompositionInfoData >*
+inline ::google::protobuf::Map< ::google::protobuf::int64, ::WakfuProto::CompositionInfoData >*
 CompositionInfo::mutable_infobycharacterid() {
-  // @@protoc_insertion_point(field_mutable_map:CompositionInfo.infoByCharacterId)
+  // @@protoc_insertion_point(field_mutable_map:WakfuProto.CompositionInfo.infoByCharacterId)
   return infobycharacterid_.MutableMap();
 }
 
@@ -920,13 +924,13 @@ inline void CompositionInfoData::clear_breedid() {
   clear_has_breedid();
 }
 inline ::google::protobuf::int32 CompositionInfoData::breedid() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.breedId)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.breedId)
   return breedid_;
 }
 inline void CompositionInfoData::set_breedid(::google::protobuf::int32 value) {
   set_has_breedid();
   breedid_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.breedId)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.breedId)
 }
 
 // optional bool isBestRecord = 2;
@@ -944,13 +948,13 @@ inline void CompositionInfoData::clear_isbestrecord() {
   clear_has_isbestrecord();
 }
 inline bool CompositionInfoData::isbestrecord() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.isBestRecord)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.isBestRecord)
   return isbestrecord_;
 }
 inline void CompositionInfoData::set_isbestrecord(bool value) {
   set_has_isbestrecord();
   isbestrecord_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.isBestRecord)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.isBestRecord)
 }
 
 // optional string name = 3;
@@ -968,40 +972,40 @@ inline void CompositionInfoData::clear_name() {
   clear_has_name();
 }
 inline const ::std::string& CompositionInfoData::name() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.name)
   return name_.GetNoArena();
 }
 inline void CompositionInfoData::set_name(const ::std::string& value) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.name)
 }
 #if LANG_CXX11
 inline void CompositionInfoData::set_name(::std::string&& value) {
   set_has_name();
   name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_rvalue:WakfuProto.CompositionInfoData.name)
 }
 #endif
 inline void CompositionInfoData::set_name(const char* value) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_char:WakfuProto.CompositionInfoData.name)
 }
 inline void CompositionInfoData::set_name(const char* value, size_t size) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_pointer:WakfuProto.CompositionInfoData.name)
 }
 inline ::std::string* CompositionInfoData::mutable_name() {
   set_has_name();
-  // @@protoc_insertion_point(field_mutable:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_mutable:WakfuProto.CompositionInfoData.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* CompositionInfoData::release_name() {
-  // @@protoc_insertion_point(field_release:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_release:WakfuProto.CompositionInfoData.name)
   clear_has_name();
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1012,7 +1016,7 @@ inline void CompositionInfoData::set_allocated_name(::std::string* name) {
     clear_has_name();
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:CompositionInfoData.name)
+  // @@protoc_insertion_point(field_set_allocated:WakfuProto.CompositionInfoData.name)
 }
 
 // optional int32 sex = 4;
@@ -1030,13 +1034,13 @@ inline void CompositionInfoData::clear_sex() {
   clear_has_sex();
 }
 inline ::google::protobuf::int32 CompositionInfoData::sex() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.sex)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.sex)
   return sex_;
 }
 inline void CompositionInfoData::set_sex(::google::protobuf::int32 value) {
   set_has_sex();
   sex_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.sex)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.sex)
 }
 
 // optional int64 guildBlazon = 5;
@@ -1054,13 +1058,13 @@ inline void CompositionInfoData::clear_guildblazon() {
   clear_has_guildblazon();
 }
 inline ::google::protobuf::int64 CompositionInfoData::guildblazon() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.guildBlazon)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.guildBlazon)
   return guildblazon_;
 }
 inline void CompositionInfoData::set_guildblazon(::google::protobuf::int64 value) {
   set_has_guildblazon();
   guildblazon_ = value;
-  // @@protoc_insertion_point(field_set:CompositionInfoData.guildBlazon)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.guildBlazon)
 }
 
 // optional string guildName = 6;
@@ -1078,40 +1082,40 @@ inline void CompositionInfoData::clear_guildname() {
   clear_has_guildname();
 }
 inline const ::std::string& CompositionInfoData::guildname() const {
-  // @@protoc_insertion_point(field_get:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_get:WakfuProto.CompositionInfoData.guildName)
   return guildname_.GetNoArena();
 }
 inline void CompositionInfoData::set_guildname(const ::std::string& value) {
   set_has_guildname();
   guildname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set:WakfuProto.CompositionInfoData.guildName)
 }
 #if LANG_CXX11
 inline void CompositionInfoData::set_guildname(::std::string&& value) {
   set_has_guildname();
   guildname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_rvalue:WakfuProto.CompositionInfoData.guildName)
 }
 #endif
 inline void CompositionInfoData::set_guildname(const char* value) {
   set_has_guildname();
   guildname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_char:WakfuProto.CompositionInfoData.guildName)
 }
 inline void CompositionInfoData::set_guildname(const char* value, size_t size) {
   set_has_guildname();
   guildname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_pointer:WakfuProto.CompositionInfoData.guildName)
 }
 inline ::std::string* CompositionInfoData::mutable_guildname() {
   set_has_guildname();
-  // @@protoc_insertion_point(field_mutable:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_mutable:WakfuProto.CompositionInfoData.guildName)
   return guildname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* CompositionInfoData::release_guildname() {
-  // @@protoc_insertion_point(field_release:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_release:WakfuProto.CompositionInfoData.guildName)
   clear_has_guildname();
   return guildname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1122,7 +1126,7 @@ inline void CompositionInfoData::set_allocated_guildname(::std::string* guildnam
     clear_has_guildname();
   }
   guildname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), guildname);
-  // @@protoc_insertion_point(field_set_allocated:CompositionInfoData.guildName)
+  // @@protoc_insertion_point(field_set_allocated:WakfuProto.CompositionInfoData.guildName)
 }
 
 // -------------------------------------------------------------------
@@ -1146,13 +1150,13 @@ inline void RankingInfo::clear_startindex() {
   clear_has_startindex();
 }
 inline ::google::protobuf::int32 RankingInfo::startindex() const {
-  // @@protoc_insertion_point(field_get:RankingInfo.startIndex)
+  // @@protoc_insertion_point(field_get:WakfuProto.RankingInfo.startIndex)
   return startindex_;
 }
 inline void RankingInfo::set_startindex(::google::protobuf::int32 value) {
   set_has_startindex();
   startindex_ = value;
-  // @@protoc_insertion_point(field_set:RankingInfo.startIndex)
+  // @@protoc_insertion_point(field_set:WakfuProto.RankingInfo.startIndex)
 }
 
 // required int32 totalIndexCount = 2;
@@ -1170,13 +1174,13 @@ inline void RankingInfo::clear_totalindexcount() {
   clear_has_totalindexcount();
 }
 inline ::google::protobuf::int32 RankingInfo::totalindexcount() const {
-  // @@protoc_insertion_point(field_get:RankingInfo.totalIndexCount)
+  // @@protoc_insertion_point(field_get:WakfuProto.RankingInfo.totalIndexCount)
   return totalindexcount_;
 }
 inline void RankingInfo::set_totalindexcount(::google::protobuf::int32 value) {
   set_has_totalindexcount();
   totalindexcount_ = value;
-  // @@protoc_insertion_point(field_set:RankingInfo.totalIndexCount)
+  // @@protoc_insertion_point(field_set:WakfuProto.RankingInfo.totalIndexCount)
 }
 
 // optional int32 firstTeamFirstIndex = 3;
@@ -1194,30 +1198,30 @@ inline void RankingInfo::clear_firstteamfirstindex() {
   clear_has_firstteamfirstindex();
 }
 inline ::google::protobuf::int32 RankingInfo::firstteamfirstindex() const {
-  // @@protoc_insertion_point(field_get:RankingInfo.firstTeamFirstIndex)
+  // @@protoc_insertion_point(field_get:WakfuProto.RankingInfo.firstTeamFirstIndex)
   return firstteamfirstindex_;
 }
 inline void RankingInfo::set_firstteamfirstindex(::google::protobuf::int32 value) {
   set_has_firstteamfirstindex();
   firstteamfirstindex_ = value;
-  // @@protoc_insertion_point(field_set:RankingInfo.firstTeamFirstIndex)
+  // @@protoc_insertion_point(field_set:WakfuProto.RankingInfo.firstTeamFirstIndex)
 }
 
-// map<int32, .TeamInfo> teams = 4;
+// map<int32, .WakfuProto.TeamInfo> teams = 4;
 inline int RankingInfo::teams_size() const {
   return teams_.size();
 }
 inline void RankingInfo::clear_teams() {
   teams_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >&
+inline const ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >&
 RankingInfo::teams() const {
-  // @@protoc_insertion_point(field_map:RankingInfo.teams)
+  // @@protoc_insertion_point(field_map:WakfuProto.RankingInfo.teams)
   return teams_.GetMap();
 }
-inline ::google::protobuf::Map< ::google::protobuf::int32, ::TeamInfo >*
+inline ::google::protobuf::Map< ::google::protobuf::int32, ::WakfuProto::TeamInfo >*
 RankingInfo::mutable_teams() {
-  // @@protoc_insertion_point(field_mutable_map:RankingInfo.teams)
+  // @@protoc_insertion_point(field_mutable_map:WakfuProto.RankingInfo.teams)
   return teams_.MutableMap();
 }
 
@@ -1236,14 +1240,16 @@ RankingInfo::mutable_teams() {
 // @@protoc_insertion_point(namespace_scope)
 
 
+}  // namespace WakfuProto
+
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::LadderType> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::WakfuProto::LadderType> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::LadderType>() {
-  return ::LadderType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::WakfuProto::LadderType>() {
+  return ::WakfuProto::LadderType_descriptor();
 }
 
 }  // namespace protobuf
