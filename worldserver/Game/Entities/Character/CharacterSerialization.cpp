@@ -141,12 +141,14 @@ void Character::SerializeSpellInventory(WorldPacket& data)
 void Character::SerializeInventories(WorldPacket& data)
 {
     data << quint16(0); // questInventory size
-    data << quint16(0); // temporaryInventory size
-    data << quint16(0); // cosmeticsInventory size
-    data << quint16(0); // petCosmeticsInventory size
 
-    // UNK - FIX ME
-    data << quint64(0);
+    data << quint16(0); // temporaryInventory size
+
+    data << quint16(0); // cosmeticsInventory size
+    data << quint32(0); // activeRefId
+
+    data << quint16(0); // petCosmeticsInventory size
+    data << quint32(0); // activeRefId
 }
 
 void Character::Character::SerializeEquipmentInventory(WorldPacket& data)
@@ -417,8 +419,8 @@ void Character::SerializeAchievements(WorldPacket& data)
 
 void Character::SerializeAccountInformation(WorldPacket& data)
 {
-    data << quint16(101); // adminRights size
-    for (quint8 i = 0; i < 101; ++i)
+    data << quint16(100); // adminRights size
+    for (quint8 i = 0; i < 100; ++i)
         data << quint32(0); // adminRight
 
     data << quint32(101); // subscriptionLevel
@@ -520,11 +522,6 @@ void Character::SerializeSpellDeck(WorldPacket& data)
     data << qint32(-1); // level
 
     data << quint32(1); // size?
-}
-
-void Character::SerializeDungeonProgression(WorldPacket& data)
-{
-    data << quint16(0);
 }
 
 void Character::SerializeAptitudeBonusInventory(WorldPacket& data)

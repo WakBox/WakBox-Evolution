@@ -180,12 +180,13 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
 
         if(newChar->Create(ObjectMgr::Instance()->GenerateGuid(GUIDTYPE_CHARACTER), charCreateInfos))
         {
-            if (breed == CHARACTER_BREED_TUTORIAL)
-            {
-                newChar->SetPosition(0, 0, 0);
+            // I think tutorial mode is different now?
+            //if (breed == CHARACTER_BREED_TUTORIAL)
+            //{
+                newChar->SetPosition(40, -1, 4);
                 newChar->SetDirection(7);
-                newChar->SetInstanceId(621);
-            }
+                newChar->SetInstanceId(521);
+            //}
 
             if (newChar->SaveToDB(true))
             {
@@ -253,32 +254,42 @@ void WorldSession::SendSelectCharacterResult(bool result)
 
 void WorldSession::SendCharacterEnterWorldPackets()
 {
-    // Send 5567
-
     SendModerationRequest();
 
     SendFriendList();
     SendIgnoreList();
 
-    // Send packet 20000 nation synchro
-    // Send 8427, 8418, 20002, 20000
+    // Send packet 20002
+    // Send packet 20000
+
+    // Send 5567
+
+    // Send packet 20000
+
+    // Send packet 8427
+    // Send packet 8418
 
     SendCharacterInformation();
 
     // Send 5200
+
+    // Need to be updated!
     SendCharacterEnterWorld();
 
     // Send packet 5300 : Long UID list (reserved) ?
 
     WorldPacket data(SMSG_SEND_CHAR_POSITION);
-    data << int(0); //GetCharacter()->GetPositionX();
-    data << int(1); //GetCharacter()->GetPositionY();
+    data << qint32(40); //GetCharacter()->GetPositionX();
+    data << qint32(-1); //GetCharacter()->GetPositionY();
     SendPacket(data);
 
-    /* TODO - next
-    //SendUpdateObject();
+    // Send 4202 - multiple times
 
-    WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);
+    // 4102
+    SendUpdateObject();
+
+    // 200
+    /*WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);
 
     data2 << quint16(1); // loop size
     data2 << quint64(20114); // Instance ElementId
@@ -305,9 +316,18 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     SendPacket(data2);
 
+    // Send 204
+    // Send 8006
     // Send 4124
-    // Send 6230, loads of them?
+    // Send 9504
+    // Send 11214
+    // Send 9301
+    // Send 12600
+    // Send 6320, loads of them?
+    // Send 8427
     // Send 4123
+    // Send 5567
+    // etc.
 
     SendCharacterUpdate();
     */
@@ -486,7 +506,7 @@ void WorldSession::SendCharacterInformation()
         // Send dungeon_progression.proto
         WakfuProto::ProtoDungeonProgression protoDungeonProgress;
 
-        WakfuProto::ProtoDungeonEntry* entry1 = protoDungeonProgress.add_map();
+        /*WakfuProto::ProtoDungeonEntry* entry1 = protoDungeonProgress.add_map();
         entry1->set_index(22);
         entry1->set_difficulty(11);
 
@@ -508,7 +528,7 @@ void WorldSession::SendCharacterInformation()
 
         WakfuProto::ProtoDungeonEntry* entry6 = protoDungeonProgress.add_map();
         entry6->set_index(110);
-        entry6->set_difficulty(20);
+        entry6->set_difficulty(20);*/
 
         data.StartBlock<quint16>();
         {

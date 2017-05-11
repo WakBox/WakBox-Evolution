@@ -197,9 +197,6 @@ public:
     // SPELL_DECK
     void SerializeSpellDeck(WorldPacket& data);
 
-    // DUNGEON_PROGRESSION
-    void SerializeDungeonProgression(WorldPacket& data);
-
     // APTITUDE_BONUS_INVENTORY
     void SerializeAptitudeBonusInventory(WorldPacket& data);
 
