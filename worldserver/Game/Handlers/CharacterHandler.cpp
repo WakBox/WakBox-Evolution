@@ -285,8 +285,8 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     // Send 4202 - multiple times
 
-    // 4102
-    SendUpdateObject();
+    // 4102 - TODO
+    //SendUpdateObject();
 
     // 200
     /*WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);
