@@ -2,4 +2,4 @@ WakBox Evolution
 ================
 
 Wakfu sandbox written in C++/Qt
-Supporting cilent 1.53.1
+Supporting client 1.53.1
