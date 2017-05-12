@@ -23,131 +23,62 @@ void WorldSession::HandleInteractiveElement(WorldPacket &packet)
 
 void WorldSession::SendUpdateObject()
 {
-    Character* character = GetCharacter();
-    if (!character)
-        return;
-
     WorldPacket data(SMSG_UPDATE_OBJECT);
-    data << quint8(0);
-    data << quint8(1);
 
-    data << quint8(0);
-    data << character->GetGuid();
+    data << quint8(0); // 0 = SpawnInWorld, 1= SpawnInMyFight
+    data << quint8(1); // Actor count
 
-    data.StartBlock<quint16>();
+    // Actor 1
     {
-        data << quint8(8);
-        data << character->GetGuid();
-        data << quint8(0);
-        data << GetAccountInfos().id;
-        data.WriteString(character->GetName(), STRING_SIZE_2);
+        data << quint8(0); // Actor type (0 = PlayerCharacter, 1 = NonPlayerCharacter.createNpc, 4 = InteractiveNonPlayerCharacter)
+        data << qint64(0); // Actor UID
 
-        data << character->GetBreed();
-        data << character->GetPositionX();
-        data << character->GetPositionY();
-        data << character->GetPositionZ();
-        data << character->GetInstanceId();
-        data << character->GetDirection();
+        data.StartBlock<quint16>();
+        {
+            // if Actor type == 0 (Player)
+            // {
 
-        // *** Skin
-        data << character->GetGender();
-        data << character->GetSkinColor();
-        data << character->GetHairColor();
-        data << character->GetPupilColor();
-        data << character->GetSkinColorFactor();
-        data << character->GetHairColorFactor();
-        data << character->GetClothIndex();
-        data << character->GetFaceIndex();
-        data << qint16(-1); // Titles
+                // CharacterSerializerPart
+                // data << quint8(9); // FOR_REMOTE_CHARACTER_INFORMATION
 
-        // PUBLIC_CHARACTERISTICS
-        data << quint16(0); // size
-
-        // FIGHT_PROPERTIES
-        data << quint8(0); // hasProperties
-
-        // FIGHT
-        data << qint32(-1); // currentFightId
-        data << quint8(0); // isKo
-        data << quint8(0); // isDead
-        data << quint8(0); // isSummonned
-        data << quint8(0); // isFleeing
-        data << qint8(-1); // obstacleId
-
-        data << quint8(0); // hasSummon
-
-        // EQUIPMENT_APPEARANCE
-        data << quint16(0); // Views size
-
-        // RUNNING_EFFECTS
-        data << quint8(0); // hasInFightData
-        data << quint8(0); // hasOutFightData
-
-        // CURRENT_MOVEMENT_PATH
-        data << quint8(0); // hasCurrentPath
-
-        // WORLD_PROPERTIES
-        data << quint8(0); // hasProperties
-
-        // GROUP
-        data << quint64(0); // partyId
-
-        // TEMPLATE
-        data << quint16(0); // sightRadius
-        data << quint16(0); // aggroRadius
-
-        // COLLECT
-        data << quint16(0); // unavailableActions size
-
-        // OCCUPATION
-        data << quint8(0); // hasOccupation
-
-        // XP
-        data << character->GetXP();
-
-        // XP_CHARACTERISTICS
-        data << character->GetXPFreePoints();
-        data << quint16(0); // xpBonusPoints size
-        data << quint16(0); // characteristicBonusPoints size
-
-        data << character->GetXPGauge(); // Should be named WakfuGauge...
-
-        // CITIZEN_POINT
-        data << quint16(0); // nationCitizenScores
-        data << quint16(0); // offendedNations
-
-        // GUILD_REMOTE_INFO
-        data << character->GetGuildId();
-        data << quint64(0); // Blazon
-        data << quint16(0); // Level
-        data << quint16(0); // GuildName
-
-        // NATION_ID
-        data << quint32(0); // NationId
-
-        // NATION_SYNCHRO
-        data << quint64(0); // rank
-        data << quint64(0); // jobs
-        data << quint64(0); // vote
-        data << quint8(0); // governmentOpinion
-        data << quint8(0); // isCandidate
-
-        // SOCIAL_STATES
-        data << quint8(0); // afkState
-        data << quint8(0); // dndState
-
-        // PET
-        data << quint8(0); // hasPet
-
-        // ACCOUNT_INFORMATION_REMOTE
-        data << quint32(0); // subscriptionLevel
-        data << quint16(0); // additionalRights size
-
-        // COMPANION_CONTROLLER_ID
-        data << quint64(0); // controllerId
-        data << quint64(0); // companionId
+                // ID
+                // IDENTITY
+                // NAME
+                // BREED
+                // GUILD_BLAZON
+                // GUILD_ID
+                // POSITION
+                // APPEARANCE
+                // PUBLIC_CHARACTERISTICS
+                // FIGHT_PROPERTIES
+                // FIGHT
+                // EQUIPMENT_APPEARANCE
+                // RUNNING_EFFECTS
+                // CURRENT_MOVEMENT_PATH
+                // WORLD_PROPERTIES
+                // GROUP
+                // TEMPLATE
+                // COLLECT
+                // PET
+                // OCCUPATION
+                // XP
+                // XP_CHARACTERISTICS
+                // CITIZEN_POINT
+                // GUILD_REMOTE_INFO
+                // NATION_ID
+                // NATION_SYNCHRO
+                // SOCIAL_STATES
+                // ACCOUNT_INFORMATION_REMOTE
+                // COMPANION_CONTROLLER_ID
+                // VISIBILITY
+                // COSMETICS
+                // DOWNSCALE_INFO
+           // }
+        }
+        data.EndBlock<quint16>();
     }
-    data.EndBlock<quint16>();
 
+    // On first login send packet with all player/creature around the player
+    // For the others send packet to all players around the area
     SendPacket(data);
 }

@@ -2,9 +2,6 @@
 
 void WorldSession::HandleCharMovement(WorldPacket& packet)
 {
-    return;
-
-    // TODO
     qint32 fromX, fromY;
     qint16 fromZ;
     quint8 stepsCount;
@@ -18,18 +15,23 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     {
         quint8 direction;
         packet >> direction;
-        steps[i] = (direction >> 5) & 0x7;
+
+        direction = (direction >> 5) & 0x7;
+        qDebug() << "[" << i << "] " << direction;
+
+        steps.push_back((direction >> 5) & 0x7); // int data = (step.direction.m_index & 0x7) << 5;
+        // data |= (step.heightDiff & 0x1F); <--- TODO?
     }
 
-
     // Todo check coords with map file, collision, etc. ?
+    // All this pointer check should be done somewhere else / using packet status? => STATUS_IN_WORLD :)
     Character* character = GetCharacter();
     if (!character)
         return;
 
-    for (quint8 i = 0; i < stepsCount; ++i)
+    for (quint8 i = 0; i < steps.count(); ++i)
     {
-        switch (steps[i])
+        switch (steps.at(i))
         {
         case 0:
             ++fromX;
@@ -68,7 +70,17 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     qDebug () << "New position : " << fromX << " - " << fromY;
 
     character->SetPosition(fromX, fromY, fromZ);
-    character->SetDirection(steps[stepsCount - 1]);
+    character->SetDirection(steps.last());
+
+    // Send SMSG_UPDATE_POSITION (4127) to all player in area
+    /*
+    // ActorMoveToMessage
+    packet.ReadLong("actorId");
+    packet.ReadInt("X");
+    packet.ReadInt("Y");
+    packet.ReadShort("Z");
+    packet.ReadByte("Direction");
+    */
 }
 
 void WorldSession::HandleCharDirection(WorldPacket& packet)

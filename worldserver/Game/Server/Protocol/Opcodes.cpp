@@ -71,7 +71,7 @@ void OpcodeTable::Load()
     //    ADD_OPCODE_HANDLER(SMSG_UPDATE_CREATURE_STATE,                  &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHAR_DIRECTION,                         &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SEND_CHAR_POSITION,                     STATUS_NEVER,       &WorldSession::HandleServerSide);
-    //    ADD_OPCODE_HANDLER(SMSG_UPDATE_POSITION,                        &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_UPDATE_POSITION,                        STATUS_NEVER,       &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_PROPERTIES_UPDATE,                      &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_START_FIGHT,                            &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_EQUIPMENT_UNK,                          STATUS_NEVER,       &WorldSession::HandleServerSide);
