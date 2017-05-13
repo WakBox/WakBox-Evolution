@@ -115,3 +115,13 @@ bool Character::SaveToDB(bool create)
 
     return true;
 }
+
+void Character::SetInWorld(bool inWorld)
+{
+    m_inWorld = inWorld;
+
+    if (inWorld)
+        sWorld->AddCharacter(GetName(), this);
+    else
+        sWorld->RemoveCharacterByName(GetName());
+}

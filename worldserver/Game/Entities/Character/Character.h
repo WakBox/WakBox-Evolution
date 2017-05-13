@@ -27,6 +27,10 @@ public:
     ~Character();
 
     WorldSession* GetSession() { return m_session; }
+
+    void SetInWorld(bool inWorld = true);
+    bool InWorld() { return m_inWorld; }
+
     QString GetName() { return m_name; }
     quint16 GetBreed() { return m_breed; }
     quint8 GetGender() { return m_gender; }
@@ -212,8 +216,40 @@ public:
     // NATION_PVP_MONEY
     void SerializeNationPvpMoney(WorldPacket& data);
 
+    // PUBLIC_CHARACTERISTICS
+    void SerializePublicCharacteristics(WorldPacket& data);
+
+    // FIGHT_PROPERTIES
+    void SerializeFightProperties(WorldPacket& data);
+
+    // FIGHT
+    void SerializeFight(WorldPacket& data);
+
+    // EQUIPMENT_APPEARANCE
+    void SerializeEquipmentAppearance(WorldPacket& data);
+
+    // CURRENT_MOVEMENT_PATH
+    void SerializeCurrentMovementPath(WorldPacket& data);
+
+    // GROUP
+    void SerializeGroup(WorldPacket& data);
+
+    // GUILD_REMOTE_INFO
+    void SerializeGuildRemoteInfo(WorldPacket& data);
+
+    // ACCOUNT_INFORMATION_REMOTE
+    void SerializeAccountInformationRemote(WorldPacket& data);
+
+    // COSMETICS
+    void SerializeCosmetics(WorldPacket& data);
+
+    // DOWNSCALE_INFO
+    void SerializeDownscaleInfo(WorldPacket& data);
+
 private:
     WorldSession* m_session;
+
+    bool m_inWorld;
 
     QString m_name;
     quint16 m_breed;

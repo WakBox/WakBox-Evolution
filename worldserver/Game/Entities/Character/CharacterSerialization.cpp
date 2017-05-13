@@ -571,5 +571,68 @@ void Character::SerializeNationPvpMoney(WorldPacket& data)
     data << quint64(0); // dailyPvpMoneyAmount
 }
 
+void Character::SerializePublicCharacteristics(WorldPacket& data)
+{
+    data << quint16(0); // size
+}
 
+void Character::SerializeFightProperties(WorldPacket& data)
+{
+    data << quint8(0); // hasProperties
+}
+
+void Character::SerializeFight(WorldPacket& data)
+{
+    data << qint32(-1); // currentFightId
+    data << quint8(0); // isKo
+    data << quint8(0); // isDead
+    data << quint8(0); // isSummoned
+    data << quint8(0); // isFleeing
+    data << qint8(-1); // obstacleId
+
+    data << quint8(0); // hasSUMMONDATA
+}
+
+void Character::SerializeEquipmentAppearance(WorldPacket& data)
+{
+    data << quint8(0); // EquipmentAppearance size
+}
+
+void Character::SerializeCurrentMovementPath(WorldPacket& data)
+{
+    data << quint8(0); // hasCurrentPath
+}
+
+void Character::SerializeGroup(WorldPacket& data)
+{
+    data << qint64(-1); // partyId
+}
+
+void Character::SerializeGuildRemoteInfo(WorldPacket& data)
+{
+    data << quint64(0);
+    data << quint64(0);
+    data << quint16(0);
+    data.WriteString("", STRING_SIZE_2);
+    data << quint32(0);
+}
+
+void Character::SerializeAccountInformationRemote(WorldPacket& data)
+{
+    data << quint32(101); // subscriptionLevel
+    data << quint16(0); // additionalRightsSize
+    data << quint32(0); // heroesSubscriptionLevel
+    data << quint16(7); // characterMaxLevel
+    data << quint64(0); // betaReward
+}
+
+void Character::SerializeCosmetics(WorldPacket& data)
+{
+    data << quint8(0); // hasActiveCosmetic
+}
+
+void Character::SerializeDownscaleInfo(WorldPacket& data)
+{
+    data << quint16(7); // downscaleLevel
+}
 

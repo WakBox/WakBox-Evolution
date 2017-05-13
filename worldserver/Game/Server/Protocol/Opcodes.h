@@ -11,8 +11,6 @@ enum Opcodes
     CMSG_AUTH_TOKEN                             = 1213,
     CMSG_AUTH_TOKEN_REQUEST                     = 2079,
 
-
-
     CMSG_PING_COMMAND                           = 107,
     CMSG_INTERACTIVE_ELEMENT                    = 201,
     CMSG_GROUP_INVITE                           = 501,
@@ -55,7 +53,6 @@ enum Opcodes
     SMSG_INTERACTIVE_ELEMENT_UPDATE             = 202,
     SMSG_WORLD_LIST                             = 1200,
 
-
     SMSG_CHAR_SELECT                            = 2050,
     SMSG_CHAR_DELETE                            = 2052,
     SMSG_CHAR_CREATE                            = 2054,
@@ -66,6 +63,7 @@ enum Opcodes
     SMSG_IGNORE_LIST                            = 3146,
 
     SMSG_CHAT_MESSAGE                           = 3152,
+    SMSG_PRIVATE_MESSAGE                        = 3154,
     SMSG_HAS_MODERATION_REQUEST                 = 3222,
 
     SMSG_CHARACTER_INFORMATION                  = 4098,

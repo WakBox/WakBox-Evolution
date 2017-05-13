@@ -58,3 +58,18 @@ void World::Update(quint64 diff)
 {
     sScriptMgr->OnUpdate(diff);
 }
+
+void World::SendGlobalPacket(WorldPacket &data, WorldSession *self)
+{
+    SessionList::ConstIterator itr;
+    for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
+    {
+        if (((*itr) &&
+             (*itr)->GetCharacter() &&
+             (*itr)->GetCharacter()->InWorld()) &&
+             (*itr) != self)
+        {
+            (*itr)->SendPacket(data);
+        }
+    }
+}

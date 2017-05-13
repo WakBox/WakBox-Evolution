@@ -9,18 +9,32 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     packet >> fromX >> fromY >> fromZ >> stepsCount;
     QVector<quint8> steps;
 
-    qDebug() << "Movement packet | fromX : " << fromX << " fromY : " << fromY << " fromZ : " << fromZ << " StepsCount : " << stepsCount << " Steps :";
+    qDebug() << "Movement packet | fromX : " << fromX << " fromY : " << fromY << " fromZ : " << fromZ << " StepsCount : " << stepsCount;
+    qDebug() << "Steps :";
 
     for (quint8 i = 0; i < stepsCount; ++i)
     {
-        quint8 direction;
-        packet >> direction;
+        quint8 step;
+        packet >> step;
 
-        direction = (direction >> 5) & 0x7;
-        qDebug() << "[" << i << "] " << direction;
+        qDebug() << "[" << i << "] Step Byte : " << step;
 
-        steps.push_back((direction >> 5) & 0x7); // int data = (step.direction.m_index & 0x7) << 5;
-        // data |= (step.heightDiff & 0x1F); <--- TODO?
+        quint8 direction = (step >> 5) & 0x7;
+
+        qDebug() << "[" << i << "] Direction: " << direction;
+
+        int heightDiff = step & 0x1F;
+        if ((heightDiff & 0x10) != 0x0) {
+          heightDiff |= 0xFFFFFFE0;
+        }
+
+        fromZ += heightDiff;
+
+        qDebug() << "[" << i << "] heightDiff: " << heightDiff;
+
+        steps.push_back(direction);
+
+        qDebug() << " ";
     }
 
     // Todo check coords with map file, collision, etc. ?
@@ -67,20 +81,19 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
         }
     }
 
-    qDebug () << "New position : " << fromX << " - " << fromY;
+    qDebug () << "New position : " << fromX << " - " << fromY << " - " << fromZ;
 
     character->SetPosition(fromX, fromY, fromZ);
     character->SetDirection(steps.last());
 
-    // Send SMSG_UPDATE_POSITION (4127) to all player in area
-    /*
-    // ActorMoveToMessage
-    packet.ReadLong("actorId");
-    packet.ReadInt("X");
-    packet.ReadInt("Y");
-    packet.ReadShort("Z");
-    packet.ReadByte("Direction");
-    */
+    // Todo send to player in the area only
+    WorldPacket data(SMSG_UPDATE_POSITION);
+    data << character->GetGuid();
+    data << character->GetPositionX();
+    data << character->GetPositionY();
+    data << character->GetPositionZ();
+    data << character->GetDirection();
+    sWorld->SendGlobalPacket(data, this);
 }
 
 void WorldSession::HandleCharDirection(WorldPacket& packet)

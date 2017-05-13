@@ -102,6 +102,7 @@ void WorldSession::OnClose()
     Character* character = GetCharacter();
     if (character)
     {
+        character->SetInWorld(false);
         character->SaveToDB();
         qDebug() << "Character " << character->GetName() << " saved to DB.";
     }

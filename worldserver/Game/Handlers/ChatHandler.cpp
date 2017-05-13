@@ -14,7 +14,7 @@ void WorldSession::HandleChatMessage(WorldPacket& packet)
     data.WriteString(character->GetName());
     data << character->GetGuid();
     data.WriteString(message);
-    // SendPacket(data); -> only for players in range TODO
+    sWorld->SendGlobalPacket(data);
 }
 
 void WorldSession::HandlePrivateMessage(WorldPacket& packet)
@@ -22,8 +22,18 @@ void WorldSession::HandlePrivateMessage(WorldPacket& packet)
     QString toCharacterName = packet.ReadString();
     QString message = packet.ReadString();
 
-    // Send to character but check aVi for SendPrivateMessageResult
-    // Packet 3154
+    if (Character* target = sWorld->FindCharacterByName(toCharacterName))
+    {
+        WorldPacket data(SMSG_PRIVATE_MESSAGE);
+        data << target->GetGuid();
+        data.WriteString(target->GetName());
+        data << GetCharacter()->GetGuid();
+        data.WriteString(GetCharacter()->GetName());
+        data.WriteString(message, STRING_SIZE_4);
+
+        target->GetSession()->SendPacket(data);
+        SendPacket(data);
+    }
 }
 
 void WorldSession::HandleTradeMessage(WorldPacket& packet)

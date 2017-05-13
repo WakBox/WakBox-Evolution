@@ -22,8 +22,8 @@ void OpcodeTable::Load()
     //    ADD_OPCODE_HANDLER(CMSG_LEAVE_CHAR_SELECT,                      &WorldSession::HandleLeaveCharSelect);
     //    ADD_OPCODE_HANDLER(CMSG_WHOIS_COMMAND,                          &WorldSession::HandleWhoisCommand);
     ADD_OPCODE_HANDLER(CMSG_CHAR_CREATE,                            STATUS_AUTHED,      &WorldSession::HandleCharCreate);
-    //    ADD_OPCODE_HANDLER(CMSG_CHAT_MESSAGE,                           &WorldSession::HandleChatMessage);
-    //    ADD_OPCODE_HANDLER(CMSG_PRIVATE_MESSAGE,                        &WorldSession::HandlePrivateMessage);
+    ADD_OPCODE_HANDLER(CMSG_CHAT_MESSAGE,                           STATUS_AUTHED,      &WorldSession::HandleChatMessage);
+    ADD_OPCODE_HANDLER(CMSG_PRIVATE_MESSAGE,                        STATUS_AUTHED,      &WorldSession::HandlePrivateMessage);
     //    ADD_OPCODE_HANDLER(CMSG_TRADE_MESSAGE,                          &WorldSession::HandleTradeMessage);
     //    ADD_OPCODE_HANDLER(CMSG_RECRUIT_MESSAGE,                        &WorldSession::HandleRecruitMessage);
     ADD_OPCODE_HANDLER(CMSG_CHAR_MOVEMENT,                          STATUS_AUTHED,      &WorldSession::HandleCharMovement);
@@ -62,7 +62,8 @@ void OpcodeTable::Load()
     ADD_OPCODE_HANDLER(SMSG_FRIEND_LIST,                            STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_IGNORE_LIST,                            STATUS_NEVER,       &WorldSession::HandleServerSide);
 
-    //    ADD_OPCODE_HANDLER(SMSG_CHAT_MESSAGE,                           &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_CHAT_MESSAGE,                           STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_PRIVATE_MESSAGE,                           STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_HAS_MODERATION_REQUEST,                 STATUS_NEVER,       &WorldSession::HandleServerSide);
 
     ADD_OPCODE_HANDLER(SMSG_CHARACTER_INFORMATION,                  STATUS_NEVER,       &WorldSession::HandleServerSide);

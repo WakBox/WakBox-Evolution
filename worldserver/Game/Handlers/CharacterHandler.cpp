@@ -185,7 +185,7 @@ void WorldSession::HandleCharCreate(WorldPacket& packet)
             //{
                 newChar->SetPosition(40, -1, 4);
                 newChar->SetDirection(7);
-                newChar->SetInstanceId(521);
+                newChar->SetInstanceId(527);
             //}
 
             if (newChar->SaveToDB(true))
@@ -285,8 +285,10 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     // Send 4202 - multiple times
 
-    // 4102 - TODO
-    //SendUpdateObject();
+    // Send all creature / player in the area
+    SendUpdateObject();
+    // Send actor spawn to the other player in the area
+    SendUpdateObject(this);
 
     // 200
     /*WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);
@@ -331,6 +333,8 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     SendCharacterUpdate();
     */
+
+    GetCharacter()->SetInWorld();
 }
 
 void WorldSession::SendCharacterInformation()
