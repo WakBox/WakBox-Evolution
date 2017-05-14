@@ -21,7 +21,7 @@ void WorldSession::HandleInteractiveElement(WorldPacket &packet)
     ScriptMgr::Instance()->OnInteractiveElementActive(this->GetCharacter(), id, (InteractiveElementType)type);
 }
 
-void WorldSession::SendUpdateObject(WorldSession* actor)
+void WorldSession::SendActorSpawn(WorldSession* actor)
 {
     QList<Character*> actorList;
 
@@ -42,7 +42,7 @@ void WorldSession::SendUpdateObject(WorldSession* actor)
     for (QList<Character*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
         qDebug() << ">> " << (*itr)->GetName();
 
-    WorldPacket data(SMSG_UPDATE_OBJECT);
+    WorldPacket data(SMSG_ACTOR_SPAWN);
 
     data << quint8(0); // 0 = SpawnInWorld, 1= SpawnInMyFight
     data << quint8(actorList.count()); // Actor count

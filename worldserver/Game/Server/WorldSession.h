@@ -92,7 +92,7 @@ public:
     void SendCharacterInformation();
     void SendCharacterEnterWorld();
     void SendCharacterUpdate();
-    void SendUpdateObject(WorldSession* actor = nullptr);
+    void SendActorSpawn(WorldSession* actor = nullptr);
 
 public slots:
     void OnClose();

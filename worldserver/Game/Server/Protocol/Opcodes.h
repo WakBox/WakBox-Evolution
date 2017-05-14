@@ -68,7 +68,8 @@ enum Opcodes
 
     SMSG_CHARACTER_INFORMATION                  = 4098,
     SMSG_CHARACTER_ENTER_WORLD                  = 4100,
-    SMSG_UPDATE_OBJECT                          = 4102,
+    SMSG_ACTOR_SPAWN                            = 4102,
+    SMSG_ACTOR_DESPAWN                          = 4104,
     SMSG_UPDATE_CREATURE_STATE                  = 4112,
     SMSG_CHAR_DIRECTION                         = 4118,
     SMSG_SEND_CHAR_POSITION                     = 4125,

@@ -286,9 +286,9 @@ void WorldSession::SendCharacterEnterWorldPackets()
     // Send 4202 - multiple times
 
     // Send all creature / player in the area
-    SendUpdateObject();
+    SendActorSpawn();
     // Send actor spawn to the other player in the area
-    SendUpdateObject(this);
+    SendActorSpawn(this);
 
     // 200
     /*WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);

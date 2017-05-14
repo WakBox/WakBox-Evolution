@@ -73,6 +73,8 @@ public:
     bool LoadFromDB(quint64 guid);
     bool SaveToDB(bool create = false);
 
+    void SendActorDespawn();
+
     // Character Serialization
 
     // ID

@@ -123,5 +123,25 @@ void Character::SetInWorld(bool inWorld)
     if (inWorld)
         sWorld->AddCharacter(GetName(), this);
     else
+    {
+        SendActorDespawn();
         sWorld->RemoveCharacterByName(GetName());
+    }
+}
+
+// Temporary - handling of this packet should be different!
+void Character::SendActorDespawn()
+{
+    WorldPacket data(SMSG_ACTOR_DESPAWN);
+    data << quint8(0); // bool m_applyApsOnDespawn
+    data << quint8(0); // bool m_fightDespawn
+    data << quint8(1); // actorsCount
+
+    {
+        data << quint8(0); // Actor type
+        data << GetGuid();
+    }
+
+    // Send only for player in area
+    sWorld->SendGlobalPacket(data, GetSession());
 }

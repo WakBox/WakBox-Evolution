@@ -68,7 +68,8 @@ void OpcodeTable::Load()
 
     ADD_OPCODE_HANDLER(SMSG_CHARACTER_INFORMATION,                  STATUS_NEVER,       &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_CHARACTER_ENTER_WORLD,                  STATUS_NEVER,       &WorldSession::HandleServerSide);
-    ADD_OPCODE_HANDLER(SMSG_UPDATE_OBJECT,                          STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_ACTOR_SPAWN,                            STATUS_NEVER,       &WorldSession::HandleServerSide);
+    ADD_OPCODE_HANDLER(SMSG_ACTOR_DESPAWN,                          STATUS_NEVER,       &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_UPDATE_CREATURE_STATE,                  &WorldSession::HandleServerSide);
     //    ADD_OPCODE_HANDLER(SMSG_CHAR_DIRECTION,                         &WorldSession::HandleServerSide);
     ADD_OPCODE_HANDLER(SMSG_SEND_CHAR_POSITION,                     STATUS_NEVER,       &WorldSession::HandleServerSide);

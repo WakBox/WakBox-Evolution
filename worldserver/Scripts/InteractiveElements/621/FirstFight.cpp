@@ -43,7 +43,7 @@ public:
         character->GetSession()->SendPacket(data);
 
         // Spawn Wapin
-        WorldPacket data2(SMSG_UPDATE_OBJECT);
+        WorldPacket data2(SMSG_ACTOR_SPAWN);
         data2 << quint8(0);
         data2 << quint8(1);
 
@@ -152,7 +152,7 @@ public:
         character->GetSession()->SendPacket(data3);
 
         // Spawn Kano
-        WorldPacket data4(SMSG_UPDATE_OBJECT);
+        WorldPacket data4(SMSG_ACTOR_SPAWN);
         data4 << quint8(0);
         data4 << quint8(1);
 
