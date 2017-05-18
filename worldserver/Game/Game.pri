@@ -1,4 +1,5 @@
 include(Accounts/Accounts.pri)
+include(BinaryData/BinaryData.pri)
 include(Chat/Chat.pri)
 include(Entities/Entities.pri)
 include(Handlers/Handlers.pri)
