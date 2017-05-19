@@ -1,6 +1,8 @@
 #ifndef BINARYDATASTRUCTURE_H
 #define BINARYDATASTRUCTURE_H
 
+#include <QtCore>
+
 /**
  * From 1.39.4 - Need to be updated!
  */

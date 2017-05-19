@@ -1,4 +1,5 @@
 #include "World.h"
+#include "BinaryData/BinaryData.h"
 #include "Game/Entities/ObjectMgr.h"
 #include "Game/Scripting/ScriptMgr.h"
 
@@ -28,6 +29,8 @@ World::~World()
 
 bool World::Initialize()
 {
+    LoadBinaryStorage();
+
     sObjectMgr->SetHighestGuids();
     sObjectMgr->LoadInteractiveElements();
 

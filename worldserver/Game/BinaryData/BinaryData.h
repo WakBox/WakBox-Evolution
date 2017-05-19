@@ -1,16 +1,13 @@
 #ifndef BINARYDATA_H
 #define BINARYDATA_H
 
-#include "Utils/Singleton.h"
 #include "BinaryDataStructure.h"
+#include "BinaryData/BinaryDataStorage.h"
 
-class BinaryDataMgr : public Singleton<BinaryDataMgr>
-{
-public:
-    BinaryDataMgr();
-    ~BinaryDataMgr();
-private:
+#include "Storage/AchievementStorage.h"
 
-};
+extern AchievementStorage sAchievement;
+
+void LoadBinaryStorage();
 
 #endif // BINARYDATA_H
