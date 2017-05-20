@@ -72,18 +72,18 @@ public:
 
     T const* FindEntry(qint32 id) const
     {
-        /*typename QHash<qint32, T const*>::const_iterator it = m_entries.find(id);
+        typename QHash<qint32, T>::const_iterator it = m_entries.find(id);
         if (it != m_entries.end())
-            return (T*) &it.value();*/
+            return &it.value();
 
-        return m_entries.value(id, NULL);
+        return nullptr;
     }
 
 protected:
     Rows m_rows;
     BinaryReader* _reader;
 
-    QHash<qint32, T const*> m_entries;
+    QHash<qint32, T> m_entries;
 };
 
 #endif // BINARYDATASTORAGE_H

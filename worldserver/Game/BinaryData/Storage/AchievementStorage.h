@@ -89,7 +89,7 @@ public:
             entry.m_mercenaryRank = this->_reader->ReadByte();
             entry.m_order = this->_reader->ReadInt();
 
-            this->m_entries[entry.m_id] = &entry;
+            this->m_entries[entry.m_id] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for AchievementStorage";
