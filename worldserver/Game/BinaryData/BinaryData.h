@@ -6,7 +6,7 @@
 
 #include "Storage/AchievementStorage.h"
 
-extern AchievementStorage sAchievement;
+extern AchievementStorage<AchievementBinaryData> sAchievement;
 
 void LoadBinaryStorage();
 

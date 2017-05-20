@@ -1,8 +1,9 @@
 #include "BinaryData.h"
 
-AchievementStorage sAchievement;
+AchievementStorage<AchievementBinaryData> sAchievement;
 
-inline void LoadStorage(BinaryDataStorage& storage, QString filename)
+template<class T>
+inline void LoadStorage(BinaryDataStorage<T>& storage, QString filename)
 {
     QFile file("bdata/" + filename);
     if (!file.open(QIODevice::ReadOnly))
@@ -15,9 +16,7 @@ inline void LoadStorage(BinaryDataStorage& storage, QString filename)
     QByteArray bdata = file.readAll();
     quint8 fileId = (quint8)QFileInfo(filename).fileName().split(".").at(0).toUInt();
 
-    qDebug() << fileId;
-
-    storage.Init(bdata, fileId);
+    storage.InitWith(bdata, fileId);
     storage.Load();
 }
 

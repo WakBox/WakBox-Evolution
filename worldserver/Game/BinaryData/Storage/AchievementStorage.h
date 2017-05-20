@@ -3,52 +3,53 @@
 
 #include "BinaryData/BinaryDataStorage.h"
 
-class AchievementStorage : public BinaryDataStorage
+template<class T>
+class AchievementStorage : public BinaryDataStorage<T>
 {
 public:
-    AchievementStorage() : BinaryDataStorage() { }
+    AchievementStorage() { }
 
     void Load()
     {
-        qint32 size = m_rows.size();
+        qint32 size = this->m_rows.size();
 
         for (qint32 i = 0; i < size; ++i)
         {
-            Row row = m_rows[i];
-            SetBufferPosition(row.offset);
+            Row row = this->m_rows[i];
+            this->_reader->SetBufferPosition(row.offset);
 
             AchievementBinaryData entry;
 
-            entry.m_id = ReadInt();
-            entry.m_categoryId = ReadInt();
-            entry.m_isVisible = ReadBool();
-            entry.m_notifyOnPass = ReadBool();
-            entry.m_isActive = ReadBool();
-            entry.m_criterion = ReadString();
-            entry.m_activationCriterion = ReadString();
+            entry.m_id = this->_reader->ReadInt();
+            entry.m_categoryId = this->_reader->ReadInt();
+            entry.m_isVisible = this->_reader->ReadBool();
+            entry.m_notifyOnPass = this->_reader->ReadBool();
+            entry.m_isActive = this->_reader->ReadBool();
+            entry.m_criterion = this->_reader->ReadString();
+            entry.m_activationCriterion = this->_reader->ReadString();
 
-            qint32 goalCount = ReadInt();
+            qint32 goalCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < goalCount; ++i)
             {
                 AchievementGoal achievementGoal;
 
-                achievementGoal.m_id = ReadInt();
-                achievementGoal.m_feedback = ReadBool();
-                achievementGoal.m_hasPositionFeedback = ReadBool();
-                achievementGoal.m_positionX = ReadShort();
-                achievementGoal.m_positionY = ReadShort();
-                achievementGoal.m_positionZ = ReadShort();
-                achievementGoal.m_positionWorldId = ReadShort();
-                qint32 vlistenerCount = ReadInt();
+                achievementGoal.m_id = this->_reader->ReadInt();
+                achievementGoal.m_feedback = this->_reader->ReadBool();
+                achievementGoal.m_hasPositionFeedback = this->_reader->ReadBool();
+                achievementGoal.m_positionX = this->_reader->ReadShort();
+                achievementGoal.m_positionY = this->_reader->ReadShort();
+                achievementGoal.m_positionZ = this->_reader->ReadShort();
+                achievementGoal.m_positionWorldId = this->_reader->ReadShort();
+                qint32 vlistenerCount = this->_reader->ReadInt();
 
                 for (qint32 j = 0; j < vlistenerCount; ++j)
                 {
                     AchievementVariableListener achievementVariableListener;
 
-                    achievementVariableListener.m_id = ReadInt();
-                    achievementVariableListener.m_successCriterion = ReadString();
-                    achievementVariableListener.m_variableIds = ReadIntArray();
+                    achievementVariableListener.m_id = this->_reader->ReadInt();
+                    achievementVariableListener.m_successCriterion = this->_reader->ReadString();
+                    achievementVariableListener.m_variableIds = this->_reader->ReadIntArray();
 
                     achievementGoal.m_vlisteners.push_back(achievementVariableListener);
                 }
@@ -57,45 +58,42 @@ public:
             }
 
 
-            qint32 rewardCount = ReadInt();
+            qint32 rewardCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < rewardCount; ++i)
             {
                 AchievementReward achievementReward;
 
-                achievementReward.m_id = ReadInt();
-                achievementReward.m_type = ReadInt();
-                achievementReward.m_params = ReadIntArray();
+                achievementReward.m_id = this->_reader->ReadInt();
+                achievementReward.m_type = this->_reader->ReadInt();
+                achievementReward.m_params = this->_reader->ReadIntArray();
 
                 entry.m_rewards.push_back(achievementReward);
             }
 
-            entry.m_duration = ReadInt();
-            entry.m_cooldown = ReadInt();
-            entry.m_shareable = ReadBool();
-            entry.m_repeatable = ReadBool();
-            entry.m_needsUserAccept = ReadBool();
-            entry.m_recommandedLevel = ReadInt();
-            entry.m_recommandedPlayers = ReadInt();
-            entry.m_followable = ReadBool();
-            entry.m_displayOnActivationDelay = ReadInt();
-            entry.m_periodStartTime = ReadLong();
-            entry.m_period = ReadLong();
-            entry.m_autoCompass = ReadBool();
-            entry.m_gfxId = ReadInt();
-            entry.m_isMercenary = ReadBool();
-            entry.m_mercenaryItemId = ReadInt();
-            entry.m_mercenaryRank = ReadByte();
-            entry.m_order = ReadInt();
+            entry.m_duration = this->_reader->ReadInt();
+            entry.m_cooldown = this->_reader->ReadInt();
+            entry.m_shareable = this->_reader->ReadBool();
+            entry.m_repeatable = this->_reader->ReadBool();
+            entry.m_needsUserAccept = this->_reader->ReadBool();
+            entry.m_recommandedLevel = this->_reader->ReadInt();
+            entry.m_recommandedPlayers = this->_reader->ReadInt();
+            entry.m_followable = this->_reader->ReadBool();
+            entry.m_displayOnActivationDelay = this->_reader->ReadInt();
+            entry.m_periodStartTime = this->_reader->ReadLong();
+            entry.m_period = this->_reader->ReadLong();
+            entry.m_autoCompass = this->_reader->ReadBool();
+            entry.m_gfxId = this->_reader->ReadInt();
+            entry.m_isMercenary = this->_reader->ReadBool();
+            entry.m_mercenaryItemId = this->_reader->ReadInt();
+            entry.m_mercenaryRank = this->_reader->ReadByte();
+            entry.m_order = this->_reader->ReadInt();
 
-            m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_id] = &entry;
         }
 
-        qDebug() << ">> Loaded " << m_entries.size() << " entries for AchievementStorage";
+        qDebug() << ">> Loaded " << this->m_entries.size() << " entries for AchievementStorage";
     }
-
-private:
-    QMap<qint32, AchievementBinaryData> m_entries;
 };
 
 #endif // BINARYDATA_ACHIEVEMENTSTORAGE_H
