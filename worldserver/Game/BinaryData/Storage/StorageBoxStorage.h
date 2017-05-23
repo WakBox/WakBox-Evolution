@@ -26,7 +26,7 @@ public:
             qint8 hasChaosParam = this->_reader->ReadByte();
             if (hasChaosParam)
             {
-                entry.m_chaosParams.m_chaosLevel = this->_reader->ReadInt();
+                entry.m_chaosParams.m_chaosLevel = this->_reader->ReadByte();
                 entry.m_chaosParams.m_chaosCollectorParamId = this->_reader->ReadInt();
             }
 

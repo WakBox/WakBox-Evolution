@@ -335,6 +335,7 @@ struct BoatLinkBinaryData
     QString m_criteria;
     QString m_criteriaDisplay;
     bool m_needsToPayEverytime;
+    TravelLoadingBinaryData m_loading;
 };
 
 struct BookcaseInteractiveElementParamBinaryData

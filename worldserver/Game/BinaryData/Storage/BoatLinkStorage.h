@@ -28,6 +28,11 @@ public:
             entry.m_criteriaDisplay = this->_reader->ReadString();
             entry.m_needsToPayEverytime = this->_reader->ReadBool();
 
+            entry.m_loading.m_loadingAnimationName = this->_reader->ReadString();
+            entry.m_loading.m_loadingMinDuration = this->_reader->ReadInt();
+            entry.m_loading.m_loadingFadeInDuration = this->_reader->ReadInt();
+            entry.m_loading.m_loadingFadeOutDuration = this->_reader->ReadInt();
+
             this->m_entries[entry.m_id] = entry;
         }
 
