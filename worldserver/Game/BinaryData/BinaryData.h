@@ -5,8 +5,222 @@
 #include "BinaryData/BinaryDataStorage.h"
 
 #include "Storage/AchievementStorage.h"
+#include "Storage/AchievementCategoryStorage.h"
+#include "Storage/AchievementListStorage.h"
+#include "Storage/AchievementVariableStorage.h"
+#include "Storage/AlmanachDateStorage.h"
+#include "Storage/AlmanachEntryStorage.h"
+#include "Storage/AptitudeStorage.h"
+#include "Storage/AptitudeBonusStorage.h"
+#include "Storage/AptitudeBonusCategoryStorage.h"
+#include "Storage/ArcadeChallengeStorage.h"
+#include "Storage/ArcadeDungeonStorage.h"
+#include "Storage/AreaEffectStorage.h"
+#include "Storage/AudioMarkerInteractiveElementParamStorage.h"
+#include "Storage/AvatarBreedStorage.h"
+#include "Storage/AvatarBreedColorsStorage.h"
+#include "Storage/BackgroundFeedbackStorage.h"
+#include "Storage/BackgroundInteractiveElementParamStorage.h"
+#include "Storage/BagsStorage.h"
+#include "Storage/BoardInteractiveElementParamStorage.h"
+#include "Storage/BoatStorage.h"
+#include "Storage/BoatLinkStorage.h"
+#include "Storage/BookcaseInteractiveElementParamStorage.h"
+#include "Storage/CannonStorage.h"
+#include "Storage/CensoredEntryStorage.h"
+#include "Storage/ChallengeLootListStorage.h"
+#include "Storage/ChaosParamStorage.h"
+#include "Storage/CharacGainPerLevelStorage.h"
+#include "Storage/CitizenRankStorage.h"
+#include "Storage/ClientEventStorage.h"
+#include "Storage/ClimateBonusStorage.h"
+#include "Storage/ClimateBonusListStorage.h"
+#include "Storage/CollectInteractiveElementParamStorage.h"
+#include "Storage/CompanionItemStorage.h"
+#include "Storage/CraftStorage.h"
+#include "Storage/CraftInteractiveElementParamStorage.h"
+#include "Storage/DecorationInteractiveElementParamStorage.h"
+#include "Storage/DestructibleElementParamStorage.h"
+#include "Storage/DialogStorage.h"
+#include "Storage/DoorInteractiveElementParamStorage.h"
+#include "Storage/DragoStorage.h"
+#include "Storage/DungeonStorage.h"
+#include "Storage/DungeonDisplayerInteractiveElementParamStorage.h"
+#include "Storage/EffectGroupStorage.h"
+#include "Storage/EmoteStorage.h"
+#include "Storage/EquipableDummyInteractiveElementParamStorage.h"
+#include "Storage/ExchangeInteractiveElementParamStorage.h"
+#include "Storage/FightChallengeStorage.h"
+#include "Storage/FightChallengeMonsterStorage.h"
+#include "Storage/GemAndPowderStorage.h"
+#include "Storage/GemBackgroundInteractiveElementParamStorage.h"
+#include "Storage/GenericActivableInteractiveElementParamStorage.h"
+#include "Storage/GroundStorage.h"
+#include "Storage/HavenBagModelViewStorage.h"
+#include "Storage/HavenWorldBoardInteractiveElementParamStorage.h"
+#include "Storage/HavenWorldBuildingStorage.h"
+#include "Storage/HavenWorldBuildingCatalogStorage.h"
+#include "Storage/HavenWorldBuildingDecoStorage.h"
+#include "Storage/HavenWorldBuildingEvolutionStorage.h"
+#include "Storage/HavenWorldBuildingVisualDefinitionStorage.h"
+#include "Storage/HavenWorldDefinitionStorage.h"
+#include "Storage/HavenWorldPatchDefinitionStorage.h"
+#include "Storage/InstanceInteractionLevelStorage.h"
+#include "Storage/InteractiveElementModelStorage.h"
+#include "Storage/InteractiveElementTemplateStorage.h"
+#include "Storage/ItemStorage.h"
+#include "Storage/ItemSetStorage.h"
+#include "Storage/ItemTypeStorage.h"
+#include "Storage/KrosmozFigureStorage.h"
+#include "Storage/KrosmozGameBoardInteractiveElementParamStorage.h"
+#include "Storage/KrosmozGameCollectionInteractiveElementParamStorage.h"
+#include "Storage/LightLootListStorage.h"
+#include "Storage/LockStorage.h"
+#include "Storage/LootChestInteractiveElementParamStorage.h"
+#include "Storage/MagiCraftLootListStorage.h"
+#include "Storage/MarketBoardInteractiveElementParamStorage.h"
+#include "Storage/MonsterStorage.h"
+#include "Storage/MonsterTypeStorage.h"
+#include "Storage/MonsterTypeDungeonStorage.h"
+#include "Storage/MonsterTypePestStorage.h"
+#include "Storage/MonsterTypeRelashionshipStorage.h"
+#include "Storage/NationColorsStorage.h"
+#include "Storage/NationLawStorage.h"
+#include "Storage/NationRankStorage.h"
+#include "Storage/PetStorage.h"
+#include "Storage/ProtectorStorage.h"
+#include "Storage/ProtectorBuffStorage.h"
+#include "Storage/ProtectorBuffListStorage.h"
+#include "Storage/ProtectorEcosystemProtectionStorage.h"
+#include "Storage/RecipeStorage.h"
+#include "Storage/RecycleMachineInteractiveElementParamStorage.h"
+#include "Storage/ResourceStorage.h"
+#include "Storage/RewardDisplayerInteractiveElementParamStorage.h"
+#include "Storage/SecretStorage.h"
+#include "Storage/SkillActionStorage.h"
+#include "Storage/SkillStorage.h"
+#include "Storage/SpellStorage.h"
+#include "Storage/StateStorage.h"
+#include "Storage/StaticEffectStorage.h"
+#include "Storage/StoolInteractiveElementParamStorage.h"
+#include "Storage/StorageBoxStorage.h"
+#include "Storage/StreetLightInteractiveElementParamStorage.h"
+#include "Storage/TeleporterStorage.h"
+#include "Storage/TimelineBuffListStorage.h"
+#include "Storage/TravelLoadingStorage.h"
+#include "Storage/TreasureStorage.h"
+#include "Storage/TutorialStorage.h"
+#include "Storage/ZaapStorage.h"
+#include "Storage/ZaapLinkStorage.h"
 
-extern AchievementStorage<AchievementBinaryData> sAchievement;
+extern AchievementStorage<AchievementBinaryData> sAchievementStorage;
+extern AchievementCategoryStorage<AchievementCategoryBinaryData> sAchievementCategoryStorage;
+extern AchievementListStorage<AchievementListBinaryData> sAchievementListStorage;
+extern AchievementVariableStorage<AchievementVariableBinaryData> sAchievementVariableStorage;
+extern AlmanachDateStorage<AlmanachDateBinaryData> sAlmanachDateStorage;
+extern AlmanachEntryStorage<AlmanachEntryBinaryData> sAlmanachEntryStorage;
+extern AptitudeStorage<AptitudeBinaryData> sAptitudeStorage;
+extern AptitudeBonusStorage<AptitudeBonusBinaryData> sAptitudeBonusStorage;
+extern AptitudeBonusCategoryStorage<AptitudeBonusCategoryBinaryData> sAptitudeBonusCategoryStorage;
+extern ArcadeChallengeStorage<ArcadeChallengeBinaryData> sArcadeChallengeStorage;
+extern ArcadeDungeonStorage<ArcadeDungeonBinaryData> sArcadeDungeonStorage;
+extern AreaEffectStorage<AreaEffectBinaryData> sAreaEffectStorage;
+extern AudioMarkerInteractiveElementParamStorage<AudioMarkerInteractiveElementParamBinaryData> sAudioMarkerInteractiveElementParamStorage;
+extern AvatarBreedStorage<AvatarBreedBinaryData> sAvatarBreedStorage;
+extern AvatarBreedColorsStorage<AvatarBreedColorsBinaryData> sAvatarBreedColorsStorage;
+extern BackgroundFeedbackStorage<BackgroundFeedbackBinaryData> sBackgroundFeedbackStorage;
+extern BackgroundInteractiveElementParamStorage<BackgroundInteractiveElementParamBinaryData> sBackgroundInteractiveElementParamStorage;
+extern BagsStorage<BagsBinaryData> sBagsStorage;
+extern BoardInteractiveElementParamStorage<BoardInteractiveElementParamBinaryData> sBoardInteractiveElementParamStorage;
+extern BoatStorage<BoatBinaryData> sBoatStorage;
+extern BoatLinkStorage<BoatLinkBinaryData> sBoatLinkStorage;
+extern BookcaseInteractiveElementParamStorage<BookcaseInteractiveElementParamBinaryData> sBookcaseInteractiveElementParamStorage;
+extern CannonStorage<CannonBinaryData> sCannonStorage;
+extern CensoredEntryStorage<CensoredEntryBinaryData> sCensoredEntryStorage;
+extern ChallengeLootListStorage<ChallengeLootListBinaryData> sChallengeLootListStorage;
+extern ChaosParamStorage<ChaosParamBinaryData> sChaosParamStorage;
+extern CharacGainPerLevelStorage<CharacGainPerLevelBinaryData> sCharacGainPerLevelStorage;
+extern CitizenRankStorage<CitizenRankBinaryData> sCitizenRankStorage;
+extern ClientEventStorage<ClientEventBinaryData> sClientEventStorage;
+extern ClimateBonusStorage<ClimateBonusBinaryData> sClimateBonusStorage;
+extern ClimateBonusListStorage<ClimateBonusListBinaryData> sClimateBonusListStorage;
+extern CollectInteractiveElementParamStorage<CollectInteractiveElementParamBinaryData> sCollectInteractiveElementParamStorage;
+extern CompanionItemStorage<CompanionItemBinaryData> sCompanionItemStorage;
+extern CraftStorage<CraftBinaryData> sCraftStorage;
+extern CraftInteractiveElementParamStorage<CraftInteractiveElementParamBinaryData> sCraftInteractiveElementParamStorage;
+extern DecorationInteractiveElementParamStorage<DecorationInteractiveElementParamBinaryData> sDecorationInteractiveElementParamStorage;
+extern DestructibleElementParamStorage<DestructibleElementParamBinaryData> sDestructibleElementParamStorage;
+extern DialogStorage<DialogBinaryData> sDialogStorage;
+extern DoorInteractiveElementParamStorage<DoorInteractiveElementParamBinaryData> sDoorInteractiveElementParamStorage;
+extern DragoStorage<DragoBinaryData> sDragoStorage;
+extern DungeonStorage<DungeonBinaryData> sDungeonStorage;
+extern DungeonDisplayerInteractiveElementParamStorage<DungeonDisplayerInteractiveElementParamBinaryData> sDungeonDisplayerInteractiveElementParamStorage;
+extern EffectGroupStorage<EffectGroupBinaryData> sEffectGroupStorage;
+extern EmoteStorage<EmoteBinaryData> sEmoteStorage;
+extern EquipableDummyInteractiveElementParamStorage<EquipableDummyInteractiveElementParamBinaryData> sEquipableDummyInteractiveElementParamStorage;
+extern ExchangeInteractiveElementParamStorage<ExchangeInteractiveElementParamBinaryData> sExchangeInteractiveElementParamStorage;
+extern FightChallengeStorage<FightChallengeBinaryData> sFightChallengeStorage;
+extern FightChallengeMonsterStorage<FightChallengeMonsterBinaryData> sFightChallengeMonsterStorage;
+extern GemAndPowderStorage<GemAndPowderBinaryData> sGemAndPowderStorage;
+extern GemBackgroundInteractiveElementParamStorage<GemBackgroundInteractiveElementParamBinaryData> sGemBackgroundInteractiveElementParamStorage;
+extern GenericActivableInteractiveElementParamStorage<GenericActivableInteractiveElementParamBinaryData> sGenericActivableInteractiveElementParamStorage;
+extern GroundStorage<GroundBinaryData> sGroundStorage;
+extern HavenBagModelViewStorage<HavenBagModelViewBinaryData> sHavenBagModelViewStorage;
+extern HavenWorldBoardInteractiveElementParamStorage<HavenWorldBoardInteractiveElementParamBinaryData> sHavenWorldBoardInteractiveElementParamStorage;
+extern HavenWorldBuildingStorage<HavenWorldBuildingBinaryData> sHavenWorldBuildingStorage;
+extern HavenWorldBuildingCatalogStorage<HavenWorldBuildingCatalogBinaryData> sHavenWorldBuildingCatalogStorage;
+extern HavenWorldBuildingDecoStorage<HavenWorldBuildingDecoBinaryData> sHavenWorldBuildingDecoStorage;
+extern HavenWorldBuildingEvolutionStorage<HavenWorldBuildingEvolutionBinaryData> sHavenWorldBuildingEvolutionStorage;
+extern HavenWorldBuildingVisualDefinitionStorage<HavenWorldBuildingVisualDefinitionBinaryData> sHavenWorldBuildingVisualDefinitionStorage;
+extern HavenWorldDefinitionStorage<HavenWorldDefinitionBinaryData> sHavenWorldDefinitionStorage;
+extern HavenWorldPatchDefinitionStorage<HavenWorldPatchDefinitionBinaryData> sHavenWorldPatchDefinitionStorage;
+extern InstanceInteractionLevelStorage<InstanceInteractionLevelBinaryData> sInstanceInteractionLevelStorage;
+extern InteractiveElementModelStorage<InteractiveElementModelBinaryData> sInteractiveElementModelStorage;
+extern InteractiveElementTemplateStorage<InteractiveElementTemplateBinaryData> sInteractiveElementTemplateStorage;
+extern ItemStorage<ItemBinaryData> sItemStorage;
+extern ItemSetStorage<ItemSetBinaryData> sItemSetStorage;
+extern ItemTypeStorage<ItemTypeBinaryData> sItemTypeStorage;
+extern KrosmozFigureStorage<KrosmozFigureBinaryData> sKrosmozFigureStorage;
+extern KrosmozGameBoardInteractiveElementParamStorage<KrosmozGameBoardInteractiveElementParamBinaryData> sKrosmozGameBoardInteractiveElementParamStorage;
+extern KrosmozGameCollectionInteractiveElementParamStorage<KrosmozGameCollectionInteractiveElementParamBinaryData> sKrosmozGameCollectionInteractiveElementParamStorage;
+extern LightLootListStorage<LightLootListBinaryData> sLightLootListStorage;
+extern LockStorage<LockBinaryData> sLockStorage;
+extern LootChestInteractiveElementParamStorage<LootChestInteractiveElementParamBinaryData> sLootChestInteractiveElementParamStorage;
+extern MagiCraftLootListStorage<MagiCraftLootListBinaryData> sMagiCraftLootListStorage;
+extern MarketBoardInteractiveElementParamStorage<MarketBoardInteractiveElementParamBinaryData> sMarketBoardInteractiveElementParamStorage;
+extern MonsterStorage<MonsterBinaryData> sMonsterStorage;
+extern MonsterTypeStorage<MonsterTypeBinaryData> sMonsterTypeStorage;
+extern MonsterTypeDungeonStorage<MonsterTypeDungeonBinaryData> sMonsterTypeDungeonStorage;
+extern MonsterTypePestStorage<MonsterTypePestBinaryData> sMonsterTypePestStorage;
+extern MonsterTypeRelashionshipStorage<MonsterTypeRelashionshipBinaryData> sMonsterTypeRelashionshipStorage;
+extern NationColorsStorage<NationColorsBinaryData> sNationColorsStorage;
+extern NationLawStorage<NationLawBinaryData> sNationLawStorage;
+extern NationRankStorage<NationRankBinaryData> sNationRankStorage;
+extern PetStorage<PetBinaryData> sPetStorage;
+extern ProtectorStorage<ProtectorBinaryData> sProtectorStorage;
+extern ProtectorBuffStorage<ProtectorBuffBinaryData> sProtectorBuffStorage;
+extern ProtectorBuffListStorage<ProtectorBuffListBinaryData> sProtectorBuffListStorage;
+extern ProtectorEcosystemProtectionStorage<ProtectorEcosystemProtectionBinaryData> sProtectorEcosystemProtectionStorage;
+extern RecipeStorage<RecipeBinaryData> sRecipeStorage;
+extern RecycleMachineInteractiveElementParamStorage<RecycleMachineInteractiveElementParamBinaryData> sRecycleMachineInteractiveElementParamStorage;
+extern ResourceStorage<ResourceBinaryData> sResourceStorage;
+extern RewardDisplayerInteractiveElementParamStorage<RewardDisplayerInteractiveElementParamBinaryData> sRewardDisplayerInteractiveElementParamStorage;
+extern SecretStorage<SecretBinaryData> sSecretStorage;
+extern SkillActionStorage<SkillActionBinaryData> sSkillActionStorage;
+extern SkillStorage<SkillBinaryData> sSkillStorage;
+extern SpellStorage<SpellBinaryData> sSpellStorage;
+extern StateStorage<StateBinaryData> sStateStorage;
+extern StaticEffectStorage<StaticEffectBinaryData> sStaticEffectStorage;
+extern StoolInteractiveElementParamStorage<StoolInteractiveElementParamBinaryData> sStoolInteractiveElementParamStorage;
+extern StorageBoxStorage<StorageBoxBinaryData> sStorageBoxStorage;
+extern StreetLightInteractiveElementParamStorage<StreetLightInteractiveElementParamBinaryData> sStreetLightInteractiveElementParamStorage;
+extern TeleporterStorage<TeleporterBinaryData> sTeleporterStorage;
+extern TimelineBuffListStorage<TimelineBuffListBinaryData> sTimelineBuffListStorage;
+extern TravelLoadingStorage<TravelLoadingBinaryData> sTravelLoadingStorage;
+extern TreasureStorage<TreasureBinaryData> sTreasureStorage;
+extern TutorialStorage<TutorialBinaryData> sTutorialStorage;
+extern ZaapStorage<ZaapBinaryData> sZaapStorage;
+extern ZaapLinkStorage<ZaapLinkBinaryData> sZaapLinkStorage;
 
 void LoadBinaryStorage();
 

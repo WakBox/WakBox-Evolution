@@ -42,3 +42,5 @@ include(../dep/Dep.pri)
 include(../shared/Shared.pri)
 include(Game/Game.pri)
 include(Scripts/Scripts.pri)
+
+QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter
