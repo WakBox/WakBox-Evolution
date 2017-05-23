@@ -34,7 +34,6 @@ public:
                 entry.m_elements.push_back(achievementListData);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

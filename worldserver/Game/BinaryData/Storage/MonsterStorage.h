@@ -123,7 +123,6 @@ public:
                 entry.m_monsterActionData.push_back(monsterAction);
             }
 
-
             qint32 monsterCollectActionDataCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < monsterCollectActionDataCount; ++i)
@@ -145,7 +144,6 @@ public:
                 entry.m_monsterCollectActionData.push_back(monsterCollectActionData);
             }
 
-
             qint32 monsterBehaviourDataCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < monsterBehaviourDataCount; ++i)
@@ -159,7 +157,6 @@ public:
 
                 entry.m_monsterBehaviourData.push_back(monsterBehaviourData);
             }
-
 
             qint32 monsterEvolutionDataCount = this->_reader->ReadInt();
 
@@ -193,19 +190,17 @@ public:
                 entry.m_specialGfxEquipement.push_back(equipement);
             }
 
-
             qint32 specialGfxColorCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < specialGfxColorCount; ++i)
             {
-                Color color;
+                MonsterColor color;
 
                 color.m_partIndex = this->_reader->ReadInt();
                 color.m_color = this->_reader->ReadInt();
 
                 entry.m_specialGfxColor.push_back(color);
             }
-
 
             qint32 specialGfxAnimCount = this->_reader->ReadInt();
 

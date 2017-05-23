@@ -27,7 +27,7 @@ public:
             entry.m_conceptualCraft = this->_reader->ReadBool();
             entry.m_hiddenCraft = this->_reader->ReadBool();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_craftId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for CraftStorage";

@@ -39,7 +39,6 @@ public:
                 entry.m_items.push_back(collectItem);
             }
 
-
             qint32 actionCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < actionCount; ++i)
@@ -53,7 +52,6 @@ public:
 
                 entry.m_actions.push_back(collectAction);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

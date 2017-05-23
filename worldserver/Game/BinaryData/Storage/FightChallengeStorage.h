@@ -35,7 +35,7 @@ public:
 
             for (qint32 i = 0; i < rewardCount; ++i)
             {
-                Reward reward;
+                FightChallengeReward reward;
 
                 reward.m_id = this->_reader->ReadInt();
                 reward.m_criterion = this->_reader->ReadString();
@@ -44,7 +44,6 @@ public:
 
                 entry.m_rewards.push_back(reward);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

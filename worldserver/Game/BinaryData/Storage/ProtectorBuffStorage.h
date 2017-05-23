@@ -26,7 +26,7 @@ public:
             entry.m_origin = this->_reader->ReadByte();
             entry.m_effects = this->_reader->ReadIntArray();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_buffId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for ProtectorBuffStorage";

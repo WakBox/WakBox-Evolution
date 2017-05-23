@@ -25,7 +25,7 @@ public:
             entry.m_loadingFadeInDuration = this->_reader->ReadInt();
             entry.m_loadingFadeOutDuration = this->_reader->ReadInt();
 
-            this->m_entries[entry.m_id] = entry;
+            //this->m_entries[entry.m_id] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for TravelLoadingStorage";

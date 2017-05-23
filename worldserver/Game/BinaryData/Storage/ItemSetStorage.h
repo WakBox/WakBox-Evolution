@@ -28,23 +28,11 @@ public:
 
             for (qint32 i = 0; i < effectIdsByPartCountCount; ++i)
             {
-                TIntObjectHashMap<int tIntObjectHashMap<int;
+                qint32 effectIdsByPartCountKey = this->_reader->ReadInt();
+                QList<qint32> effectIdsByPartCountValue = this->_reader->ReadIntArray();
 
-
-                entry.m_effectIdsByPartCount.push_back(tIntObjectHashMap<int);
+                entry.m_effectIdsByPartCount.insert(effectIdsByPartCountKey, effectIdsByPartCountValue);
             }
-
-
-            qint32 effectIdsByPartCountKey = this->_reader->ReadInt();
-
-            for (qint32 i = 0; i < effectIdsByPartCountKey; ++i)
-            {
-                ReadIntArray(); readIntArray();;
-
-
-                entry.effectIdsByPartCountValue.push_back(readIntArray(););
-            }
-
 
             this->m_entries[entry.m_id] = entry;
         }

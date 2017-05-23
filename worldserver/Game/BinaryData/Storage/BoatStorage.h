@@ -28,7 +28,7 @@ public:
             entry.m_uiGfxId = this->_reader->ReadInt();
             entry.m_landmarkTravelType = this->_reader->ReadByte();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_boatId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for BoatStorage";

@@ -37,7 +37,6 @@ public:
                 entry.m_answers.push_back(answer);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

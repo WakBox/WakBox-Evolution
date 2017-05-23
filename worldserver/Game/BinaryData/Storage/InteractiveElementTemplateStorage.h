@@ -50,26 +50,14 @@ public:
                 entry.m_positionsTrigger.push_back(point3);
             }
 
-
             qint32 actionCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < actionCount; ++i)
             {
-                TShortIntHashMap(actionCount); tShortIntHashMap(actionCount);;
+                qint16 actionKey = this->_reader->ReadShort();
+                qint32 actionValue = this->_reader->ReadInt();
 
-
-                entry.m_actions.push_back(tShortIntHashMap(actionCount););
-            }
-
-
-            qint32 actionKey = this->_reader->ReadShort();
-
-            for (qint32 i = 0; i < actionKey; ++i)
-            {
-                ReadInt(); readInt();;
-
-
-                entry.actionValue.push_back(readInt(););
+                entry.m_actions.insert(actionKey, actionValue);
             }
 
             entry.m_views = this->_reader->ReadIntArray();

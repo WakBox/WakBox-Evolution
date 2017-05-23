@@ -30,7 +30,13 @@ public:
             entry.m_nbActivation = this->_reader->ReadInt();
             entry.m_distributionDuration = this->_reader->ReadInt();
             entry.m_criteria = this->_reader->ReadString();
-            entry.if (buffer.get() != 0) { = this->_reader->ReadByte();
+
+            qint8 hasChaosParam = this->_reader->ReadByte();
+            if (hasChaosParam)
+            {
+                entry.m_chaosParams.m_chaosLevel = this->_reader->ReadInt();
+                entry.m_chaosParams.m_chaosCollectorParamId = this->_reader->ReadInt();
+            }
 
             this->m_entries[entry.m_id] = entry;
         }

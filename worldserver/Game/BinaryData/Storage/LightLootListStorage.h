@@ -35,7 +35,6 @@ public:
                 entry.m_entries.push_back(lootEntry);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

@@ -27,9 +27,17 @@ public:
             entry.m_uiGfxId = this->_reader->ReadInt();
             entry.m_dragoCriterion = this->_reader->ReadString();
             entry.m_landmarkTravelType = this->_reader->ReadByte();
-            entry.if (buffer.get() != 0) { = this->_reader->ReadByte();
 
-            this->m_entries[entry.m_id] = entry;
+            qint8 hasTravelLoading = this->_reader->ReadByte();
+            if (hasTravelLoading != 0)
+            {
+                entry.m_loading.m_loadingAnimationName = this->_reader->ReadString();
+                entry.m_loading.m_loadingMinDuration = this->_reader->ReadInt();
+                entry.m_loading.m_loadingFadeInDuration = this->_reader->ReadInt();
+                entry.m_loading.m_loadingFadeOutDuration = this->_reader->ReadInt();
+            }
+
+            this->m_entries[entry.m_dragoId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for DragoStorage";

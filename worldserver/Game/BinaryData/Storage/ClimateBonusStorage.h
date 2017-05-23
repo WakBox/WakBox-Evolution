@@ -29,7 +29,7 @@ public:
             entry.m_rainDifference = this->_reader->ReadFloat();
             entry.m_windDifference = this->_reader->ReadFloat();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_buffId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for ClimateBonusStorage";

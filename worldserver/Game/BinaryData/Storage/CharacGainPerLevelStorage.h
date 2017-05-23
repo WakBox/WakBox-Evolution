@@ -26,25 +26,13 @@ public:
 
             for (qint32 i = 0; i < gainCount; ++i)
             {
-                TByteFloatHashMap(gainCount); tByteFloatHashMap(gainCount);;
+                qint8 key = this->_reader->ReadByte();
+                float value = this->_reader->ReadFloat();
 
-
-                entry.m_gains.push_back(tByteFloatHashMap(gainCount););
+                entry.m_gains.insert(key, value);
             }
 
-
-            qint32 gainKey = this->_reader->ReadByte();
-
-            for (qint32 i = 0; i < gainKey; ++i)
-            {
-                ReadFloat(); readFloat();;
-
-
-                entry.gainValue.push_back(readFloat(););
-            }
-
-
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_breedId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for CharacGainPerLevelStorage";

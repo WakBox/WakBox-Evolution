@@ -52,8 +52,7 @@ public:
                 entry.m_destinations.push_back(destination);
             }
 
-
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_teleporterId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for TeleporterStorage";

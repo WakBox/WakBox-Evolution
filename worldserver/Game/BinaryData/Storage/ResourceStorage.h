@@ -64,6 +64,7 @@ public:
 
                     resourceStep.m_actions.push_back(resourceStepAction);
                 }
+
                 resourceStep.m_sizeCategoryId = this->_reader->ReadInt();
                 resourceStep.m_lightRadius = this->_reader->ReadInt();
                 resourceStep.m_lightColor = this->_reader->ReadInt();
@@ -80,23 +81,11 @@ public:
 
             for (qint32 i = 0; i < gfxIdCount; ++i)
             {
-                TIntObjectHashMap<int tIntObjectHashMap<int;
+                qint32 gfxIdKey = this->_reader->ReadInt();
+                QList<qint32> gfxIdValue = this->_reader->ReadIntArray();
 
-
-                entry.m_gfxIds.push_back(tIntObjectHashMap<int);
+                entry.m_gfxIds.insert(gfxIdKey, gfxIdValue);
             }
-
-
-            qint32 gfxIdKey = this->_reader->ReadInt();
-
-            for (qint32 i = 0; i < gfxIdKey; ++i)
-            {
-                ReadIntArray(); readIntArray();;
-
-
-                entry.gfxIdValue.push_back(readIntArray(););
-            }
-
 
             this->m_entries[entry.m_id] = entry;
         }

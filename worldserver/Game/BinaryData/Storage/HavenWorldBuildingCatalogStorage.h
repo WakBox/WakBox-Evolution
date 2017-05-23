@@ -41,7 +41,6 @@ public:
                 entry.m_buildingCondition.push_back(buildingCondition);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

@@ -23,7 +23,13 @@ public:
             entry.m_id = this->_reader->ReadInt();
             entry.m_criterion = this->_reader->ReadString();
             entry.m_visualId = this->_reader->ReadInt();
-            entry.if (buffer.get() != 0) { = this->_reader->ReadByte();
+
+            qint8 hasChaosParam = this->_reader->ReadByte();
+            if (hasChaosParam)
+            {
+                entry.m_chaosParams.m_chaosLevel = this->_reader->ReadInt();
+                entry.m_chaosParams.m_chaosCollectorParamId = this->_reader->ReadInt();
+            }
 
             this->m_entries[entry.m_id] = entry;
         }

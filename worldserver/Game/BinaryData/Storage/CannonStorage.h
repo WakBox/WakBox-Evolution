@@ -39,13 +39,20 @@ public:
                 link.m_exitWorldId = this->_reader->ReadInt();
                 link.m_dropWeight = this->_reader->ReadInt();
                 link.m_criteria = this->_reader->ReadString();
-                link.if (buffer.get() != 0) { = this->_reader->ReadByte();
+
+                qint8 hasTravelLoading = this->_reader->ReadByte();
+                if (hasTravelLoading != 0)
+                {
+                    link.m_loading.m_loadingAnimationName = this->_reader->ReadString();
+                    link.m_loading.m_loadingMinDuration = this->_reader->ReadInt();
+                    link.m_loading.m_loadingFadeInDuration = this->_reader->ReadInt();
+                    link.m_loading.m_loadingFadeOutDuration = this->_reader->ReadInt();
+                }
 
                 entry.m_links.push_back(link);
             }
 
-
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_cannonId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for CannonStorage";

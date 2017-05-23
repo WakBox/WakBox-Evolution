@@ -37,7 +37,6 @@ public:
                 entry.m_faunaProtection.push_back(protectorFaunaProtection);
             }
 
-
             qint32 floraProtectionCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < floraProtectionCount; ++i)
@@ -53,8 +52,7 @@ public:
                 entry.m_floraProtection.push_back(protectorFloraProtection);
             }
 
-
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_protectorId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for ProtectorEcosystemProtectionStorage";

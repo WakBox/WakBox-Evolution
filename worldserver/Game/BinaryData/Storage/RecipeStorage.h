@@ -46,7 +46,6 @@ public:
                 entry.m_ingredients.push_back(recipeIngredient);
             }
 
-
             qint32 productCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < productCount; ++i)
@@ -58,7 +57,6 @@ public:
 
                 entry.m_products.push_back(recipeProduct);
             }
-
 
             qint32 materialCount = this->_reader->ReadInt();
 
@@ -73,7 +71,6 @@ public:
 
                 entry.m_materials.push_back(recipeMaterial);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

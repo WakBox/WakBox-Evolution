@@ -22,7 +22,13 @@ public:
 
             entry.m_id = this->_reader->ReadInt();
             entry.m_visualId = this->_reader->ReadInt();
-            entry.if (buffer.get() != 0) { = this->_reader->ReadByte();
+
+            qint8 hasChaosParam = this->_reader->ReadByte();
+            if (hasChaosParam)
+            {
+                entry.m_chaosParams.m_chaosLevel = this->_reader->ReadInt();
+                entry.m_chaosParams.m_chaosCollectorParamId = this->_reader->ReadInt();
+            }
 
             qint32 compartmentCount = this->_reader->ReadInt();
 

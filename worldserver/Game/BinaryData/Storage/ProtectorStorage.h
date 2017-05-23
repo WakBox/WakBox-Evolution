@@ -51,7 +51,6 @@ public:
                 entry.m_secrets.push_back(protectorSecret);
             }
 
-
             qint32 faunaWillCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < faunaWillCount; ++i)
@@ -64,7 +63,6 @@ public:
 
                 entry.m_faunaWill.push_back(protectorFaunaWill);
             }
-
 
             qint32 floraWillCount = this->_reader->ReadInt();
 
@@ -79,8 +77,7 @@ public:
                 entry.m_floraWill.push_back(protectorFloraWill);
             }
 
-
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_protectorId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for ProtectorStorage";

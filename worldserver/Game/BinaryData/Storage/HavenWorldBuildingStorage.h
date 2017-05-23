@@ -44,7 +44,6 @@ public:
                 entry.m_interactives.push_back(interactive);
             }
 
-
             qint32 skinCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < skinCount; ++i)
@@ -69,7 +68,6 @@ public:
 
                 entry.m_worldEffects.push_back(worldEffect);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

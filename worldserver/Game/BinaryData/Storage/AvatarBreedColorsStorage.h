@@ -34,6 +34,7 @@ public:
                 data.m_defaultHairIndex = this->_reader->ReadByte();
                 data.m_defaultHairFactor = this->_reader->ReadByte();
                 data.m_defaultPupilIndex = this->_reader->ReadByte();
+
                 qint32 skinColorCount = this->_reader->ReadInt();
 
                 for (qint32 j = 0; j < skinColorCount; ++j)
@@ -47,36 +48,37 @@ public:
 
                     data.m_skinColors.push_back(color);
                 }
-                    qint32 hairColorCount = this->_reader->ReadInt();
 
-                    for (qint32 k = 0; k < hairColorCount; ++k)
-                    {
-                        Color color;
+                qint32 hairColorCount = this->_reader->ReadInt();
 
-                        color.m_red = this->_reader->ReadFloat();
-                        color.m_green = this->_reader->ReadFloat();
-                        color.m_blue = this->_reader->ReadFloat();
-                        color.m_alpha = this->_reader->ReadFloat();
+                for (qint32 k = 0; k < hairColorCount; ++k)
+                {
+                    Color color;
 
-                        data.m_hairColors.push_back(color);
-                    }
-                        qint32 pupilColorCount = this->_reader->ReadInt();
+                    color.m_red = this->_reader->ReadFloat();
+                    color.m_green = this->_reader->ReadFloat();
+                    color.m_blue = this->_reader->ReadFloat();
+                    color.m_alpha = this->_reader->ReadFloat();
 
-                        for (qint32 l = 0; l < pupilColorCount; ++l)
-                        {
-                            Color color;
+                    data.m_hairColors.push_back(color);
+                }
 
-                            color.m_red = this->_reader->ReadFloat();
-                            color.m_green = this->_reader->ReadFloat();
-                            color.m_blue = this->_reader->ReadFloat();
-                            color.m_alpha = this->_reader->ReadFloat();
+                qint32 pupilColorCount = this->_reader->ReadInt();
 
-                            data.m_pupilColors.push_back(color);
-                        }
+                for (qint32 l = 0; l < pupilColorCount; ++l)
+                {
+                    Color color;
+
+                    color.m_red = this->_reader->ReadFloat();
+                    color.m_green = this->_reader->ReadFloat();
+                    color.m_blue = this->_reader->ReadFloat();
+                    color.m_alpha = this->_reader->ReadFloat();
+
+                    data.m_pupilColors.push_back(color);
+                }
 
                 entry.m_values.push_back(data);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

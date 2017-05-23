@@ -23,7 +23,7 @@ public:
             entry.m_chaosLevel = this->_reader->ReadByte();
             entry.m_chaosCollectorParamId = this->_reader->ReadInt();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_chaosCollectorParamId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for ChaosParamStorage";

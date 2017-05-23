@@ -32,7 +32,7 @@ bool World::Initialize()
     LoadBinaryStorage();
 
     // Test
-    if (AchievementBinaryData const* achievement = sAchievement.FindEntry(2517))
+    if (AchievementBinaryData const* achievement = sAchievementStorage.FindEntry(2517))
     {
         qDebug() << "Achievement " << achievement->m_id << " found!";
         qDebug() << "Criteron: " << achievement->m_criterion;

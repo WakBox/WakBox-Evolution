@@ -53,7 +53,6 @@ public:
                 entry.m_actionGroups.push_back(eventActionGroup);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

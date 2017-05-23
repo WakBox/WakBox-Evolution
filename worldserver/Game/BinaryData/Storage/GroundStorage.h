@@ -26,45 +26,21 @@ public:
 
             for (qint32 i = 0; i < resourceFertilityCount; ++i)
             {
-                TIntShortHashMap(resourceFertilityCount); tIntShortHashMap(resourceFertilityCount);;
+                qint32 resourceFertilityKey = this->_reader->ReadInt();
+                qint16 resourceFertilityValue = this->_reader->ReadShort();
 
-
-                entry.m_resourceFertility.push_back(tIntShortHashMap(resourceFertilityCount););
+                entry.m_resourceFertility.insert(resourceFertilityKey, resourceFertilityValue);
             }
-
-
-            qint32 resourceFertilityKey = this->_reader->ReadInt();
-
-            for (qint32 i = 0; i < resourceFertilityKey; ++i)
-            {
-                ReadShort(); readShort();;
-
-
-                entry.resourceFertilityValue.push_back(readShort(););
-            }
-
 
             qint32 resourceTypeFertilityCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < resourceTypeFertilityCount; ++i)
             {
-                TShortShortHashMap(resourceTypeFertilityCount); tShortShortHashMap(resourceTypeFertilityCount);;
+                qint16 resourceTypeFertilityKey = this->_reader->ReadShort();
+                qint16 resourceTypeFertilityValue = this->_reader->ReadShort();
 
-
-                entry.m_resourceTypeFertility.push_back(tShortShortHashMap(resourceTypeFertilityCount););
+                entry.m_resourceTypeFertility.insert(resourceTypeFertilityKey, resourceTypeFertilityValue);
             }
-
-
-            qint32 resourceTypeFertilityKey = this->_reader->ReadShort();
-
-            for (qint32 i = 0; i < resourceTypeFertilityKey; ++i)
-            {
-                ReadShort(); readShort();;
-
-
-                entry.resourceTypeFertilityValue.push_back(readShort(););
-            }
-
 
             this->m_entries[entry.m_id] = entry;
         }

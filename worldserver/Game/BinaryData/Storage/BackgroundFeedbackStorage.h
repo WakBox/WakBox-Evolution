@@ -37,7 +37,6 @@ public:
                 entry.m_pages.push_back(page);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

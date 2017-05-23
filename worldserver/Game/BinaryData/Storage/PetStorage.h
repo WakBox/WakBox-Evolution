@@ -45,7 +45,6 @@ public:
                 entry.m_healthPenalties.push_back(healthPenalty);
             }
 
-
             qint32 healthItemCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < healthItemCount; ++i)
@@ -58,7 +57,6 @@ public:
                 entry.m_healthItems.push_back(healthItem);
             }
 
-
             qint32 mealItemCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < mealItemCount; ++i)
@@ -70,7 +68,6 @@ public:
 
                 entry.m_mealItems.push_back(mealItem);
             }
-
 
             qint32 sleepItemCount = this->_reader->ReadInt();
 
@@ -99,7 +96,6 @@ public:
                 entry.m_colorItems.push_back(colorItem);
             }
 
-
             qint32 reskinItemCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < reskinItemCount; ++i)
@@ -111,7 +107,6 @@ public:
 
                 entry.m_reskinItems.push_back(reskinItem);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

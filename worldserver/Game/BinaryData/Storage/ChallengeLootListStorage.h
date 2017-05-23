@@ -34,7 +34,6 @@ public:
                 entry.m_entries.push_back(challengeLootEntry);
             }
 
-
             this->m_entries[entry.m_id] = entry;
         }
 

@@ -27,13 +27,12 @@ public:
 
             for (qint32 i = 0; i < entrieCount; ++i)
             {
-                LootEntry lootEntry;
+                MagiCraftLootEntry lootEntry;
 
                 lootEntry.m_itemId = this->_reader->ReadInt();
 
                 entry.m_entries.push_back(lootEntry);
             }
-
 
             this->m_entries[entry.m_id] = entry;
         }

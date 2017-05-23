@@ -23,7 +23,7 @@ public:
             entry.m_buffListId = this->_reader->ReadInt();
             entry.m_buffLists = this->_reader->ReadIntArray();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_buffListId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for ProtectorBuffListStorage";

@@ -71,45 +71,52 @@ public:
 
             for (qint32 i = 0; i < baseCastParameterCount; ++i)
             {
-                TByteObjectHashMap<CustomCharac>(baseCastParameterCount); tByteObjectHashMap<CustomCharac>(baseCastParameterCount);;
+                qint8 baseCastParameterKey = this->_reader->ReadByte();
 
+                CustomCharac baseCastParameterValue;
+                baseCastParameterValue.m_base = this->_reader->ReadInt();
+                baseCastParameterValue.m_increment = this->_reader->ReadFloat();
 
-                entry.m_baseCastParameters.push_back(tByteObjectHashMap<CustomCharac>(baseCastParameterCount););
+                entry.m_baseCastParameters.insert(baseCastParameterKey, baseCastParameterValue);
             }
-
-
-            qint32 baseCastParameterKey = this->_reader->ReadByte();
-
-            for (qint32 i = 0; i < baseCastParameterKey; ++i)
-            {
-                CustomCharac(); customCharac();;
-
-
-                entry.final CustomCharac baseCastParameterValue.push_back(customCharac(););
-            }
-
 
             qint32 alternativeCastCount = this->_reader->ReadInt();
 
             for (qint32 i = 0; i < alternativeCastCount; ++i)
             {
-                THashMap<String, CastParam>(alternativeCastCount); tHashMap<String, CastParam>(alternativeCastCount);;
+                QString alternativeCastKey = this->_reader->ReadString();
 
+                CastParam alternativeCastValue;
+                qint32 costCount = this->_reader->ReadInt();
 
-                entry.m_alternativeCasts.push_back(tHashMap<String, CastParam>(alternativeCastCount););
+                for (qint32 j = 0; j < costCount; ++j)
+                {
+                    qint8 costKey = this->_reader->ReadByte();
+
+                    CustomCharac costValue;
+                    costValue.m_base = this->_reader->ReadInt();
+                    costValue.m_increment = this->_reader->ReadFloat();
+
+                    alternativeCastValue.m_costs.insert(costKey, costValue);
+                }
+
+                alternativeCastValue.m_cost = this->_reader->ReadInt();
+                alternativeCastValue.m_PA_base = this->_reader->ReadFloat();
+                alternativeCastValue.m_PA_inc = this->_reader->ReadFloat();
+                alternativeCastValue.m_PM_base = this->_reader->ReadFloat();
+                alternativeCastValue.m_PM_inc = this->_reader->ReadFloat();
+                alternativeCastValue.m_PW_base = this->_reader->ReadFloat();
+                alternativeCastValue.m_PW_inc = this->_reader->ReadFloat();
+                alternativeCastValue.m_rangeMinBase = this->_reader->ReadFloat();
+                alternativeCastValue.m_rangeMinInc = this->_reader->ReadFloat();
+                alternativeCastValue.m_rangeMaxBase = this->_reader->ReadFloat();
+                alternativeCastValue.m_rangeMaxInc = this->_reader->ReadFloat();
+                alternativeCastValue.m_isLosAware = this->_reader->ReadBool();
+                alternativeCastValue.m_onlyInLine = this->_reader->ReadBool();
+                alternativeCastValue.m_rangeIsDynamic = this->_reader->ReadBool();
+
+                entry.m_alternativeCasts.insert(alternativeCastKey, alternativeCastValue);
             }
-
-
-            qint32 alternativeCastKey = this->_reader->ReadString();
-
-            for (qint32 i = 0; i < alternativeCastKey; ++i)
-            {
-                CastParam(); castParam();;
-
-
-                entry.final CastParam alternativeCastValue.push_back(castParam(););
-            }
-
 
             this->m_entries[entry.m_id] = entry;
         }

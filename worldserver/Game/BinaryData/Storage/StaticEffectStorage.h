@@ -77,7 +77,7 @@ public:
             entry.m_isInTurnInFight = this->_reader->ReadBool();
             entry.m_notifyInChat = this->_reader->ReadBool();
 
-            this->m_entries[entry.m_id] = entry;
+            this->m_entries[entry.m_effectId] = entry;
         }
 
         qDebug() << ">> Loaded " << this->m_entries.size() << " entries for StaticEffectStorage";
