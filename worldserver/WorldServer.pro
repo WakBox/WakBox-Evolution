@@ -22,6 +22,7 @@ unix:!macx {
 macx: {
     LIBS += -L"/usr/local/lib/" -lcryptopp
     LIBS += -L"/usr/local/lib/" -lprotobuf
+    LIBS += "/usr/local/lib/libquazip.dylib"
 }
 
 win32 {
