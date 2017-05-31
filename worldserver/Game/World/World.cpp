@@ -1,5 +1,6 @@
 #include "World.h"
 #include "BinaryData/BinaryData.h"
+#include "Maps/TopologyMgr.h"
 #include "Game/Entities/ObjectMgr.h"
 #include "Game/Scripting/ScriptMgr.h"
 
@@ -37,6 +38,8 @@ bool World::Initialize()
         qDebug() << "Achievement " << achievement->m_id << " found!";
         qDebug() << "Criteron: " << achievement->m_criterion;
     }
+
+    sTopologyMgr->LoadTopology();
 
     sObjectMgr->SetHighestGuids();
     sObjectMgr->LoadInteractiveElements();

@@ -1,30 +1,49 @@
 #include "TopologyMgr.h"
 #include "SimpleBinaryReader.h"
+#include "Logs/Log.h"
 
 template<> TopologyMgr*  Singleton<TopologyMgr>::m_instance = 0;
 
+TopologyMgr::TopologyMgr()
+{
+
+}
+
+TopologyMgr::~TopologyMgr()
+{
+
+}
+
 void TopologyMgr::LoadTopology()
 {
-    QDir dir("maps/topology");
+    QDir dir("maps/tplg");
+    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 
     if (!dir.exists())
     {
-        qDebug() << "Folder maps/topology not found!";
+        qDebug() << "Folder maps/tplg not found!";
         return;
     }
+
+    QTime t;
+    t.start();
+    Log::Write(LOG_TYPE_NORMAL, ">> Loading maps topology...");
 
     QFileInfoList mapList = dir.entryInfoList();
     for (int i = 0; i < mapList.size(); ++i)
     {
-        QuaZip archive("maps/topology/" + mapList.at(i).fileName());
+        quint16 mapId = mapList.at(i).fileName().remove(".jar").toUShort();
+        QuaZip archive("maps/tplg/" + mapList.at(i).fileName());
 
         if (!archive.open(QuaZip::mdUnzip))
         {
-            qDebug() << "Error while opening maps/topology/" + mapList.at(i).fileName();
+            qDebug() << "Error while opening maps/tplg/" + mapList.at(i).fileName();
             continue;
         }
 
         QuaZipFile file(&archive);
+
+        TopologyMapHash topologyMapHash;
 
         for (bool f = archive.goToFirstFile(); f; f = archive.goToNextFile())
         {
@@ -63,9 +82,12 @@ void TopologyMgr::LoadTopology()
 
             //qint8 res = mapTopology->isCellBlocked(offsetx, offsety);
 
-            m_topologyMaps[GetHashCode(0, mapx, mapy)] = mapTopology;
+            topologyMapHash[filePath] = mapTopology;
         }
 
         archive.close();
+        m_topologyMaps[mapId] = topologyMapHash;
     }
+
+    Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u maps topology in %u ms.", m_topologyMaps.count(), t.elapsed());
 }
