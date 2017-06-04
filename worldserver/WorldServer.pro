@@ -28,6 +28,8 @@ macx: {
 win32 {
     LIBS += -L"C:/CryptoPP/lib" -lcryptopp563
     LIBS += -L"C:/Protobuf/lib" -lprotobuf
+    LIBS += -L"C:/Quazip/lib" -lquazip
+    INCLUDEPATH += C:/Quazip/include
     INCLUDEPATH += C:/CryptoPP/include
 }
 
