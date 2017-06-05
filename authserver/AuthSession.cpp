@@ -262,8 +262,6 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
 
         data << (quint8) realmId;
 
-        // Next part
-
         data2 << realmId;
         data2.StartBlock<int>();
         {
@@ -288,10 +286,6 @@ void AuthSession::HandleRealmsRequest(WorldPacket& /*packet*/)
             data2 << (int) 0;
         }
         data2.EndBlock<int>();
-
-        // Not used anymore
-        //data2 << result.value("player_count").toInt();
-        //data2 << result.value("player_limit").toInt();
 
         data2 << (quint8) result.value("locked").toBool();
     }

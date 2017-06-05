@@ -15,6 +15,8 @@ World::World()
 
 World::~World()
 {
+    sAuthDatabase->Query(UPDATE_REALM_LOCKED, QVariantList() << 1 << sWorldConfig->GetInt("RealmId"));
+
     SessionList::Iterator itr, next;
     for (itr = m_sessions.begin(); itr != m_sessions.end(); itr = next)
     {
@@ -45,6 +47,9 @@ bool World::Initialize()
     sObjectMgr->LoadInteractiveElements();
 
     sScriptMgr->Initialize();
+
+    sAuthDatabase->Query(UPDATE_REALM_LOCKED, QVariantList() << 0 << sWorldConfig->GetInt("RealmId"));
+
     return true;
 }
 

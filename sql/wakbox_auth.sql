@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `realms` (
   `player_count` int(10) unsigned NOT NULL DEFAULT '0',
   `player_limit` int(10) unsigned NOT NULL DEFAULT '500',
   `security_access_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `locked` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `locked` tinyint(3) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`realm_id`),
   UNIQUE KEY `idx_name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `realms` (
 --
 
 INSERT INTO `realms` (`realm_id`, `name`, `address`, `port`, `version`, `community`, `player_count`, `player_limit`, `security_access_level`, `locked`) VALUES
-(1, 'WakBox', '127.0.0.1', 5556, '1.53.3', 0, 0, 500, 0, 0);
+(1, 'WakBox', '127.0.0.1', 5556, '1.53.3', 0, 0, 500, 0, 1);
 
 --
 -- Table structure for table `realm_characters`
