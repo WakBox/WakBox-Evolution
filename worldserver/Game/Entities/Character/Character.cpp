@@ -116,19 +116,6 @@ bool Character::SaveToDB(bool create)
     return true;
 }
 
-void Character::SetInWorld(bool inWorld)
-{
-    m_inWorld = inWorld;
-
-    if (inWorld)
-        sWorld->AddCharacter(GetName(), this);
-    else
-    {
-        SendActorDespawn();
-        sWorld->RemoveCharacterByName(GetName());
-    }
-}
-
 // Temporary - handling of this packet should be different!
 void Character::SendActorDespawn()
 {

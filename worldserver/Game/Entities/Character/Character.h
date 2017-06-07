@@ -28,9 +28,6 @@ public:
 
     WorldSession* GetSession() { return m_session; }
 
-    void SetInWorld(bool inWorld = true);
-    bool InWorld() { return m_inWorld; }
-
     QString GetName() { return m_name; }
     quint16 GetBreed() { return m_breed; }
     quint8 GetGender() { return m_gender; }
@@ -250,8 +247,6 @@ public:
 
 private:
     WorldSession* m_session;
-
-    bool m_inWorld;
 
     QString m_name;
     quint16 m_breed;

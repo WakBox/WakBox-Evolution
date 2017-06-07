@@ -84,7 +84,7 @@ void World::SendGlobalPacket(WorldPacket &data, WorldSession *self)
     {
         if (((*itr) &&
              (*itr)->GetCharacter() &&
-             (*itr)->GetCharacter()->InWorld()) &&
+             (*itr)->GetCharacter()->IsInWorld()) &&
              (*itr) != self)
         {
             (*itr)->SendPacket(data);

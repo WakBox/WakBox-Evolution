@@ -34,16 +34,43 @@ quint32 ObjectMgr::GenerateGuid(GuidType type)
     }
 }
 
+void ObjectMgr::LoadCreatures()
+{
+    QTime t;
+    t.start();
+
+    QSqlQuery result = sWorldDatabase->Query(SELECT_CREATURES);
+
+    while (result.next())
+    {
+        CreatureData data;
+        data.id = quint32(result.value("id").toUInt());
+        data.level = quint16(result.value("level").toUInt());
+        data.position_x = qint32(result.value("position_x").toInt());
+        data.position_y = qint32(result.value("position_y").toInt());
+        data.position_z = qint16(result.value("position_z").toInt());
+        data.direction = quint8(result.value("direction").toUInt());
+        data.instance_id = qint32(result.value("instance_id").toInt());
+        data.group_id = quint32(result.value("group_id").toUInt());
+
+        m_creatureData[qint64(result.value("guid").toLongLong())] = data;
+
+        // Add to map/partition
+    }
+
+    Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u creatures in %u ms.", m_creatureData.count(), t.elapsed());
+
+}
+
 void ObjectMgr::LoadInteractiveElements()
 {
     QTime t;
     t.start();
 
     QSqlQuery result = sWorldDatabase->Query(SELECT_INTERACTIVE_ELEMENTS);
-    QSqlRecord rows = result.record();
 
     while (result.next())
-        m_interactiveElements[(quint32)result.value(rows.indexOf("interactive_element_id")).toUInt()] = result.value(rows.indexOf("script_name")).toString();
+        m_interactiveElements[(quint32)result.value("interactive_element_id").toUInt()] = result.value("script_name").toString();
 
     Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u interactive elements in %u ms.", m_interactiveElements.count(), t.elapsed());
 }

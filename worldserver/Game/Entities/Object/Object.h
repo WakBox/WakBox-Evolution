@@ -9,7 +9,7 @@ enum TypeId
     TYPEID_OBJECT              = 0,
     TYPEID_CHARACTER           = 1,
     TYPEID_UNIT                = 2,
-    TYPEID_MONSTER             = 3
+    TYPEID_CREATURE            = 3
 };
 
 class Unit;
@@ -26,11 +26,19 @@ public:
     void SetGuid(quint64 guid) { m_guid = guid; }
     quint64 GetGuid() const { return m_guid; }
 
-    Character* ToCharacter() { if (GetTypeId() == TYPEID_CHARACTER) return reinterpret_cast<Character*>(this); else return NULL; }
+    void SetInWorld(bool inWorld = true);
+    bool IsInWorld() const { return m_inWorld; }
+
+    Character* ToCharacter() { if (GetTypeId() == TYPEID_CHARACTER) return reinterpret_cast<Character*>(this); else return nullptr; }
+
+    // Todo
+    //virtual void AddToWorld();
+    //virtual void RemoveFromWorld();
 
 protected:
     quint64 m_guid;
     TypeId m_typeId;
+    bool m_inWorld;
 };
 
 #endif // OBJECT_H

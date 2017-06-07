@@ -18,6 +18,7 @@ enum WorldDatabaseQueries
      * DATABASE_STATEMENT_SUMMARY
      */
 
+    SELECT_CREATURES,
     SELECT_INTERACTIVE_ELEMENTS
 };
 

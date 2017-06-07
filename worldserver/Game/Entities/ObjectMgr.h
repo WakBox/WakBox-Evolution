@@ -4,6 +4,7 @@
 #include <QtCore>
 #include "Databases/Database.h"
 #include "Utils/Singleton.h"
+#include "Entities/Creature/Creature.h"
 
 enum GuidType
 {
@@ -11,7 +12,8 @@ enum GuidType
     GUIDTYPE_CHARACTER = 1
 };
 
-typedef QMap<quint32, QString> InteractiveElementsMap;
+typedef QHash<qint64, CreatureData> CreatureDataHash;
+typedef QHash<quint32, QString> InteractiveElementsHash;
 
 class Character;
 
@@ -24,12 +26,14 @@ public:
     void SetHighestGuids();
     quint32 GenerateGuid(GuidType type);
 
+    void LoadCreatures();
     void LoadInteractiveElements();
     const QString GetInteractiveElementScriptNameById(quint32 id);
 
 private:
     quint32 m_highCharacterGuid;
-    InteractiveElementsMap m_interactiveElements;
+    CreatureDataHash m_creatureData;
+    InteractiveElementsHash m_interactiveElements;
 };
 
 #define sObjectMgr ObjectMgr::Instance()

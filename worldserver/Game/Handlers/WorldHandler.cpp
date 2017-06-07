@@ -33,7 +33,7 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
         for (SessionList::ConstIterator itr = sessions.begin(); itr != sessions.end(); ++itr)
             if ((*itr) && (*itr) != this)
                 if (Character* character = (*itr)->GetCharacter())
-                    if (character->InWorld())
+                    if (character->IsInWorld())
                         actorList.push_back(character);
     }
 
