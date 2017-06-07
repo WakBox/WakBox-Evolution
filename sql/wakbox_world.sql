@@ -23,6 +23,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `creatures`
+--
+
+CREATE TABLE `creatures` (
+  `guid` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
+  `breed` mediumint(8) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Creature Identifier',
+  `level` smallint(6) NOT NULL DEFAULT '1',
+  `position_x` int(11) NOT NULL DEFAULT '0',
+  `position_y` int(11) NOT NULL DEFAULT '0',
+  `position_z` mediumint(9) NOT NULL DEFAULT '0',
+  `direction` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `instance_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `group_id` mediumint(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `creature_template`
 --
 
