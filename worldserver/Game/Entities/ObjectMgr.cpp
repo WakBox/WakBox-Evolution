@@ -43,6 +43,8 @@ void ObjectMgr::LoadCreatures()
 
     while (result.next())
     {
+        // Check if creature in MonsterBinaryData
+
         CreatureData data;
         data.id = quint32(result.value("id").toUInt());
         data.level = quint16(result.value("level").toUInt());
@@ -52,10 +54,12 @@ void ObjectMgr::LoadCreatures()
         data.direction = quint8(result.value("direction").toUInt());
         data.instance_id = qint32(result.value("instance_id").toInt());
         data.group_id = quint32(result.value("group_id").toUInt());
-
         m_creatureData[qint64(result.value("guid").toLongLong())] = data;
 
+        // Check if instance_id exists
+
         // Add to map/partition
+
     }
 
     Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u creatures in %u ms.", m_creatureData.count(), t.elapsed());
