@@ -7,10 +7,6 @@ Character::Character(WorldSession* session) : Unit()
     m_session = session;
     m_typeId = TYPEID_CHARACTER;
 
-    m_name = QString();
-    m_breed = 0;
-
-    m_level = 1;
     m_xp = 0;
     m_title = -1;
 
@@ -22,12 +18,6 @@ Character::Character(WorldSession* session) : Unit()
     m_hairColorFactor = 0;
     m_clothIndex = 0;
     m_faceIndex = 0;
-
-    m_positionX = 0;
-    m_positionY = 0;
-    m_positionZ = 0;
-    m_direction = 0;
-    m_instanceId = 0;
 }
 
 Character::~Character()
@@ -38,8 +28,8 @@ bool Character::Create(quint64 guid, sCharacterCreateInfos characterCreateInfos)
 {
     SetGuid(guid);
 
-    m_name              = characterCreateInfos.name;
-    m_breed             = characterCreateInfos.breed;
+    SetName(characterCreateInfos.name);
+    SetBreed(characterCreateInfos.breed);
 
     m_gender            = characterCreateInfos.gender;
     m_skinColor         = characterCreateInfos.skinColor;
@@ -63,31 +53,28 @@ bool Character::LoadFromDB(quint64 guid)
         return false;
     }
 
-    QSqlRecord fields = result.record();
-
     m_guid              = guid;
 
-    m_name              = result.value(fields.indexOf("name")).toString();
-    m_breed             = (quint16)result.value(fields.indexOf("breed")).toUInt();
+    SetName(result.value("name").toString());
+    SetBreed(result.value("breed").toUInt());
+    SetLevel(result.value("level").toUInt());
 
-    m_level             = (quint16)result.value(fields.indexOf("level")).toUInt();
-    m_xp                = (quint64)result.value(fields.indexOf("xp")).toULongLong();
-    m_title             = (qint64)result.value(fields.indexOf("title")).toLongLong();
+    m_xp                = result.value("xp").toULongLong();
+    m_title             = result.value("title").toLongLong();
 
-    m_gender            = (quint8)result.value(fields.indexOf("gender")).toUInt();
-    m_skinColor         = (quint8)result.value(fields.indexOf("skin_color")).toUInt();
-    m_hairColor         = (quint8)result.value(fields.indexOf("hair_color")).toUInt();
-    m_pupilColor        = (quint8)result.value(fields.indexOf("pupil_color")).toUInt();
-    m_skinColorFactor   = (quint8)result.value(fields.indexOf("skin_color_factor")).toUInt();
-    m_hairColorFactor   = (quint8)result.value(fields.indexOf("hair_color_factor")).toUInt();
-    m_clothIndex        = (quint8)result.value(fields.indexOf("cloth")).toUInt();
-    m_faceIndex         = (quint8)result.value(fields.indexOf("face")).toUInt();
+    m_gender            = result.value("gender").toUInt();
+    m_skinColor         = result.value("skin_color").toUInt();
+    m_hairColor         = result.value("hair_color").toUInt();
+    m_pupilColor        = result.value("pupil_color").toUInt();
+    m_skinColorFactor   = result.value("skin_color_factor").toUInt();
+    m_hairColorFactor   = result.value("hair_color_factor").toUInt();
+    m_clothIndex        = result.value("cloth").toUInt();
+    m_faceIndex         = result.value("face").toUInt();
 
-    m_positionX         = (qint32)result.value((fields.indexOf("position_x"))).toInt();
-    m_positionY         = (qint32)result.value((fields.indexOf("position_y"))).toInt();
-    m_positionZ         = (qint16)result.value((fields.indexOf("position_z"))).toInt();
-    m_direction         = (quint8)result.value((fields.indexOf("direction"))).toInt();
-    m_instanceId        = (quint16)result.value((fields.indexOf("instance_id"))).toInt();
+    SetPosition(result.value("position_x").toInt(), result.value("position_y").toInt(), result.value("position_z").toInt());
+
+    SetDirection(result.value("direction").toInt());
+    SetInstanceId(result.value("instance_id").toInt());
 
     GetSession()->SetCharacter(this);
     return true;
@@ -98,7 +85,7 @@ bool Character::SaveToDB(bool create)
     if (create)
     {
         QSqlQuery result = sCharDatabase->Query(INSERT_CHARACTER, QVariantList()
-                                << GetGuid() << GetSession()->GetAccountInfos().id << m_name << m_breed << m_gender << m_level << m_xp
+                                << GetGuid() << GetSession()->GetAccountInfos().id << GetName() << GetBreed() << m_gender << GetLevel() << m_xp
                                 << m_skinColor << m_hairColor << m_pupilColor << m_skinColorFactor << m_hairColorFactor << m_clothIndex << m_faceIndex << m_title
                                 << GetPositionX() << GetPositionY() << GetPositionZ() << GetDirection() << GetInstanceId());
 

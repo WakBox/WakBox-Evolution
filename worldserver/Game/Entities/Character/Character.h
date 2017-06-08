@@ -28,8 +28,6 @@ public:
 
     WorldSession* GetSession() { return m_session; }
 
-    QString GetName() { return m_name; }
-    quint16 GetBreed() { return m_breed; }
     quint8 GetGender() { return m_gender; }
 
     quint8 GetSkinColor() { return m_skinColor; }
@@ -46,23 +44,6 @@ public:
     quint64 GetXP() { return 0; }
     quint16 GetXPFreePoints() { return 0; }
     quint32 GetXPGauge() { return 0; }
-
-    void SetPosition(qint32 positionX, qint32 positionY, qint16 positionZ)
-    {
-        m_positionX = positionX;
-        m_positionY = positionY;
-        m_positionZ = positionZ;
-    }
-
-    qint32 GetPositionX() { return m_positionX; }
-    qint32 GetPositionY() { return m_positionY; }
-    qint16 GetPositionZ() { return m_positionZ; }
-
-    void SetDirection(quint8 direction) { m_direction = direction; }
-    quint8 GetDirection() { return m_direction; }
-
-    void SetInstanceId(quint16 instanceId) { m_instanceId = instanceId; }
-    quint16 GetInstanceId() { return m_instanceId; }
 
     quint64 GetGuildId() { return 0; }
 
@@ -248,10 +229,6 @@ public:
 private:
     WorldSession* m_session;
 
-    QString m_name;
-    quint16 m_breed;
-
-    quint16 m_level;
     quint64 m_xp;
     qint64 m_title;
 
@@ -263,12 +240,6 @@ private:
     quint8 m_hairColorFactor;
     quint8 m_clothIndex;
     quint8 m_faceIndex;
-
-    qint32 m_positionX;
-    qint32 m_positionY;
-    qint16 m_positionZ;
-    quint8 m_direction;
-    quint16 m_instanceId;
 };
 
 #endif // CHARACTER_H
