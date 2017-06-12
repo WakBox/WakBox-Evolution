@@ -37,7 +37,7 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
 
         for (MapObjectList::ConstIterator object = mapObjects.begin(); object != mapObjects.end(); ++object)
         {
-            if (++i == 100)
+            if (++i > 100)
                 break;
 
             if ((*object))
@@ -62,7 +62,11 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
 
     for (QList<Unit*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
     {
-        data << quint8(0); // Actor type (0 = PlayerCharacter, 1 = NonPlayerCharacter.createNpc, 4 = InteractiveNonPlayerCharacter)
+        if ((*itr)->GetTypeId() == TYPEID_CHARACTER)
+            data << quint8(0); // Actor type (0 = PlayerCharacter, 1 = NonPlayerCharacter.createNpc, 4 = InteractiveNonPlayerCharacter)
+        else
+            data << quint8(1);
+
         data << quint64((*itr)->GetGuid());
 
         data.StartBlock<quint16>();
@@ -73,6 +77,9 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
             if ((*itr)->GetTypeId() == TYPEID_CHARACTER)
             {
                 Character* character = (*itr)->ToCharacter();
+
+                if (!character)
+                    continue;
 
                  // ID
                  character->SerializeGuid(data);
@@ -174,6 +181,9 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
             {
                 Creature* creature = (*itr)->ToCreature();
 
+                if (!creature)
+                    continue;
+
                 // ID
                 creature->SerializeGuid(data);
 
@@ -191,6 +201,9 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
 
                 // APPEARANCE
                 creature->SerializeAppearance(data);
+
+                // TMP
+                data << quint16(creature->GetLevel());
 
                 // PUBLIC_CHARACTERISTICS
                 creature->SerializePublicCharacteristics(data);

@@ -26,7 +26,7 @@ public:
     // Serialization
 
     // Appearance
-    virtual void SerializeAppearance(WorldPacket& data);
+    void SerializeAppearance(WorldPacket& data);
 
     // GROUP
     void SerializeGroup(WorldPacket& data);

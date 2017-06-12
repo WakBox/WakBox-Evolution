@@ -24,6 +24,7 @@ void Map::Load()
         for (QList<qint64>::ConstIterator guid = creatureGuids.begin(); guid != creatureGuids.end(); ++guid)
         {
             Creature* creature = new Creature();
+            creature->SetGuid(*guid);
             creature->SetData(sObjectMgr->GetCreatureData(*guid));
 
             m_mapObjects.push_back(creature);

@@ -56,7 +56,7 @@ public:
     // Character Serialization
 
     // IDENTITY
-    virtual void SerializeIdentity(WorldPacket& data);
+    void SerializeIdentity(WorldPacket& data);
 
     // GUILD_BLAZON
     void SerializeGuildBlazon(WorldPacket& data);
@@ -68,7 +68,7 @@ public:
     void SerializeHP(WorldPacket& data);
 
     // APPEARANCE
-    virtual void SerializeAppearance(WorldPacket& data);
+    void SerializeAppearance(WorldPacket& data);
 
     // SHORTCUT_INVENTORIES
     void SerializeShortcutInventories(WorldPacket& data);
