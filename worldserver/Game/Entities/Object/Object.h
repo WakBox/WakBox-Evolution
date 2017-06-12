@@ -14,6 +14,7 @@ enum TypeId
 
 class Unit;
 class Character;
+class Creature;
 
 class Object
 {
@@ -30,6 +31,7 @@ public:
     bool IsInWorld() const { return m_inWorld; }
 
     Character* ToCharacter() { if (GetTypeId() == TYPEID_CHARACTER) return reinterpret_cast<Character*>(this); else return nullptr; }
+    Creature* ToCreature() { if (GetTypeId() == TYPEID_CREATURE) return reinterpret_cast<Creature*>(this); else return nullptr; }
 
     // Todo
     //virtual void AddToWorld();

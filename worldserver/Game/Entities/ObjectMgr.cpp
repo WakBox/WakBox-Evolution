@@ -1,6 +1,7 @@
 #include "ObjectMgr.h"
 #include "Configuration/ConfigMgr.h"
 #include "Logs/Log.h"
+#include "Utils/Util.h"
 #include "Define.h"
 
 template<> ObjectMgr*  Singleton<ObjectMgr>::m_instance = 0;
@@ -46,7 +47,7 @@ void ObjectMgr::LoadCreatures()
         // Check if creature in MonsterBinaryData
 
         CreatureData data;
-        data.id = quint32(result.value("id").toUInt());
+        data.id = quint32(result.value("breed").toUInt());
         data.level = quint16(result.value("level").toUInt());
         data.position_x = qint32(result.value("position_x").toInt());
         data.position_y = qint32(result.value("position_y").toInt());
@@ -59,7 +60,8 @@ void ObjectMgr::LoadCreatures()
         // Check if instance_id exists
 
         // Add to map/partition
-
+        QList<qint64>& partitionCreatureGuids = m_mapCreatureGuids[data.instance_id][Utils::getIntFromTwoInt(data.position_x, data.position_y)];
+        partitionCreatureGuids.push_back(qint64(result.value("guid").toLongLong()));
     }
 
     Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u creatures in %u ms.", m_creatureData.count(), t.elapsed());
@@ -77,9 +79,4 @@ void ObjectMgr::LoadInteractiveElements()
         m_interactiveElements[(quint32)result.value("interactive_element_id").toUInt()] = result.value("script_name").toString();
 
     Log::Write(LOG_TYPE_NORMAL, ">> Loaded %u interactive elements in %u ms.", m_interactiveElements.count(), t.elapsed());
-}
-
-const QString ObjectMgr::GetInteractiveElementScriptNameById(quint32 id)
-{
-    return m_interactiveElements.value(id, QString());
 }

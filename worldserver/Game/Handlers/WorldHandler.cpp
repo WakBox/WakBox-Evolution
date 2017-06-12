@@ -1,4 +1,7 @@
 #include "Server/WorldSession.h"
+#include "Maps/Map.h"
+#include "Entities/ObjectMgr.h"
+#include "Utils/Util.h"
 
 void WorldSession::SendWorldSelectResult(bool result)
 {
@@ -23,23 +26,33 @@ void WorldSession::HandleInteractiveElement(WorldPacket &packet)
 
 void WorldSession::SendActorSpawn(WorldSession* actor)
 {
-    QList<Character*> actorList;
+    QList<Unit*> actorList;
+    int i = 0;
 
     if (actor)
         actorList.push_back(actor->GetCharacter());
     else
     {
-        SessionList const& sessions = sWorld->GetAllSessions();
-        for (SessionList::ConstIterator itr = sessions.begin(); itr != sessions.end(); ++itr)
-            if ((*itr) && (*itr) != this)
-                if (Character* character = (*itr)->GetCharacter())
-                    if (character->IsInWorld())
-                        actorList.push_back(character);
+        MapObjectList mapObjects = GetCharacter()->GetMap()->GetObjectList();
+
+        for (MapObjectList::ConstIterator object = mapObjects.begin(); object != mapObjects.end(); ++object)
+        {
+            if (++i == 100)
+                break;
+
+            if ((*object))
+            {
+                if ((*object)->GetTypeId() == TYPEID_CHARACTER && (*object)->ToCharacter() == GetCharacter())
+                    continue;
+
+                actorList.push_back((*object));
+            }
+        }
     }
 
     qDebug() << "Actor list: " << actorList.count();
 
-    for (QList<Character*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
+    for (QList<Unit*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
         qDebug() << ">> " << (*itr)->GetName();
 
     WorldPacket data(SMSG_ACTOR_SPAWN);
@@ -47,7 +60,7 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
     data << quint8(0); // 0 = SpawnInWorld, 1= SpawnInMyFight
     data << quint8(actorList.count()); // Actor count
 
-    for (QList<Character*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
+    for (QList<Unit*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
     {
         data << quint8(0); // Actor type (0 = PlayerCharacter, 1 = NonPlayerCharacter.createNpc, 4 = InteractiveNonPlayerCharacter)
         data << quint64((*itr)->GetGuid());
@@ -57,101 +70,156 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
             // CharacterSerializerPart
             data << quint8(9); // FOR_REMOTE_CHARACTER_INFORMATION
 
-            // ID
-            (*itr)->SerializeGuid(data);
+            if ((*itr)->GetTypeId() == TYPEID_CHARACTER)
+            {
+                Character* character = (*itr)->ToCharacter();
 
-            // IDENTITY
-            (*itr)->SerializeIdentity(data);
+                 // ID
+                 character->SerializeGuid(data);
 
-            // NAME
-            (*itr)->SerializeName(data);
+                 // IDENTITY
+                 character->SerializeIdentity(data);
 
-            // BREED
-            (*itr)->SerializeBreed(data);
+                 // NAME
+                 character->SerializeName(data);
 
-            // GUILD_BLAZON
-            (*itr)->SerializeGuildBlazon(data);
+                 // BREED
+                 character->SerializeBreed(data);
 
-            // GUILD_ID
-            (*itr)->SerializeGuildId(data);
+                 // GUILD_BLAZON
+                 character->SerializeGuildBlazon(data);
 
-            // POSITION
-            (*itr)->SerializePosition(data);
+                 // GUILD_ID
+                 character->SerializeGuildId(data);
 
-            // APPEARANCE
-            (*itr)->SerializeAppearance(data);
+                 // POSITION
+                 character->SerializePosition(data);
 
-            // PUBLIC_CHARACTERISTICS
-            (*itr)->SerializePublicCharacteristics(data);
+                 // APPEARANCE
+                 character->SerializeAppearance(data);
 
-            // FIGHT_PROPERTIES
-            (*itr)->SerializeFightProperties(data);
+                 // PUBLIC_CHARACTERISTICS
+                 character->SerializePublicCharacteristics(data);
 
-            // FIGHT
-            (*itr)->SerializeFight(data);
+                 // FIGHT_PROPERTIES
+                 character->SerializeFightProperties(data);
 
-            // EQUIPMENT_APPEARANCE
-            (*itr)->SerializeEquipmentAppearance(data);
+                 // FIGHT
+                 character->SerializeFight(data);
 
-            // RUNNING_EFFECTS
-            (*itr)->SerializeRunningEffects(data);
+                 // EQUIPMENT_APPEARANCE
+                 character->SerializeEquipmentAppearance(data);
 
-            // CURRENT_MOVEMENT_PATH
-            (*itr)->SerializeCurrentMovementPath(data);
+                 // RUNNING_EFFECTS
+                 character->SerializeRunningEffects(data);
 
-            // WORLD_PROPERTIES
-            (*itr)->SerializeWorldProperties(data);
+                 // CURRENT_MOVEMENT_PATH
+                 character->SerializeCurrentMovementPath(data);
 
-            // GROUP
-            (*itr)->SerializeGroup(data);
+                 // WORLD_PROPERTIES
+                 character->SerializeWorldProperties(data);
 
-            // TEMPLATE - Nothing for player
-            //(*itr)->SerializeTemplate(data);
+                 // GROUP
+                 character->SerializeGroup(data);
 
-            // COLLECT - Nothing for player
-            //(*itr)->SerializeCollect(data);
+                 // TEMPLATE - Nothing for player
+                 //character->SerializeTemplate(data);
 
-            // PET
-            (*itr)->SerializePet(data);
+                 // COLLECT - Nothing for player
+                 //character->SerializeCollect(data);
 
-            // OCCUPATION
-            (*itr)->SerializeOccupation(data);
+                 // PET
+                 character->SerializePet(data);
 
-            // XP
-            (*itr)->SerializeXP(data);
+                 // OCCUPATION
+                 character->SerializeOccupation(data);
 
-            // XP_CHARACTERISTICS
-            (*itr)->SerializeXPCharacteristics(data);
+                 // XP
+                 character->SerializeXP(data);
 
-            // CITIZEN_POINT
-            (*itr)->SerializeCitizenPoint(data);
+                 // XP_CHARACTERISTICS
+                 character->SerializeXPCharacteristics(data);
 
-            // GUILD_REMOTE_INFO
-            (*itr)->SerializeGuildRemoteInfo(data);
+                 // CITIZEN_POINT
+                 character->SerializeCitizenPoint(data);
 
-            // NATION_ID
-            (*itr)->SerializeNationId(data);
+                 // GUILD_REMOTE_INFO
+                 character->SerializeGuildRemoteInfo(data);
 
-            // NATION_SYNCHRO
-            (*itr)->SerializeNationSynchro(data);
+                 // NATION_ID
+                 character->SerializeNationId(data);
 
-            // SOCIAL_STATES
-            (*itr)->SerializeSocialStates(data);
+                 // NATION_SYNCHRO
+                 character->SerializeNationSynchro(data);
 
-            // ACCOUNT_INFORMATION_REMOTE
-            (*itr)->SerializeAccountInformationRemote(data);
+                 // SOCIAL_STATES
+                 character->SerializeSocialStates(data);
 
-            // COMPANION_CONTROLLER_ID - Nothing for player
-            //(*itr)->SerializeCompanionControllerId(data);
+                 // ACCOUNT_INFORMATION_REMOTE
+                 character->SerializeAccountInformationRemote(data);
 
-            // VISIBILITY
-            (*itr)->SerializeVisibility(data);
+                 // COMPANION_CONTROLLER_ID - Nothing for player
+                 //character->SerializeCompanionControllerId(data);
 
-            // COSMETICS
-            (*itr)->SerializeCosmetics(data);
+                 // VISIBILITY
+                 character->SerializeVisibility(data);
 
-            // DOWNSCALE_INFO
-            (*itr)->SerializeDownscaleInfo(data);
+                 // COSMETICS
+                 character->SerializeCosmetics(data);
+
+                 // DOWNSCALE_INFO
+                 character->SerializeDownscaleInfo(data);
+            }
+            else if ((*itr)->GetTypeId() == TYPEID_CREATURE)
+            {
+                Creature* creature = (*itr)->ToCreature();
+
+                // ID
+                creature->SerializeGuid(data);
+
+                // IDENTITY
+                creature->SerializeIdentity(data);
+
+                // NAME
+                creature->SerializeName(data);
+
+                // BREED
+                creature->SerializeBreed(data);
+
+                // POSITION
+                creature->SerializePosition(data);
+
+                // APPEARANCE
+                creature->SerializeAppearance(data);
+
+                // PUBLIC_CHARACTERISTICS
+                creature->SerializePublicCharacteristics(data);
+
+                // FIGHT_PROPERTIES
+                creature->SerializeFightProperties(data);
+
+                // FIGHT
+                creature->SerializeFight(data);
+
+                // CURRENT_MOVEMENT_PATH
+                creature->SerializeCurrentMovementPath(data);
+
+                // WORLD_PROPERTIES
+                creature->SerializeWorldProperties(data);
+
+                // GROUP
+                creature->SerializeGroup(data);
+
+                // TEMPLATE
+                creature->SerializeTemplate(data);
+
+                // COLLECT
+                creature->SerializeCollect(data);
+
+                // COMPANION_CONTROLLER_ID
+                creature->SerializeCompanionControllerId(data);
+
+            }
         }
         data.EndBlock<quint16>();
     }
@@ -160,7 +228,7 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
     // For the others send packet to all players around the area
 
     if (actor)
-        sWorld->SendGlobalPacket(data, actor);
+        actor->GetCharacter()->GetMap()->SendPacket(data, actor);
     else
         SendPacket(data);
 }

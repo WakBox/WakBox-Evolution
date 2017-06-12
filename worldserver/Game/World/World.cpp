@@ -44,6 +44,7 @@ bool World::Initialize()
     sTopologyMgr->LoadTopology();
 
     sObjectMgr->SetHighestGuids();
+    sObjectMgr->LoadCreatures();
     sObjectMgr->LoadInteractiveElements();
 
     sScriptMgr->Initialize();

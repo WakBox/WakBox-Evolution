@@ -55,17 +55,8 @@ public:
 
     // Character Serialization
 
-    // ID
-    void SerializeGuid(WorldPacket& data);
-
     // IDENTITY
-    void SerializeIdentity(WorldPacket& data);
-
-    // NAME
-    void SerializeName(WorldPacket& data);
-
-    // BREED
-    void SerializeBreed(WorldPacket& data);
+    virtual void SerializeIdentity(WorldPacket& data);
 
     // GUILD_BLAZON
     void SerializeGuildBlazon(WorldPacket& data);
@@ -76,11 +67,8 @@ public:
     // HP
     void SerializeHP(WorldPacket& data);
 
-    // POSITION
-    void SerializePosition(WorldPacket& data);
-
     // APPEARANCE
-    void SerializeAppearance(WorldPacket& data);
+    virtual void SerializeAppearance(WorldPacket& data);
 
     // SHORTCUT_INVENTORIES
     void SerializeShortcutInventories(WorldPacket& data);
@@ -169,9 +157,6 @@ public:
     // ANTI_ADDICTION
     void SerializeAntiAddiction(WorldPacket& data);
 
-    // WORLD_PROPERTIES
-    void SerializeWorldProperties(WorldPacket& data);
-
     // VISIBILITY
     void SerializeVisibility(WorldPacket& data);
 
@@ -196,20 +181,8 @@ public:
     // NATION_PVP_MONEY
     void SerializeNationPvpMoney(WorldPacket& data);
 
-    // PUBLIC_CHARACTERISTICS
-    void SerializePublicCharacteristics(WorldPacket& data);
-
-    // FIGHT_PROPERTIES
-    void SerializeFightProperties(WorldPacket& data);
-
-    // FIGHT
-    void SerializeFight(WorldPacket& data);
-
     // EQUIPMENT_APPEARANCE
     void SerializeEquipmentAppearance(WorldPacket& data);
-
-    // CURRENT_MOVEMENT_PATH
-    void SerializeCurrentMovementPath(WorldPacket& data);
 
     // GROUP
     void SerializeGroup(WorldPacket& data);

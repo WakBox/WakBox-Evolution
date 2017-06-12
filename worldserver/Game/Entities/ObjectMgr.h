@@ -12,7 +12,10 @@ enum GuidType
     GUIDTYPE_CHARACTER = 1
 };
 
-typedef QHash<qint64, CreatureData> CreatureDataHash;
+typedef QHash<qint64/*guid*/, CreatureData> CreatureDataHash;
+typedef QHash<qint16/*partitionId*/, QList<qint64>> CreatureGuidsHash;
+typedef QHash<qint16/*mapId*/, CreatureGuidsHash> MapCreatureGuidsHash;
+
 typedef QHash<quint32, QString> InteractiveElementsHash;
 
 class Character;
@@ -26,13 +29,30 @@ public:
     void SetHighestGuids();
     quint32 GenerateGuid(GuidType type);
 
+    CreatureData const& GetCreatureData(qint64 guid)
+    {
+        return m_creatureData[guid];
+    }
+
+    CreatureGuidsHash const& GetMapCreatureGuids(qint16 mapId)
+    {
+        return m_mapCreatureGuids[mapId];
+    }
+
     void LoadCreatures();
     void LoadInteractiveElements();
-    const QString GetInteractiveElementScriptNameById(quint32 id);
+    const QString GetInteractiveElementScriptNameById(quint32 id)
+    {
+        return m_interactiveElements.value(id, QString());
+    }
 
 private:
     quint32 m_highCharacterGuid;
+
     CreatureDataHash m_creatureData;
+    CreatureGuidsHash m_paritionCreatureGuids;
+    MapCreatureGuidsHash m_mapCreatureGuids;
+
     InteractiveElementsHash m_interactiveElements;
 };
 

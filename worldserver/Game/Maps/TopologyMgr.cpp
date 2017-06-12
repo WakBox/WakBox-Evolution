@@ -1,6 +1,7 @@
 #include "TopologyMgr.h"
 #include "SimpleBinaryReader.h"
 #include "Logs/Log.h"
+#include "Utils/Util.h"
 
 template<> TopologyMgr*  Singleton<TopologyMgr>::m_instance = 0;
 
@@ -82,7 +83,7 @@ void TopologyMgr::LoadTopology()
 
             //qint8 res = mapTopology->isCellBlocked(offsetx, offsety);
 
-            topologyMapHash[filePath] = mapTopology;
+            topologyMapHash[Utils::getIntFromTwoInt(mapx, mapy)] = mapTopology;
         }
 
         archive.close();

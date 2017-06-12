@@ -21,8 +21,26 @@ public:
     Creature();
     ~Creature();
 
-protected:
+    void SetData(CreatureData const& data);
 
+    // Serialization
+
+    // Appearance
+    virtual void SerializeAppearance(WorldPacket& data);
+
+    // GROUP
+    void SerializeGroup(WorldPacket& data);
+
+    // TEMPLATE
+    void SerializeTemplate(WorldPacket& data);
+
+    // COLLECT
+    void SerializeCollect(WorldPacket& data);
+
+    // COMPANION_CONTROLLER_ID
+    void SerializeCompanionControllerId(WorldPacket& data);
+
+private:
 };
 
 #endif // CREATURE_H

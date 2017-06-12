@@ -1,5 +1,6 @@
 #include "Server/WorldSession.h"
 #include "Entities/ObjectMgr.h"
+#include "Maps/MapMgr.h"
 #include "Miscellaneous/SharedDefines.h"
 #include "Utils/Util.h"
 #include "Proto/equipment.pb.h"
@@ -285,10 +286,15 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     // Send 4202 - multiple times
 
-    // Send all creature / player in the area
-    SendActorSpawn();
-    // Send actor spawn to the other player in the area
-    SendActorSpawn(this);
+    // todo: move it?
+    Map* map = sMapMgr->CreateMap(GetCharacter()->GetInstanceId());
+    if (!map)
+    {
+        Log::Write(LOG_TYPE_NORMAL, "Error while creating map %i!", GetCharacter()->GetInstanceId());
+        return;
+    }
+
+    map->AddCharacterToMap(GetCharacter());
 
     // 200
     /*WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);
@@ -333,8 +339,6 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     SendCharacterUpdate();
     */
-
-    GetCharacter()->SetInWorld();
 }
 
 void WorldSession::SendCharacterInformation()

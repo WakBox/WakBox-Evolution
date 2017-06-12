@@ -1,24 +1,9 @@
 #include "Character.h"
 
-void Character::SerializeGuid(WorldPacket& data)
-{
-    data << GetGuid();
-}
-
 void Character::SerializeIdentity(WorldPacket& data)
 {
     data << (quint8) 0; // idType
     data << GetSession()->GetAccountInfos().id;
-}
-
-void Character::SerializeName(WorldPacket& data)
-{
-    data.WriteString(GetName(), STRING_SIZE_2);
-}
-
-void Character::SerializeBreed(WorldPacket& data)
-{
-    data << GetBreed();
 }
 
 void Character::SerializeGuildBlazon(WorldPacket& data)
@@ -34,24 +19,6 @@ void Character::SerializeGuildId(WorldPacket& data)
 void Character::SerializeHP(WorldPacket& data)
 {
     data << GetHealth();
-}
-
-void Character::SerializePosition(WorldPacket& data)
-{
-    data << GetPositionX();
-    data << GetPositionY();
-    data << GetPositionZ();
-    data << GetInstanceId();
-    data << GetDirection();
-
-    // dimBagPosition
-    data << (quint8) 1;
-    {
-        data << quint32(0); //x
-        data << quint32(0); //y
-        data << quint16(0); //z
-        data << quint16(0); //instanceid
-    }
 }
 
 void Character::SerializeAppearance(WorldPacket& data)
@@ -478,11 +445,6 @@ void Character::SerializeAntiAddiction(WorldPacket& data)
     data << quint8(0); // hasAddictionData
 }
 
-void Character::SerializeWorldProperties(WorldPacket& data)
-{
-    data << quint8(0); // hasProperties
-}
-
 void Character::SerializeVisibility(WorldPacket& data)
 {
     data << quint8(1); // Visible
@@ -571,36 +533,9 @@ void Character::SerializeNationPvpMoney(WorldPacket& data)
     data << quint64(0); // dailyPvpMoneyAmount
 }
 
-void Character::SerializePublicCharacteristics(WorldPacket& data)
-{
-    data << quint16(0); // size
-}
-
-void Character::SerializeFightProperties(WorldPacket& data)
-{
-    data << quint8(0); // hasProperties
-}
-
-void Character::SerializeFight(WorldPacket& data)
-{
-    data << qint32(-1); // currentFightId
-    data << quint8(0); // isKo
-    data << quint8(0); // isDead
-    data << quint8(0); // isSummoned
-    data << quint8(0); // isFleeing
-    data << qint8(-1); // obstacleId
-
-    data << quint8(0); // hasSUMMONDATA
-}
-
 void Character::SerializeEquipmentAppearance(WorldPacket& data)
 {
     data << quint8(0); // EquipmentAppearance size
-}
-
-void Character::SerializeCurrentMovementPath(WorldPacket& data)
-{
-    data << quint8(0); // hasCurrentPath
 }
 
 void Character::SerializeGroup(WorldPacket& data)
