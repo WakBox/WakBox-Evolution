@@ -33,13 +33,10 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
         actorList.push_back(actor->GetCharacter());
     else
     {
-        MapObjectList mapObjects = GetCharacter()->GetMap()->GetObjectList();
+        QList<Unit*> mapObjects = GetCharacter()->GetMap()->GetPartitionObjectList(Utils::getIntFromTwoInt(GetCharacter()->GetPositionX(), GetCharacter()->GetPositionY()));
 
-        for (MapObjectList::ConstIterator object = mapObjects.begin(); object != mapObjects.end(); ++object)
+        for (QList<Unit*>::ConstIterator object = mapObjects.begin(); object != mapObjects.end(); ++object)
         {
-            if (++i > 100)
-                break;
-
             if ((*object))
             {
                 if ((*object)->GetTypeId() == TYPEID_CHARACTER && (*object)->ToCharacter() == GetCharacter())
@@ -51,9 +48,6 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
     }
 
     qDebug() << "Actor list: " << actorList.count();
-
-    for (QList<Unit*>::ConstIterator itr = actorList.begin(); itr != actorList.end(); ++itr)
-        qDebug() << ">> " << (*itr)->GetName();
 
     WorldPacket data(SMSG_ACTOR_SPAWN);
 

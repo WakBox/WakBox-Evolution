@@ -1,4 +1,5 @@
 #include "Creature.h"
+#include "BinaryData/BinaryData.h"
 
 Creature::Creature() : Unit()
 {
@@ -18,4 +19,9 @@ void Creature::SetData(CreatureData const& data)
     SetDirection(data.direction);
     SetInstanceId(data.instance_id);
     //quint32 group_id;
+
+    // Load from template (binary data)
+    if (MonsterBinaryData const* creature = sMonsterStorage.FindEntry(GetBreed()))
+    {
+    }
 }

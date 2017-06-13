@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Entities/Character/Character.h"
 #include "Entities/ObjectMgr.h"
+#include "Utils/Util.h"
 
 Map::Map(qint16 id)
 {
@@ -27,14 +28,14 @@ void Map::Load()
             creature->SetGuid(*guid);
             creature->SetData(sObjectMgr->GetCreatureData(*guid));
 
-            m_mapObjects.push_back(creature);
+            m_mapObjects[Utils::getIntFromTwoInt(creature->GetPositionX(), creature->GetPositionY())].push_back(creature);
         }
     }
 }
 
 void Map::AddCharacterToMap(Character* character)
 {
-    m_mapObjects.push_back(character);
+    m_mapObjects[Utils::getIntFromTwoInt(character->GetPositionX(), character->GetPositionY())].push_back(character);
     character->SetMap(this);
 
     // Send all creature / player in the area
@@ -48,8 +49,10 @@ void Map::AddCharacterToMap(Character* character)
 
 void Map::SendPacket(WorldPacket &data, WorldSession *self)
 {
-    MapObjectList::ConstIterator itr;
-    for (itr = m_mapObjects.begin(); itr != m_mapObjects.end(); ++itr)
+    QList<Unit*>::ConstIterator itr;
+    qint16 partition = Utils::getIntFromTwoInt(self->GetCharacter()->GetPositionX(), self->GetCharacter()->GetPositionY());
+
+    for (itr = m_mapObjects[partition].begin(); itr != m_mapObjects[partition].end(); ++itr)
     {
         if ((*itr) &&
              (*itr)->GetTypeId() == TYPEID_CHARACTER &&
