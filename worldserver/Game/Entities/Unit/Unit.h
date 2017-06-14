@@ -2,8 +2,10 @@
 #define UNIT_H
 
 #include "Entities/Object/Object.h"
+#include "Utils/Util.h"
 
 class Map;
+class Partition;
 
 class Unit : public Object
 {
@@ -39,6 +41,10 @@ public:
 
     void SetMap(Map* map) { m_map = map; }
     Map* GetMap() { return m_map; }
+
+    void SetPartition(Partition* partition) { m_partition = partition; }
+    Partition* GetPartition() { return m_partition; }
+    qint16 GetLastPartitionId() { return Utils::getIntFromTwoInt(GetPositionX(), GetPositionY()); }
 
     // Serialization
 
@@ -84,6 +90,7 @@ private:
     quint16 m_instanceId;
 
     Map* m_map;
+    Partition* m_partition;
 };
 
 #endif // UNIT_H

@@ -20,8 +20,6 @@ Map* MapMgr::CreateMap(qint16 id)
     if (!map)
     {
         map = new Map(id);
-        map->Load();
-
         m_maps[id] = map;
     }
 

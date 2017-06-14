@@ -3,12 +3,10 @@
 
 #include <QtCore>
 
-#include "Server/WorldSession.h"
-#include "Entities/Object/Object.h"
+#include "Entities/ObjectMgr.h"
+#include "Partition.h"
 
-class Character;
-
-typedef QHash<qint16/*partitionId*/, QList<Unit*>> MapObjectList;
+typedef QHash<qint16/*partitionId*/, Partition*> PartitionHash;
 
 class Map
 {
@@ -17,17 +15,25 @@ public:
     ~Map();
 
     qint16 GetId() { return m_id; }
-    QList<Unit*> const& GetPartitionObjectList(qint16 partition) { return m_mapObjects[partition]; }
 
-    void Load();
+    QList<qint64> const& GetPartitionCreatureGuids(qint16 partition)
+    {
+        CreatureGuidsHash const& partitionCreatureGuids = sObjectMgr->GetMapCreatureGuids(GetId());
+        return partitionCreatureGuids[partition];
+    }
+
+    Partition* CreatePartition(qint16 id);
+    Partition* FindPartition(qint16 id) const
+    {
+        PartitionHash::const_iterator it = m_partitions.find(id);
+        return (it != m_partitions.end() ? it.value() : nullptr);
+    }
+
     void AddCharacterToMap(Character* character);
-
-    void SendPacket(WorldPacket& data, WorldSession* self = nullptr);
 
 private:
     qint16 m_id;
-
-    MapObjectList m_mapObjects;
+    PartitionHash m_partitions;
 };
 
 #endif // MAP_H

@@ -296,6 +296,14 @@ void WorldSession::SendCharacterEnterWorldPackets()
 
     map->AddCharacterToMap(GetCharacter());
 
+    // Send all creature / player in the area
+    GetCharacter()->GetSession()->SendActorSpawn();
+
+    // Send actor spawn to the other player in the area
+    GetCharacter()->GetSession()->SendActorSpawn(GetCharacter()->GetSession());
+
+    GetCharacter()->SetInWorld();
+
     // 200
     /*WorldPacket data2(SMSG_INTERACTIVE_ELEMENT_SPAWN);
 

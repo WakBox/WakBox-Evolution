@@ -33,16 +33,16 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
         actorList.push_back(actor->GetCharacter());
     else
     {
-        QList<Unit*> mapObjects = GetCharacter()->GetMap()->GetPartitionObjectList(Utils::getIntFromTwoInt(GetCharacter()->GetPositionX(), GetCharacter()->GetPositionY()));
+        MapUnitList units = GetCharacter()->GetPartition()->GetUnitList();
 
-        for (QList<Unit*>::ConstIterator object = mapObjects.begin(); object != mapObjects.end(); ++object)
+        for (MapUnitList::ConstIterator unit = units.begin(); unit != units.end(); ++unit)
         {
-            if ((*object))
+            if ((*unit))
             {
-                if ((*object)->GetTypeId() == TYPEID_CHARACTER && (*object)->ToCharacter() == GetCharacter())
+                if ((*unit)->GetTypeId() == TYPEID_CHARACTER && (*unit)->ToCharacter() == GetCharacter())
                     continue;
 
-                actorList.push_back((*object));
+                actorList.push_back((*unit));
             }
         }
     }
@@ -235,7 +235,7 @@ void WorldSession::SendActorSpawn(WorldSession* actor)
     // For the others send packet to all players around the area
 
     if (actor)
-        actor->GetCharacter()->GetMap()->SendPacket(data, actor);
+        actor->GetCharacter()->GetPartition()->SendPacket(data, actor);
     else
         SendPacket(data);
 }
