@@ -1,4 +1,6 @@
 #include "Unit.h"
+#include "Utils/Util.h"
+#include "Maps/MapMgr.h"
 
 Unit::Unit() : Object()
 {
@@ -20,4 +22,11 @@ Unit::Unit() : Object()
 Unit::~Unit()
 {
 
+}
+
+qint16 Unit::GetLastPartitionId()
+{
+    return Utils::getIntFromTwoInt(
+                MapMgr::getMapCoordFromCell(GetPositionX()),
+                MapMgr::getMapCoordFromCell(GetPositionY()));
 }

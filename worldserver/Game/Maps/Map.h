@@ -16,12 +16,6 @@ public:
 
     qint16 GetId() { return m_id; }
 
-    QList<qint64> const& GetPartitionCreatureGuids(qint16 partition)
-    {
-        CreatureGuidsHash const& partitionCreatureGuids = sObjectMgr->GetMapCreatureGuids(GetId());
-        return partitionCreatureGuids[partition];
-    }
-
     Partition* CreatePartition(qint16 id);
     Partition* FindPartition(qint16 id) const
     {

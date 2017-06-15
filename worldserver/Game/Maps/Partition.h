@@ -7,6 +7,8 @@
 
 typedef QList<Unit*> MapUnitList;
 
+class Map;
+
 class Partition
 {
 public:

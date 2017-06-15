@@ -44,7 +44,7 @@ public:
 
     void SetPartition(Partition* partition) { m_partition = partition; }
     Partition* GetPartition() { return m_partition; }
-    qint16 GetLastPartitionId() { return Utils::getIntFromTwoInt(GetPositionX(), GetPositionY()); }
+    qint16 GetLastPartitionId();
 
     // Serialization
 

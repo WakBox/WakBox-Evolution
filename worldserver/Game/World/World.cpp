@@ -32,7 +32,7 @@ World::~World()
 
 bool World::Initialize()
 {
-    LoadBinaryStorage();
+    /*LoadBinaryStorage();
 
     // Test
     if (AchievementBinaryData const* achievement = sAchievementStorage.FindEntry(2517))
@@ -41,7 +41,7 @@ bool World::Initialize()
         qDebug() << "Criteron: " << achievement->m_criterion;
     }
 
-    sTopologyMgr->LoadTopology();
+    sTopologyMgr->LoadTopology();*/
 
     sObjectMgr->SetHighestGuids();
     sObjectMgr->LoadCreatures();

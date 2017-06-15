@@ -3,6 +3,7 @@
 #include "Logs/Log.h"
 #include "Utils/Util.h"
 #include "Define.h"
+#include "Maps/MapMgr.h"
 
 template<> ObjectMgr*  Singleton<ObjectMgr>::m_instance = 0;
 
@@ -60,7 +61,11 @@ void ObjectMgr::LoadCreatures()
         // Check if instance_id exists
 
         // Add to map/partition
-        QList<qint64>& partitionCreatureGuids = m_mapCreatureGuids[data.instance_id][Utils::getIntFromTwoInt(data.position_x, data.position_y)];
+        qint16 partitionId = Utils::getIntFromTwoInt(
+                    MapMgr::getMapCoordFromCell(data.position_x),
+                    MapMgr::getMapCoordFromCell(data.position_y));
+
+        QList<qint64>& partitionCreatureGuids = m_mapCreatureGuids[data.instance_id][partitionId];
         partitionCreatureGuids.push_back(qint64(result.value("guid").toLongLong()));
     }
 

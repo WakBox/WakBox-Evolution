@@ -34,9 +34,9 @@ public:
         return m_creatureData[guid];
     }
 
-    CreatureGuidsHash const& GetMapCreatureGuids(qint16 mapId)
+    QList<qint64> const& GetPartitionCreatureGuids(qint16 mapId, qint16 partition)
     {
-        return m_mapCreatureGuids[mapId];
+        return m_mapCreatureGuids[mapId][partition];
     }
 
     void LoadCreatures();

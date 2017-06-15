@@ -1,6 +1,7 @@
 #include "Partition.h"
 #include "Entities/ObjectMgr.h"
 #include "Map.h"
+#include "Maps/MapMgr.h"
 
 Partition::Partition(Map* map, qint16 partitionId)
 {
@@ -15,13 +16,19 @@ Partition::~Partition()
 
 void Partition::Load()
 {
-    QList<qint64> const& creatureGuids = GetMap()->GetPartitionCreatureGuids(GetId());
+    QList<qint64> const& creatureGuids = sObjectMgr->GetPartitionCreatureGuids(GetMap()->GetId(), GetId());
+
+    qDebug() << "CreatureGuids = " << creatureGuids.size();
 
     for (QList<qint64>::ConstIterator guid = creatureGuids.begin(); guid != creatureGuids.end(); ++guid)
     {
         Creature* creature = new Creature();
         creature->SetGuid(*guid);
         creature->SetData(sObjectMgr->GetCreatureData(*guid));
+
+        qDebug() << "partitionId " << Utils::getIntFromTwoInt(
+                        MapMgr::getMapCoordFromCell(creature->GetPositionX()),
+                        MapMgr::getMapCoordFromCell(creature->GetPositionY()));
 
         m_unitList.push_back(creature);
     }

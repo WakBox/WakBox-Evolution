@@ -27,7 +27,6 @@ void WorldSession::HandleInteractiveElement(WorldPacket &packet)
 void WorldSession::SendActorSpawn(WorldSession* actor)
 {
     QList<Unit*> actorList;
-    int i = 0;
 
     if (actor)
         actorList.push_back(actor->GetCharacter());
