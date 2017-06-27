@@ -24,7 +24,7 @@ Unit::~Unit()
 
 }
 
-qint16 Unit::GetLastPartitionId()
+qint32 Unit::GetLastPartitionId()
 {
     return Utils::getIntFromTwoInt(
                 MapMgr::getMapCoordFromCell(GetPositionX()),

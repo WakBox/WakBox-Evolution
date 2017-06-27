@@ -12,7 +12,7 @@ class Map;
 class Partition
 {
 public:
-    Partition(Map* map, qint16 partitionId);
+    Partition(Map* map, qint32 partitionId);
     ~Partition();
 
     Map* GetMap() { return m_map; }
@@ -26,7 +26,7 @@ public:
 
 private:
     Map* m_map;
-    qint16 m_id;
+    qint32 m_id;
     MapUnitList m_unitList;
 };
 

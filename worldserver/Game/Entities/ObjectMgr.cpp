@@ -61,7 +61,7 @@ void ObjectMgr::LoadCreatures()
         // Check if instance_id exists
 
         // Add to map/partition
-        qint16 partitionId = Utils::getIntFromTwoInt(
+        qint32 partitionId = Utils::getIntFromTwoInt(
                     MapMgr::getMapCoordFromCell(data.position_x),
                     MapMgr::getMapCoordFromCell(data.position_y));
 

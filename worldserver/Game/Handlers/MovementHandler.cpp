@@ -86,6 +86,8 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     character->SetPosition(fromX, fromY, fromZ);
     character->SetDirection(steps.last());
 
+    qDebug() << "PartitionId : " << character->GetLastPartitionId();
+
     // Todo send to player in the area only
     WorldPacket data(SMSG_UPDATE_POSITION);
     data << character->GetGuid();

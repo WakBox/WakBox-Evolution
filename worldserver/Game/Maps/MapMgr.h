@@ -12,7 +12,7 @@ struct Rect
     qint16 mapMaxY;
 };
 
-typedef QHash<qint16/*id*/, Map*> MapHash;
+typedef QHash<qint32/*id*/, Map*> MapHash;
 
 class MapMgr : public Singleton<MapMgr>
 {
@@ -20,10 +20,10 @@ public:
     MapMgr();
     ~MapMgr();
 
-    static qint16 getMapCoordFromCell(qint16 cell)
+    static qint32 getMapCoordFromCell(qint32 cell)
     {
         float mapCoord = cell / 18.0f;
-        qint16 v = (qint16)mapCoord;
+        qint32 v = (qint32)mapCoord;
 
         if (mapCoord >= 0.0f)
             return v;
@@ -42,8 +42,8 @@ public:
         return rect;
     }
 
-    Map* CreateMap(qint16 id);
-    Map* FindMap(qint16 id) const
+    Map* CreateMap(qint32 id);
+    Map* FindMap(qint32 id) const
     {
         MapHash::const_iterator it = m_maps.find(id);
         return (it != m_maps.end() ? it.value() : nullptr);

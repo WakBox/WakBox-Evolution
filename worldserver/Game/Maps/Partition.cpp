@@ -3,7 +3,7 @@
 #include "Map.h"
 #include "Maps/MapMgr.h"
 
-Partition::Partition(Map* map, qint16 partitionId)
+Partition::Partition(Map* map, qint32 partitionId)
 {
     m_map = map;
     m_id = partitionId;

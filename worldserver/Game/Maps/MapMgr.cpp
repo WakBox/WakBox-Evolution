@@ -13,7 +13,7 @@ MapMgr::~MapMgr()
 
 }
 
-Map* MapMgr::CreateMap(qint16 id)
+Map* MapMgr::CreateMap(qint32 id)
 {
     Map* map = FindMap(id);
 

@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(qint16 id)
+Map::Map(qint32 id)
 {
     m_id = id;
 }
@@ -10,7 +10,7 @@ Map::~Map()
 
 }
 
-Partition* Map::CreatePartition(qint16 id)
+Partition* Map::CreatePartition(qint32 id)
 {
     Partition* partition = FindPartition(id);
 

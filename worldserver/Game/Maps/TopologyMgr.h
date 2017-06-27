@@ -11,7 +11,7 @@
 #include "Topology/TopologyMapCi.h"
 #include "Topology/TopologyMapDi.h"
 
-typedef QHash<qint16, TopologyMap*> TopologyMapHash;
+typedef QHash<qint32, TopologyMap*> TopologyMapHash;
 typedef QHash<quint16, TopologyMapHash> TopologyMapsHash;
 
 class TopologyMgr : public Singleton<TopologyMgr>
