@@ -391,8 +391,6 @@ void Character::SerializeAccountInformation(WorldPacket& data)
         data << quint32(0); // adminRight
 
     data << quint32(101); // subscriptionLevel
-    data << quint32(0); // heroesSubscriptionLevel
-    data << quint32(0); //m_freeHeroesSubscriptionLevel
     data << quint32(0); // forcedSubscriptionLevel
     data << quint32(0); // antiAddictionLevel
     data << quint64(QDateTime::currentMSecsSinceEpoch()); // sessionStartTime (current timestamp ?)
@@ -556,7 +554,6 @@ void Character::SerializeAccountInformationRemote(WorldPacket& data)
 {
     data << quint32(101); // subscriptionLevel
     data << quint16(0); // additionalRightsSize
-    data << quint32(0); // heroesSubscriptionLevel
     data << quint16(7); // characterMaxLevel
     data << quint64(0); // betaReward
 }
