@@ -13,8 +13,8 @@ enum GuidType
 };
 
 typedef QHash<qint64/*guid*/, CreatureData> CreatureDataHash;
-typedef QHash<qint16/*partitionId*/, QList<qint64>> CreatureGuidsHash;
-typedef QHash<qint16/*mapId*/, CreatureGuidsHash> MapCreatureGuidsHash;
+typedef QHash<qint32/*partitionId*/, QList<qint64>> CreatureGuidsHash;
+typedef QHash<qint32/*mapId*/, CreatureGuidsHash> MapCreatureGuidsHash;
 
 typedef QHash<quint32, QString> InteractiveElementsHash;
 
@@ -34,7 +34,7 @@ public:
         return m_creatureData[guid];
     }
 
-    QList<qint64> const& GetPartitionCreatureGuids(qint16 mapId, qint16 partition)
+    QList<qint64> const& GetPartitionCreatureGuids(qint32 mapId, qint32 partition)
     {
         return m_mapCreatureGuids[mapId][partition];
     }

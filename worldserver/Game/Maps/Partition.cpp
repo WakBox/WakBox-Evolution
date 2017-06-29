@@ -26,7 +26,8 @@ void Partition::Load()
         creature->SetGuid(*guid);
         creature->SetData(sObjectMgr->GetCreatureData(*guid));
 
-        qDebug() << "partitionId " << Utils::getIntFromTwoInt(
+        qDebug() << "m_partitionId" << GetId();
+        qDebug() << "partitionId creature" << Utils::getIntFromTwoInt(
                         MapMgr::getMapCoordFromCell(creature->GetPositionX()),
                         MapMgr::getMapCoordFromCell(creature->GetPositionY()));
 

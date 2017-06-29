@@ -16,7 +16,7 @@ public:
     ~Partition();
 
     Map* GetMap() { return m_map; }
-    qint16 GetId() { return m_id; }
+    qint32 GetId() { return m_id; }
 
     MapUnitList const& GetUnitList() { return m_unitList; }
 
