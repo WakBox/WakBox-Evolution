@@ -89,9 +89,9 @@ void WorldSession::HandleClientAuthToken(WorldPacket& packet)
             data << quint64(m_accountInfos.subscriptionTime);
 
             // Hero subscription (hero system?)
-            data << quint32(1); // m_heroSubscription count
-                data << quint32(0); // unkInt
-                data << quint64(0); // unkLong (heroId?)
+            data << quint32(0); // m_heroSubscription count
+            //    data << quint32(0); // unkInt
+            //    data << quint64(0); // unkLong (heroId?)
 
             // Admin rights => TODO
             for (quint8 i = 0; i < MAX_ADMIN_RIGHT + 5; ++i)

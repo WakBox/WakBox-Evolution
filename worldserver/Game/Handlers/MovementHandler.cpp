@@ -1,4 +1,5 @@
 #include "Server/WorldSession.h"
+#include "Maps/MapMgr.h"
 
 void WorldSession::HandleCharMovement(WorldPacket& packet)
 {
