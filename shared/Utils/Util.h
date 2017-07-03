@@ -14,6 +14,16 @@ public:
     {
         return a << 16 | (b & 0xFFFF);
     }
+
+    static qint16 getFirstShortFromInt(qint32 value)
+    {
+        return (qint16)(value >> 16 & 0xFFFF);
+    }
+
+    static qint16 getSecondShortFromInt(qint32 value)
+    {
+        return (qint16)(value & 0xFFFF);
+    }
 };
 
 #endif

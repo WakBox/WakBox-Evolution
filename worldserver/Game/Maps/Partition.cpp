@@ -18,21 +18,16 @@ void Partition::Load()
 {
     QList<qint64> const& creatureGuids = sObjectMgr->GetPartitionCreatureGuids(GetMap()->GetId(), GetId());
 
-    qDebug() << "CreatureGuids = " << creatureGuids.size();
-
     for (QList<qint64>::ConstIterator guid = creatureGuids.begin(); guid != creatureGuids.end(); ++guid)
     {
         Creature* creature = new Creature();
         creature->SetGuid(*guid);
         creature->SetData(sObjectMgr->GetCreatureData(*guid));
 
-        qDebug() << "m_partitionId" << GetId();
-        qDebug() << "partitionId creature" << Utils::getIntFromTwoInt(
-                        MapMgr::getMapCoordFromCell(creature->GetPositionX()),
-                        MapMgr::getMapCoordFromCell(creature->GetPositionY()));
-
         m_unitList.push_back(creature);
     }
+
+    qDebug() << ">> Loaded " << m_unitList.size() << " units for partition " << GetId();
 }
 
 void Partition::AddCharacterToPartition(Character* character)

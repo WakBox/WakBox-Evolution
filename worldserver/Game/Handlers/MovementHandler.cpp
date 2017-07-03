@@ -87,8 +87,6 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     character->SetPosition(fromX, fromY, fromZ);
     character->SetDirection(steps.last());
 
-    qDebug() << "PartitionId : " << character->GetLastPartitionId();
-
     // Todo send to player in the area only
     WorldPacket data(SMSG_UPDATE_POSITION);
     data << character->GetGuid();
@@ -96,7 +94,26 @@ void WorldSession::HandleCharMovement(WorldPacket& packet)
     data << character->GetPositionY();
     data << character->GetPositionZ();
     data << character->GetDirection();
-    sWorld->SendGlobalPacket(data, this);
+    character->GetPartition()->SendPacket(data, this);
+
+    qDebug() << "PartitionId : " << character->GetLastPartitionId();
+
+    if (character->GetPartition()->GetId() != character->GetLastPartitionId())
+    {
+        Partition* newPartition = character->GetMap()->CreatePartition(character->GetLastPartitionId());
+        character->SetPartition(newPartition);
+        character->GetPartition()->SendPacket(data, this);
+
+        // Unload unsued partition
+        // Send message spawn on new partition
+        // Send message despawn on old partition
+
+        // Send all creature / player in the area
+        SendActorSpawn();
+
+        // Send actor spawn to the other player in the area
+        SendActorSpawn(this);
+    }
 }
 
 void WorldSession::HandleCharDirection(WorldPacket& packet)

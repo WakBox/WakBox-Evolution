@@ -16,7 +16,8 @@ public:
 
     qint16 GetId() { return m_id; }
 
-    Partition* CreatePartition(qint32 id);
+    Partition* CreatePartitionFromCell(qint32 x, qint32 y);
+    Partition* CreatePartition(qint32 id, bool createAdjacent = false);
     Partition* FindPartition(qint32 id) const
     {
         PartitionHash::const_iterator it = m_partitions.find(id);
